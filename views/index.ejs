@@ -3,9 +3,19 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/index.js"></script>
   </head>
-  <body>
+  <body onload="init()">
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <button id="create_new" onclick="openCreateForm()">Create new post</button>
+
+    <% include createForm.ejs%>
+
+    <script>
+      // Check browser support
+      if (!window.indexedDB) {
+        alert("Sorry! Your browser does not support IndexedDB");
+      }
+    </script>
   </body>
 </html>
