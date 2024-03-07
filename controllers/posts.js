@@ -1,5 +1,6 @@
 const postModel = require('../models/posts');
 
+// Function to create new posts
 exports.create = function (postData) {
     let currentDate = new Date();
 
@@ -22,3 +23,13 @@ exports.create = function (postData) {
         return null;
     })
 }
+
+// Function to get all posts
+exports.getAll = function () {
+    return postModel.find({}).then(posts => {
+        return JSON.stringify(posts);
+    }).catch(err => {
+        console.log(err);
+        return null;
+    });
+};

@@ -1,10 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var post = require('../models/posts');
+const {getAll} = require("../controllers/posts");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'PlantHub' });
+  let result = getAll();
+  result.then(posts => {
+    let data = JSON.parse(posts);
+    console.log(data.length);
+    res.render('index', { title: 'PlantHub', data: data});
+  }).catch(err => {
+    res.render('error', { error: err});
+  });
 });
 
 /* POST create post form. */

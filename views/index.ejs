@@ -11,6 +11,12 @@
     <button id="create_btn" onclick="openCreatePost()">Create new post</button>
     <button id="post_btn" onclick="showPostDetails()">Show post details</button>
 
+    <% data.forEach(post => { %>
+      <p>Location: <%= post.location %></p>
+      <p>Description: <%= post.description %></p>
+      <hr>
+    <% }); %>
+
     <div id="overlay">
       <% include create-post.ejs%>
       <% include post-details.ejs%>
