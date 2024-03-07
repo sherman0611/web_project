@@ -1,6 +1,6 @@
 <div id="create_post">
     <h2>New plant sightings</h2>
-    <form id="create_post_form" method="POST" onsubmit="return validateForm()">
+    <form id="create_post_form" action="/create-post" method="POST" onsubmit="return validateForm()">
         <p>
             <label for="image_file">Upload image file:</label>
             <input type="file" id="image_file" name="image_file" accept="image/*">
@@ -11,20 +11,20 @@
         </p>
         <p>
             <label for="location">Location found: </label>
-            <input type="text" id="location" name="location">
+            <input type="text" id="location" name="location" required>
         </p>
         <p>
             <label for="description">Plant description: </label>
-            <input type="text" id="description" name="description">
+            <input type="text" id="description" name="description" required>
         </p>
         <h3>Plant size</h3>
         <p>
             <label for="height">Plant height: </label>
-            <input type="text" id="height" name="height">
+            <input type="text" id="height" name="height" required>
         </p>
         <p>
             <label for="spread">Plant spread: </label>
-            <input type="text" id="spread" name="spread">
+            <input type="text" id="spread" name="spread" required>
         </p>
         <h3>Plant characteristics</h3>
         <p>
@@ -60,21 +60,21 @@
         <h3>Identification</h3>
         <p>
             <label for="plant_name">Plant name: </label>
-            <input type="text" id="plant_name" name="plant_name">
+            <input type="text" id="plant_name" name="plant_name" required>
         </p>
         <p>
-            <label for="plant_name">Plant unknown or uncertain?</label>
-            <input type="radio" id="unknown" name="unknown" value="unknown">
+            <label for="plant_certainty">Plant unknown or uncertain?</label>
+            <input type="radio" id="unknown" name="plant_certainty" value="unknown">
             <label for="unknown">Unknown</label>
-            <input type="radio" id="uncertain" name="uncertain" value="uncertain">
+            <input type="radio" id="uncertain" name="plant_certainty" value="uncertain">
             <label for="uncertain">Uncertain</label>
         </p>
         <h3>Your username</h3>
         <p>
             <label for="username">Username: </label>
-            <input type="text" id="username" name="username">
+            <input type="text" id="username" name="username" required>
         </p>
-        <button id="create" onclick="">Create post</button>
+        <button id="create" type="submit">Create post</button>
     </form>
     <button id="close_btn" onclick="closeCreatePost()">Close window</button>
 </div>
