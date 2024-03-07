@@ -6,4 +6,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'PlantHub' });
 });
 
+/* GET create post page. */
+router.get('/create-post', function(req, res, next) {
+  res.render('create-post');
+});
+
 module.exports = router;

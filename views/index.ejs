@@ -2,20 +2,18 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script src="/javascripts/index.js"></script>
   </head>
   <body onload="init()">
     <h1><%= title %></h1>
-    <button id="create_new" onclick="openCreateForm()">Create new post</button>
+    <button id="create_btn" onclick="openCreatePost()">Create new post</button>
+    <button id="post_btn" onclick="showPostDetails()">Show post details</button>
 
-    <% include createForm.ejs%>
-
-    <script>
-      // Check browser support
-      if (!window.indexedDB) {
-        alert("Sorry! Your browser does not support IndexedDB");
-      }
-    </script>
+    <div id="overlay">
+      <% include create-post.ejs%>
+      <% include post-details.ejs%>
+    </div>
   </body>
 </html>

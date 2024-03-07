@@ -1,6 +1,6 @@
-<div id="create_form" style="...">
+<div id="create_post">
     <h2>New plant sightings</h2>
-    <form onsubmit="return validateForm()">
+    <form id="create_post_form" method="POST" onsubmit="return validateForm()">
         <p>
             <label for="image_file">Upload image file:</label>
             <input type="file" id="image_file" name="image_file" accept="image/*">
@@ -14,7 +14,7 @@
             <input type="text" id="location" name="location">
         </p>
         <p>
-            <label for="description">Description: </label>
+            <label for="description">Plant description: </label>
             <input type="text" id="description" name="description">
         </p>
         <h3>Plant size</h3>
@@ -76,5 +76,5 @@
         </p>
         <button id="create" onclick="">Create post</button>
     </form>
-    <button id="close" onclick="closeCreateForm()">Close window</button>
+    <button id="close_btn" onclick="closeCreatePost()">Close window</button>
 </div>
