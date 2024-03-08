@@ -1,11 +1,11 @@
 const postModel = require('../models/posts');
 
 // Function to create new posts
-exports.create = function (postData) {
+exports.create = function (postData, filePath) {
     let currentDate = new Date();
 
     let post = new postModel({
-        image_url: postData.image_url,
+        image: filePath,
         location: postData.location,
         description: postData.description,
         date: currentDate,

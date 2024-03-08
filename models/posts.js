@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 
 let PostSchema = new Schema(
     {
-        image_url: {type: String, max: 100},
+        image: {type: String},
         location: {type: String, required: true, max: 100},
         description: {type: String, required: true, max: 100},
         date: {type: Date},

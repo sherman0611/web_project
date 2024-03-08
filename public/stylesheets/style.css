@@ -35,7 +35,22 @@ a {
   padding: 20px;
 }
 
-#post_link {
+.post_link {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: inherit;
+}
+
+.post_image {
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
+.post_content {
+  flex: 1;
+}
+
+.post_link:hover {
+  background-color: #f0f0f0;
 }
