@@ -17,15 +17,6 @@ a {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#create_post {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-}
-
 #post_details {
   position: absolute;
   top: 50%;
@@ -34,6 +25,20 @@ a {
   background-color: white;
   padding: 20px;
 }
+
+.container {
+  display: flex;
+}
+
+.post_details {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.comment_section {
+  flex: 1;
+}
+
 
 .post_link {
   display: flex;

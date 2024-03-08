@@ -8,7 +8,7 @@
   </head>
   <body onload="init()">
     <h1><%= title %></h1>
-    <button id="create_btn" onclick="openCreatePost()">Create new post</button>
+    <a href="/create"><button id="create_btn">Create new post</button></a>
     <% data.forEach(post => { %>
       <a class="post_link" href="/post/<%= post._id %>">
         <img class="post_image" src="<%= post.image %>" alt="<%= post.plant_name %>" width="200" height="200">
@@ -21,9 +21,5 @@
         <hr>
       </a>
     <% }); %>
-
-    <div id="overlay">
-      <% include create.ejs%>
-    </div>
   </body>
 </html>

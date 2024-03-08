@@ -29,6 +29,11 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/* GET create post page. */
+router.get('/create', function(req, res, next) {
+  res.render('create', { title: 'Create post' });
+});
+
 /* POST create post form. */
 router.post('/create', upload.single('image_file'), function(req, res, next) {
   let postData = req.body;
