@@ -9,17 +9,19 @@
   <body onload="init()">
     <h1><%= title %></h1>
     <button id="create_btn" onclick="openCreatePost()">Create new post</button>
-    <button id="post_btn" onclick="showPostDetails()">Show post details</button>
 
     <% data.forEach(post => { %>
-      <p>Location: <%= post.location %></p>
-      <p>Description: <%= post.description %></p>
-      <hr>
+      <a id="post_link" href="/post/<%= post._id %>">
+        <p><strong><%= post.plant_name %></strong></p>
+        <p>Description: <%= post.description %></p>
+        <p>Date: <%= post.date %></p>
+        <p>User: <%= post.username %></p>
+        <hr>
+      </a>
     <% }); %>
 
     <div id="overlay">
       <% include create-post.ejs%>
-      <% include post-details.ejs%>
     </div>
   </body>
 </html>

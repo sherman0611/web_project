@@ -33,3 +33,13 @@ exports.getAll = function () {
         return null;
     });
 };
+
+// Function to get post by ID
+exports.getById = function (postId) {
+    return postModel.findById(postId).then(post => {
+        return post;
+    }).catch(err => {
+        console.log(err);
+        return null;
+    });
+};

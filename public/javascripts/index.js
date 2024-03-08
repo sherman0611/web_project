@@ -48,19 +48,10 @@ function openCreatePost() {
     document.getElementById('overlay').style.display = 'block';
     document.getElementById('create_post').style.display = 'block';
 }
+
 function closeCreatePost() {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('create_post').style.display = 'none';
-}
-
-function showPostDetails() {
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('post_details').style.display = 'block';
-}
-
-function closePostDetails() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('post_details').style.display = 'none';
 }
 
 function validateForm() {

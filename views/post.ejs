@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="/javascripts/post.js"></script>
+</head>
+    <body>
+        <p><strong><%= post.plant_name %></strong></p>
+        <p>Location: <%= post.location %></p>
+        <p>Description: <%= post.description %></p>
+        <p>Date: <%= post.date %></p>
+        <p>Height: <%= post.height %></p>
+        <p>Spread: <%= post.spread %></p>
+        <p>User: <%= post.username %></p>
+
+        <div id="comments">
+            <div id="history" class="boxed"></div>
+            <div id="input" class="bottom boxed">
+                <form onsubmit="return false;" style="width: 100%">
+                    <p>
+                    <div id="who_you_are" style="display: inline"></div>
+                    <input type="text" placeholder="Post your reply" id="chat_input" name="chat_input" style="width: 80%">
+                    <button id="chat_send" onclick="sendChatText()">Send</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <button id="close_btn" onclick="returnHome()">Go Back</button>
+    </body>
+</html>

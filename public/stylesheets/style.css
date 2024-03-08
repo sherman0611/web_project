@@ -34,3 +34,8 @@ a {
   background-color: white;
   padding: 20px;
 }
+
+#post_link {
+  text-decoration: none;
+  color: inherit;
+}
