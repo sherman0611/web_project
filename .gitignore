@@ -1,0 +1,3 @@
+client-side/public/images/uploads/*
+server-side/public/images/uploads/*
+.idea/
