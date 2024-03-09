@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var post = require('../models/posts');
-const { getAll, getById } = require("../controllers/posts");
+const posts = require("../controllers/posts");
 var multer = require("multer");
 
 var storage = multer.diskStorage({
@@ -19,7 +18,7 @@ let upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let result = getAll();
+  let result = posts.getAll();
   result.then(posts => {
     let data = JSON.parse(posts);
     // console.log(data.length);
@@ -37,8 +36,9 @@ router.get('/create', function(req, res, next) {
 /* POST create post form. */
 router.post('/create', upload.single('image_file'), function(req, res, next) {
   let postData = req.body;
+  // let filePath = req.file ? req.file.path : null;
   let filePath = req.file.path;
-  let result = post.create(postData, filePath);
+  let result = posts.create(postData, filePath);
   console.log(result);
   res.redirect('/');
 });
@@ -46,7 +46,7 @@ router.post('/create', upload.single('image_file'), function(req, res, next) {
 /* GET post details page. */
 router.get('/post/:id', function(req, res, next) {
   const postId = req.params.id;
-  let result = getById(postId);
+  let result = posts.getById(postId);
   result.then(post => {
     if (!post) {
       res.status(404).send('Post not found');
