@@ -34,7 +34,7 @@ exports.getAll = function () {
 // Function to get post by ID
 exports.getById = function (postId) {
     return postModel.findById(postId).then(post => {
-        return post;
+        return JSON.stringify(post);
     }).catch(err => {
         console.log(err);
         return null;

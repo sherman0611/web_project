@@ -4,13 +4,14 @@ let Schema = mongoose.Schema;
 
 let CommentSchema  = new Schema(
     {
-        postId: {
-            type: Schema.Types.ObjectId,
-            ref: 'post'
-        },
-        userId: {type: String},
+        // postId: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'post'
+        // },
+        postId: {type: String, max: 100},
+        username: {type: String, max: 100},
         commentText: {type: String},
-        time: { type: Date, default: Date.now }
+        date: { type: Date, default: Date.now }
     }
 );
 

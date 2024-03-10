@@ -20,16 +20,24 @@
             </div>
 
             <div id="chat_interface">
+                <h2>Comments</h2>
+                <% comments.forEach(comment => { %>
+                    <div class="post_content">
+                        <p><strong><%= comment.username %></strong></p>
+                        <p><%= comment.commentText %></p>
+                        <p><%= comment.date %></p>
+                    </div>
+                    <hr>
+                <% }); %>
                 <div id="history" class="boxed"></div>
                 <div id="input" class="bottom boxed">
-                    <form action="/save-comment" method="POST" enctype="multipart/form-data" onsubmit="return false;" style="width: 100%">
-                        <p><label for="name"> Your name: </label>
-                            <input type="text" id="name" name="name">
+                    <form id="comment_form" action="/save-comment" method="post" onsubmit="return false;" style="width: 100%">
+                        <p><label for="name">Your name: </label>
+                            <input type="text" id="username" name="username">
                         </p>
                         <p>
-                            <label for="name"> Comment: </label>
-                            <input type="text" id="chat_input" name="chat_input" style="width: 80%" placeholder="Enter your reply...">
-                            <button id="chat_send" onclick="sendChatText()">Send</button>
+                            <input type="text" id="comment_input" name="comment_input" style="width: 80%" placeholder="Enter your reply...">
+                            <button id="comment_send" onclick="sendCommentText()">Send</button>
                         </p>
                     </form>
                 </div>

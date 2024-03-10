@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const posts = require("../controllers/posts");
+const comments = require("../controllers/comments");
 var multer = require("multer");
 
 var storage = multer.diskStorage({
@@ -21,7 +22,6 @@ router.get('/', function(req, res, next) {
   let result = posts.getAll();
   result.then(posts => {
     let data = JSON.parse(posts);
-    // console.log(data.length);
     res.render('index', { title: 'PlantHub', data: data});
   }).catch(err => {
     res.render('error', { error: err});
@@ -37,44 +37,69 @@ router.get('/create', function(req, res, next) {
 router.post('/create', upload.single('image_file'), function(req, res, next) {
   let postData = req.body;
   let filePath = req.file ? req.file.path : null;
-  let result = posts.create(postData, filePath);
-  console.log(result);
-  res.redirect('/');
-});
 
-router.post('/create', function(req, res, next) {
-  let firstNo = req.body.firstNumber;
-  let secondNo = req.body.secondNumber;
-
-  fetch('http://localhost:3000/add', {
+  fetch('http://localhost:3001/create', {
     method: 'post',
     body: JSON.stringify({
-      firstNumber: firstNo,
-      secondNumber: secondNo
+      postData: postData,
+      filePath: filePath
     }),
     headers: {'Content-Type': 'application/json'},
   }).then(r => {
     r.json()
         .then(json => {
-          res.render('index', {title: " The result is : " + json.result})
+          res.redirect('/');
         })
-        .catch(err =>
-            res.render('index', {title: err}));
+        .catch(err => {
+          console.log('Failed to create post');
+        });
   });
 });
 
 /* GET post details page. */
 router.get('/post/:id', function(req, res, next) {
   const postId = req.params.id;
-  let result = posts.getById(postId);
-  result.then(post => {
+
+  let postPromise = posts.getById(postId);
+  let commentsPromise = comments.getAllByPostId(postId);
+  // let commentsPromise = comments.getAll();
+
+  Promise.all([postPromise, commentsPromise]).then(([post, comments]) => {
     if (!post) {
       res.status(404).send('Post not found');
     } else {
-      res.render('post', { post: post });
+      console.log(comments);
+      let postData = JSON.parse(post);
+      let commentData = JSON.parse(comments);
+      console.log(commentData);
+      res.render('post', { post: postData, comments: commentData });
     }
   }).catch(err => {
     res.render('error', { error: err });
+  });
+});
+
+/* POST comment form. */
+router.post('/save-comment', function(req, res, next) {
+  // let commentData = req.body;
+
+  fetch('http://localhost:3001/save-comment', {
+    method: 'post',
+    body: JSON.stringify({
+      postId: '65eb9ff50db9afa77fcd2bfd',
+      username: 'freia',
+      commentText: 'reeeeee'
+    }),
+    headers: {'Content-Type': 'application/json'},
+  }).then(r => {
+    r.json()
+        .then(json => {
+          console.log('Comment sent');
+          res.redirect('/');
+        })
+        .catch(err => {
+          console.log('Failed to send comment');
+        });
   });
 });
 

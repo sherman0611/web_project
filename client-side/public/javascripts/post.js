@@ -1,50 +1,31 @@
-let name = null;
-let roomNo = null;
+let username = null;
+let postId = null;
 let socket = io();
 
 function init(id) {
-    roomNo = id;
+    postId = id;
 
     // called when a message is received
     socket.on('comment', function (room, userId, chatText) {
         let who = userId
-        if (userId === name) who = 'Me';
+        if (userId === username) who = 'Me';
         writeOnHistory('<b>' + who + ':</b> ' + chatText);
     });
 }
 
-function sendChatText() {
-    connectToRoom()
-    let chatText = document.getElementById('chat_input').value;
-
-    // Send an HTTP request to your server to save the comment
-    fetch('/save-comment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            roomNo: roomNo,
-            name: name,
-            chatText: chatText
-        })
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to save comment');
-        }
-        console.log('Comment saved successfully');
-    }).catch(error => {
-        console.error('Error saving comment:', error);
-    });
-
-    socket.emit('comment', roomNo, name, chatText);
-    console.log('Sent chat message:', chatText);
+function connectToRoom() {
+    username = document.getElementById('username').value;
+    if (!username) username = 'Anon' + Math.floor(Math.random() * 1000);
+    socket.emit('create or join', postId, username);
 }
 
-function connectToRoom() {
-    name = document.getElementById('name').value;
-    if (!name) name = 'Unknown-' + Math.random();
-    socket.emit('create or join', roomNo, name);
+function sendCommentText() {
+    connectToRoom()
+    let commentText = document.getElementById('comment_input').value;
+    socket.emit('comment', postId, username, commentText);
+    console.log('Sent chat message:', commentText);
+
+    document.getElementById('comment_form').submit();
 }
 
 function writeOnHistory(text) {
@@ -52,5 +33,5 @@ function writeOnHistory(text) {
     let paragraph = document.createElement('p');
     paragraph.innerHTML = text;
     history.appendChild(paragraph);
-    document.getElementById('chat_input').value = '';
+    document.getElementById('comment_input').value = '';
 }

@@ -1,11 +1,11 @@
 const commentModel = require('../models/comments');
 
 // Function to create new posts
-exports.create = function (userId, postId, commentText) {
+exports.create = function (commentData) {
     let comment = new commentModel({
-        postId: postId,
-        userId: userId,
-        commentText: commentText
+        postId: commentData.postId,
+        username: commentData.username,
+        commentText: commentData.commentText,
     });
 
     return comment.save().then(comment => {
@@ -17,11 +17,11 @@ exports.create = function (userId, postId, commentText) {
     })
 }
 
-exports.getCommentsByPostId = function(postId) {
+exports.getAllByPostId = function (postId) {
     return commentModel.find({ postId: postId }).then(comments => {
-            return comments;
-        }).catch(err => {
-            console.log(err);
-            return null;
-        });
+        return JSON.stringify(comments);
+    }).catch(err => {
+        console.log(err);
+        return null;
+    });
 };
