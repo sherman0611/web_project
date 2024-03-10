@@ -101,4 +101,16 @@ router.post('/save-comment', function(req, res, next) {
   });
 });
 
+router.get('/fetch-comments', async (req, res) => {
+  try {
+    const postId = req.query.postId;
+    const commentData = await comments.getAllByPostId(postId);
+
+    res.json(commentData);
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ error: 'Error fetching comments' });
+  }
+});
+
 module.exports = router;

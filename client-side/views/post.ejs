@@ -21,16 +21,17 @@
 
             <div id="chat_interface">
                 <h2>Comments</h2>
-                <% comments.forEach(comment => { %>
-                    <div class="post_content">
-                        <p><strong><%= comment.username %></strong></p>
-                        <p><%= comment.commentText %></p>
-                        <p><%= comment.date %></p>
-                    </div>
-                    <hr>
-                <% }); %>
-                <div id="history" class="boxed"></div>
-                <div id="input" class="bottom boxed">
+                <div id="history">
+                    <% comments.forEach(comment => { %>
+                        <div class="post_content">
+                            <p><strong><%= comment.username %></strong></p>
+                            <p><%= comment.commentText %></p>
+                            <p><%= comment.date %></p>
+                        </div>
+                        <hr>
+                    <% }); %>
+                </div>
+                <div id="input">
                     <form id="comment_form" action="/save-comment" method="post" onsubmit="return false;">
                         <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
                         <p><label for="name">Your name: </label>
