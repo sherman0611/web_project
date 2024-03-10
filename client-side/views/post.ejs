@@ -6,7 +6,7 @@
     <script src="/javascripts/index.js"></script>
     <script src="/javascripts/post.js"></script>
 </head>
-    <body onload="init('<%= post._id %>')">
+    <body onload="init()">
         <div class="container">
             <div class="post_details">
                 <img src="/<%= post.image %>" alt="<%= post.plant_name %>" width="200" height="200">
@@ -31,12 +31,13 @@
                 <% }); %>
                 <div id="history" class="boxed"></div>
                 <div id="input" class="bottom boxed">
-                    <form id="comment_form" action="/save-comment" method="post" onsubmit="return false;" style="width: 100%">
+                    <form id="comment_form" action="/save-comment" method="post" onsubmit="return false;">
+                        <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
                         <p><label for="name">Your name: </label>
                             <input type="text" id="username" name="username">
                         </p>
                         <p>
-                            <input type="text" id="comment_input" name="comment_input" style="width: 80%" placeholder="Enter your reply...">
+                            <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
                             <button id="comment_send" onclick="sendCommentText()">Send</button>
                         </p>
                     </form>

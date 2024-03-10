@@ -9,7 +9,6 @@ exports.create = function (commentData) {
     });
 
     return comment.save().then(comment => {
-        console.log(comment);
         return JSON.stringify(comment);
     }).catch(err => {
         console.log(err);

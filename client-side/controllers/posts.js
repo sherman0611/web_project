@@ -13,7 +13,6 @@ exports.create = function (postData, filePath) {
     });
 
     return post.save().then(post => {
-        console.log(post);
         return JSON.stringify(post);
     }).catch(err => {
         console.log(err);

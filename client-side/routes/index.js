@@ -62,16 +62,13 @@ router.get('/post/:id', function(req, res, next) {
 
   let postPromise = posts.getById(postId);
   let commentsPromise = comments.getAllByPostId(postId);
-  // let commentsPromise = comments.getAll();
 
   Promise.all([postPromise, commentsPromise]).then(([post, comments]) => {
     if (!post) {
       res.status(404).send('Post not found');
     } else {
-      console.log(comments);
       let postData = JSON.parse(post);
       let commentData = JSON.parse(comments);
-      console.log(commentData);
       res.render('post', { post: postData, comments: commentData });
     }
   }).catch(err => {
@@ -82,13 +79,14 @@ router.get('/post/:id', function(req, res, next) {
 /* POST comment form. */
 router.post('/save-comment', function(req, res, next) {
   // let commentData = req.body;
+  console.log(req);
 
   fetch('http://localhost:3001/save-comment', {
     method: 'post',
     body: JSON.stringify({
-      postId: '65eb9ff50db9afa77fcd2bfd',
-      username: 'freia',
-      commentText: 'reeeeee'
+      postId: req.body.postId,
+      username: req.body.username,
+      commentText: req.body.commentText
     }),
     headers: {'Content-Type': 'application/json'},
   }).then(r => {
