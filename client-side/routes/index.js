@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
         let postData = JSON.parse(data);
         res.render('index', { title: 'PlantHub', data: postData});
       }).catch(error => {
-        res.render('index', { title: 'PlantHub', data: null, errorMessage: 'Connection error: Cannot connect to the server' });
+        res.render('index', { title: 'PlantHub', data: null });
       });
 });
 
@@ -48,7 +48,7 @@ router.get('/create', function(req, res, next) {
 });
 
 /* POST create post form. */
-router.post('/create', upload.single('image_file'), function(req, res, next) {
+router.post('/create', function(req, res, next) {
   let postData = req.body;
   let filePath = req.file ? req.file.path : null;
 
@@ -119,7 +119,7 @@ router.post('/save-comment', function(req, res, next) {
           res.redirect('/');
         })
         .catch(err => {
-            res.render('error', { error: err });
+          console.log('Failed to send comment');
         });
   });
 });
