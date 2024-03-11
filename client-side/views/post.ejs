@@ -9,32 +9,40 @@
 </head>
     <body onload="init()">
         <div class="container">
-            <div class="post_details">
-                <img src="/<%= post.image %>" alt="<%= post.plant_name %>" width="200" height="200">
-                <p>Plant name:<%= post.plant_name %></p>
-                <p>Location: <%= post.location %></p>
-                <p>Description: <%= post.description %></p>
-                <p>Date: <%= post.date %></p>
-                <p>Height: <%= post.height %></p>
-                <p>Spread: <%= post.spread %></p>
-                <p>User: <%= post.username %></p>
-            </div>
+            <% if (post === null) { %>
+                <p>Cannot load post</p>
+            <% } else { %>
+                <div class="post_details">
+                    <img src="/<%= post.image %>" alt="<%= post.plant_name %>" width="200" height="200">
+                    <p>Plant name:<%= post.plant_name %></p>
+                    <p>Location: <%= post.location %></p>
+                    <p>Description: <%= post.description %></p>
+                    <p>Date: <%= post.date %></p>
+                    <p>Height: <%= post.height %></p>
+                    <p>Spread: <%= post.spread %></p>
+                    <p>User: <%= post.username %></p>
+                </div>
+            <% }; %>
 
             <div id="chat_interface">
                 <h2>Comments</h2>
-                <div id="history">
-                    <% comments.forEach(comment => { %>
-                        <div class="post_content">
-                            <p><strong><%= comment.username %></strong></p>
-                            <p><%= comment.commentText %></p>
-                            <p><%= comment.date %></p>
-                        </div>
-                        <hr>
-                    <% }); %>
-                </div>
+                <% if (comments === null) { %>
+                    <p>Cannot load comments</p>
+                <% } else { %>
+                    <div id="history">
+                        <% comments.forEach(comment => { %>
+                            <div class="post_content">
+                                <p><strong><%= comment.username %></strong></p>
+                                <p><%= comment.commentText %></p>
+                                <p><%= comment.date %></p>
+                            </div>
+                            <hr>
+                        <% }); %>
+                    </div>
+                <% }; %>
                 <div id="input">
                     <form id="comment_form" action="/save-comment" method="post" onsubmit="return false;">
-                        <input type="hidden" id="postId" name="postId" value="<%= post._id %>">
+                        <input type="hidden" id="postId" name="postId" value="<%= postId %>">
                         <p><label for="name">Your name: </label>
                             <input type="text" id="username" name="username">
                         </p>

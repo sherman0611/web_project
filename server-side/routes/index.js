@@ -27,6 +27,23 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/* GET post details page. */
+router.get('/post/:id', function(req, res, next) {
+  const postId = req.params.id;
+
+  let postResult = posts.getById(postId);
+  let commentsResult = comments.getAllByPostId(postId);
+
+  Promise.all([postResult, commentsResult])
+      .then(results => {
+        const [post, comments] = results;
+        return res.json({ post, comments }); // Sending both post and comments as JSON response
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+});
+
 /* POST create post form. */
 router.post('/create', upload.single('image_file'), function(req, res, next) {
   let postData = req.body.postData;

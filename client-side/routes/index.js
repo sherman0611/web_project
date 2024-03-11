@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const posts = require("../controllers/posts");
-const comments = require("../controllers/comments");
 var multer = require("multer");
 
 var storage = multer.diskStorage({
@@ -25,8 +23,7 @@ router.get('/', function(req, res, next) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         return response;
-      })
-      .then(response => {
+      }).then(response => {
         console.log(response.headers.get('Content-Type'));
         if (response.headers.get('Content-Type').includes('application/json')) {
           return response.json();
@@ -37,11 +34,11 @@ router.get('/', function(req, res, next) {
           });
         }
       }).then(data => {
-    let postData = JSON.parse(data);
-    res.render('index', { title: 'PlantHub', data: postData});
-  }).catch(error => {
-    res.render('index', { title: 'PlantHub', data: null, errorMessage: 'Connection error: Cannot connect to the server' });
-  });
+        let postData = JSON.parse(data);
+        res.render('index', { title: 'PlantHub', data: postData});
+      }).catch(error => {
+        res.render('index', { title: 'PlantHub', data: null, errorMessage: 'Connection error: Cannot connect to the server' });
+      });
 });
 
 
@@ -77,20 +74,29 @@ router.post('/create', upload.single('image_file'), function(req, res, next) {
 router.get('/post/:id', function(req, res, next) {
   const postId = req.params.id;
 
-  let postPromise = posts.getById(postId);
-  let commentsPromise = comments.getAllByPostId(postId);
-
-  Promise.all([postPromise, commentsPromise]).then(([post, comments]) => {
-    if (!post) {
-      res.status(404).send('Post not found');
-    } else {
-      let postData = JSON.parse(post);
-      let commentData = JSON.parse(comments);
-      res.render('post', { post: postData, comments: commentData });
-    }
-  }).catch(err => {
-    res.render('error', { error: err });
-  });
+  fetch('http://localhost:3001/post/' + postId)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response;
+      }).then(response => {
+        console.log(response.headers.get('Content-Type'));
+        if (response.headers.get('Content-Type').includes('application/json')) {
+          return response.json();
+        } else {
+          res.render('error', {
+            message: 'Invalid Content Type',
+            error: {status: 500, stack: 'Invalid Content type!'}
+          });
+        }
+      }).then(data => {
+        let postData = JSON.parse(data.post);
+        let commentsData = JSON.parse(data.comments);
+        res.render('post', { postId: postId, post: postData, comments: commentsData });
+      }).catch(error => {
+        res.render('post', { postId: postId, post: null, comments: null });
+      });
 });
 
 /* POST comment form. */
@@ -110,11 +116,10 @@ router.post('/save-comment', function(req, res, next) {
     r.json()
         .then(json => {
           console.log('Comment sent');
-          reloadDiv();
           res.redirect('/');
         })
         .catch(err => {
-          console.log('Failed to send comment');
+            res.render('error', { error: err });
         });
   });
 });
