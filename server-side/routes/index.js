@@ -19,7 +19,12 @@ let upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  let result = posts.getAll();
+  result.then(posts => {
+    return res.json(posts);
+  }).catch(err => {
+    res.status(500).json({ error: err.message });
+  });
 });
 
 /* POST create post form. */
@@ -33,11 +38,8 @@ router.post('/create', upload.single('image_file'), function(req, res, next) {
 
 /* POST comment form. */
 router.post('/save-comment', function(req, res, next) {
-  console.log('received comment');
   let commentData = req.body;
-  console.log(commentData);
   let result = comments.create(commentData);
-  console.log(result);
   return res.json({result: result});
 });
 

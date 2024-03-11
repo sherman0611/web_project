@@ -15,7 +15,9 @@
       <option value="distance">Sort by Distance</option>
     </select>
 
-    <% if (data.length === 0) { %>
+    <% if (data === null) { %>
+      <p><%= errorMessage %></p>
+    <% } else if (data.length === 0) { %>
       <p>No posts available currently.</p>
     <% } else { %>
       <% data.forEach(post => { %>

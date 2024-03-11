@@ -19,14 +19,31 @@ let upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let result = posts.getAll();
-  result.then(posts => {
-    let data = JSON.parse(posts);
-    res.render('index', { title: 'PlantHub', data: data});
-  }).catch(err => {
-    res.render('error', { error: err});
+  fetch('http://localhost:3001/')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response;
+      })
+      .then(response => {
+        console.log(response.headers.get('Content-Type'));
+        if (response.headers.get('Content-Type').includes('application/json')) {
+          return response.json();
+        } else {
+          res.render('error', {
+            message: 'Invalid Content Type',
+            error: {status: 500, stack: 'Invalid Content type!'}
+          });
+        }
+      }).then(data => {
+    let postData = JSON.parse(data);
+    res.render('index', { title: 'PlantHub', data: postData});
+  }).catch(error => {
+    res.render('index', { title: 'PlantHub', data: null, errorMessage: 'Connection error: Cannot connect to the server' });
   });
 });
+
 
 /* GET create post page. */
 router.get('/create', function(req, res, next) {
@@ -93,24 +110,13 @@ router.post('/save-comment', function(req, res, next) {
     r.json()
         .then(json => {
           console.log('Comment sent');
+          reloadDiv();
           res.redirect('/');
         })
         .catch(err => {
           console.log('Failed to send comment');
         });
   });
-});
-
-router.get('/fetch-comments', async (req, res) => {
-  try {
-    const postId = req.query.postId;
-    const commentData = await comments.getAllByPostId(postId);
-
-    res.json(commentData);
-  } catch (error) {
-    console.error('Error fetching comments:', error);
-    res.status(500).json({ error: 'Error fetching comments' });
-  }
 });
 
 module.exports = router;
