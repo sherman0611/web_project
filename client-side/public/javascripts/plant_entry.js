@@ -1,11 +1,11 @@
 let username = null;
-let postId = null;
+let plant_id = null;
 let socket = io();
 
 function init() {
-    postId = document.getElementById('postId').value;
+    plant_id = document.getElementById('plant_id').value;
 
-    socket.emit('join', postId);
+    socket.emit('join', plant_id);
 
     // called when a message is received
     // socket.on('comment', function (room, userId, chatText) {
@@ -22,7 +22,7 @@ function sendCommentText() {
         document.getElementById('username').value = username;
     }
     // let commentText = document.getElementById('commentText').value;
-    // socket.emit('comment', postId, username, commentText);
+    // socket.emit('comment', plant_id, username, commentText);
 
     document.getElementById('comment_form').submit();
 }

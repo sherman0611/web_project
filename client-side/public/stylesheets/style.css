@@ -17,7 +17,7 @@ a {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#post_details {
+#plant_details {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -30,7 +30,7 @@ a {
   display: flex;
 }
 
-.post_details {
+.plant_details {
   flex: 1;
   margin-right: 20px;
 }
@@ -39,22 +39,22 @@ a {
   flex: 1;
 }
 
-.post_link {
+.plant_link {
   display: flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
 }
 
-.post_image {
+.plant_image {
   flex: 0 0 auto;
   margin-right: 10px;
 }
 
-.post_content {
+.plant_content {
   flex: 1;
 }
 
-.post_link:hover {
+.plant_link:hover {
   background-color: #f0f0f0;
 }

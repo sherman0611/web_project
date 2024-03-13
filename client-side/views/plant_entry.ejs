@@ -4,22 +4,22 @@
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script src="/javascripts/index.js"></script>
-    <script src="/javascripts/post.js"></script>
+    <script src="/javascripts/plant_entry.js"></script>
 </head>
     <body onload="init()">
         <div class="container">
-            <% if (post === null) { %>
-                <p>Cannot load post</p>
+            <% if (plant_entry === null) { %>
+                <p>Cannot load plant_entry</p>
             <% } else { %>
-                <div class="post_details">
-                    <img src="/<%= post.image %>" alt="<%= post.plant_name %>" width="200" height="200">
-                    <p>Plant name:<%= post.plant_name %></p>
-                    <p>Location: <%= post.location %></p>
-                    <p>Description: <%= post.description %></p>
-                    <p>Date: <%= post.date %></p>
-                    <p>Height: <%= post.height %></p>
-                    <p>Spread: <%= post.spread %></p>
-                    <p>User: <%= post.username %></p>
+                <div class="plant_details">
+                    <img src="/<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
+                    <p>Plant name:<%= plant_entry.plant_name %></p>
+                    <p>Location: <%= plant_entry.location %></p>
+                    <p>Description: <%= plant_entry.description %></p>
+                    <p>Date: <%= plant_entry.date %></p>
+                    <p>Height: <%= plant_entry.height %></p>
+                    <p>Spread: <%= plant_entry.spread %></p>
+                    <p>User: <%= plant_entry.username %></p>
                 </div>
             <% }; %>
 
@@ -30,7 +30,7 @@
                 <% } else { %>
                     <div id="history">
                         <% comments.forEach(comment => { %>
-                            <div class="post_content">
+                            <div class="plant_content">
                                 <p><strong><%= comment.username %></strong></p>
                                 <p><%= comment.commentText %></p>
                                 <p><%= comment.date %></p>
@@ -40,8 +40,8 @@
                     </div>
                 <% }; %>
                 <div id="input">
-                    <form id="comment_form" action="/save-comment" method="post" onsubmit="return false;">
-                        <input type="hidden" id="postId" name="postId" value="<%= postId %>">
+                    <form id="comment_form" action="/save-comment" method="plant_entry" onsubmit="return false;">
+                        <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
                         <p><label for="name">Your name: </label>
                             <input type="text" id="username" name="username">
                         </p>

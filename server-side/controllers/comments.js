@@ -1,9 +1,9 @@
 const commentModel = require('../models/comments');
 
-// Function to create new posts
+// Function to create new plant entries
 exports.create = function (commentData) {
     let comment = new commentModel({
-        postId: commentData.postId,
+        plant_id: commentData.plant_id,
         username: commentData.username,
         commentText: commentData.commentText,
     });
@@ -16,8 +16,8 @@ exports.create = function (commentData) {
     })
 }
 
-exports.getAllByPostId = function (postId) {
-    return commentModel.find({ postId: postId }).then(comments => {
+exports.getAllByPlantId = function (plant_id) {
+    return commentModel.find({ plant_id: plant_id }).then(comments => {
         return JSON.stringify(comments);
     }).catch(err => {
         console.log(err);

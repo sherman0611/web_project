@@ -34,28 +34,28 @@ router.get('/', function(req, res, next) {
           });
         }
       }).then(data => {
-        let postData = JSON.parse(data);
-        res.render('index', { title: 'PlantHub', data: postData});
+        let plantData = JSON.parse(data);
+        res.render('index', { title: 'PlantHub', data: plantData});
       }).catch(error => {
         res.render('index', { title: 'PlantHub', data: null });
       });
 });
 
 
-/* GET create post page. */
+/* GET create plant entry page. */
 router.get('/create', function(req, res, next) {
-  res.render('create', { title: 'Create post' });
+  res.render('create', { title: 'Create plant entry' });
 });
 
-/* POST create post form. */
+/* POST create plant entry form. */
 router.post('/create', function(req, res, next) {
-  let postData = req.body;
+  let plantData = req.body;
   let filePath = req.file ? req.file.path : null;
 
   fetch('http://localhost:3001/create', {
     method: 'post',
     body: JSON.stringify({
-      postData: postData,
+      plantData: plantData,
       filePath: filePath
     }),
     headers: {'Content-Type': 'application/json'},
@@ -65,16 +65,16 @@ router.post('/create', function(req, res, next) {
           res.redirect('/');
         })
         .catch(err => {
-          console.log('Failed to create post');
+          console.log('Failed to create plant entry');
         });
   });
 });
 
-/* GET post details page. */
-router.get('/post/:id', function(req, res, next) {
-  const postId = req.params.id;
+/* GET plant entry details page. */
+router.get('/plant_entry/:id', function(req, res, next) {
+  const plant_id = req.params.id;
 
-  fetch('http://localhost:3001/post/' + postId)
+  fetch('http://localhost:3001/plant_entry/' + plant_id)
       .then(response => {
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
@@ -91,11 +91,11 @@ router.get('/post/:id', function(req, res, next) {
           });
         }
       }).then(data => {
-        let postData = JSON.parse(data.post);
+        let plantData = JSON.parse(data.plant_enrty);
         let commentsData = JSON.parse(data.comments);
-        res.render('post', { postId: postId, post: postData, comments: commentsData });
+        res.render('post', { plant_id: plant_id, post: plantData, comments: commentsData });
       }).catch(error => {
-        res.render('post', { postId: postId, post: null, comments: null });
+        res.render('post', { plant_id: plant_id, post: null, comments: null });
       });
 });
 
@@ -107,7 +107,7 @@ router.post('/save-comment', function(req, res, next) {
   fetch('http://localhost:3001/save-comment', {
     method: 'post',
     body: JSON.stringify({
-      postId: req.body.postId,
+      plant_id: req.body.plant_id,
       username: req.body.username,
       commentText: req.body.commentText
     }),

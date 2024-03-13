@@ -8,7 +8,7 @@
   <body>
     <h1><%= title %></h1>
 
-    <a href="/create"><button id="create_btn">Create new post</button></a>
+    <a href="/create"><button id="create_btn">Create new plant_entry</button></a>
 
     <select id="sort_by" onchange="sortBy(this.value)">
       <option value="date">Sort by Date</option>
@@ -18,16 +18,16 @@
     <% if (data === null) { %>
       <p>Cannot connect to server</p>
     <% } else if (data.length === 0) { %>
-      <p>No posts available currently.</p>
+      <p>No plant entries available currently.</p>
     <% } else { %>
-      <% data.forEach(post => { %>
-        <a class="post_link" href="/post/<%= post._id %>">
-          <img class="post_image" src="/<%= post.image %>" alt="<%= post.plant_name %>" width="200" height="200">
-          <div class="post_content">
-            <p><strong><%= post.plant_name %></strong></p>
-            <p>Location: <%= post.location %></p>
-            <p>Date: <%= post.date %></p>
-            <p>User: <%= post.username %></p>
+      <% data.forEach(plant_entry => { %>
+        <a class="plant_link" href="/plant_entry/<%= plant_entry._id %>">
+          <img class="plant_image" src="/<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
+          <div class="plant_content">
+            <p><strong><%= plant_entry.plant_name %></strong></p>
+            <p>Location: <%= plant_entry.location %></p>
+            <p>Date: <%= plant_entry.date %></p>
+            <p>User: <%= plant_entry.username %></p>
           </div>
         </a>
         <hr>

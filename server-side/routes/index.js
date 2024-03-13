@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const posts = require("../controllers/posts");
+const plant_entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
 var multer = require("multer");
 
@@ -19,25 +19,25 @@ let upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let result = posts.getAll();
-  result.then(posts => {
-    return res.json(posts);
+  let result = plant_entries.getAll();
+  result.then(plants => {
+    return res.json(plants);
   }).catch(err => {
     res.status(500).json({ error: err.message });
   });
 });
 
-/* GET post details page. */
-router.get('/post/:id', function(req, res, next) {
-  const postId = req.params.id;
+/* GET plant entry details page. */
+router.get('/plant_entry/:id', function(req, res, next) {
+  const plant_id = req.params.id;
 
-  let postResult = posts.getById(postId);
-  let commentsResult = comments.getAllByPostId(postId);
+  let plantResult = plant_entries.getById(plant_id);
+  let commentsResult = comments.getAllByPlantId(plant_id);
 
-  Promise.all([postResult, commentsResult])
+  Promise.all([plantResult, commentsResult])
       .then(results => {
-        const [post, comments] = results;
-        return res.json({ post, comments }); // Sending both post and comments as JSON response
+        const [plant_entry, comments] = results;
+        return res.json({ plant_entry: plant_entry, comments }); // Sending both plant_entry and comments as JSON response
       })
       .catch(err => {
         res.status(500).json({ error: err.message });
@@ -46,9 +46,9 @@ router.get('/post/:id', function(req, res, next) {
 
 /* POST create post form. */
 router.post('/create', upload.single('image_file'), function(req, res, next) {
-  let postData = req.body.postData;
+  let plantData = req.body.plantData;
   let filePath = req.body.filePath;
-  let result = posts.create(postData, filePath);
+  let result = plant_entries.create(plantData, filePath);
   console.log(result);
   return res.json({result: result});
 });
