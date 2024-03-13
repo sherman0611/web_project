@@ -9,6 +9,33 @@
         <div id="create_plant_entry">
             <h2>New plant sightings</h2>
             <form id="create_plant_form" action="/create" method="post" enctype="multipart/form-data">
+                <h3>Basic details</h3>
+                <p>
+                    <label for="username">Your username:</label>
+                    <input type="text" id="username" name="username">
+                </p>
+                <br>
+                <p>
+                    <label for="description">Plant description: </label>
+                    <input type="text" id="description" name="description">
+                </p>
+                <p>
+                    <label for="location">Location found: </label>
+                    <input type="text" id="location" name="location">
+                </p>
+                <br>
+                <h3>Identification</h3>
+                <p>
+                    <label for="plant_name">Plant name: </label>
+                    <input type="text" id="plant_name" name="plant_name" required>
+                </p>
+                <p>
+                    <label for="plant_certainty">Plant unknown or uncertain?</label>
+                    <input type="radio" id="unknown" name="plant_certainty" value="unknown">
+                    <label for="unknown">Unknown</label>
+                    <input type="radio" id="uncertain" name="plant_certainty" value="uncertain">
+                    <label for="uncertain">Uncertain</label>
+                </p>
                 <p>
                     <label for="image_file">Upload image file:</label>
                     <input type="file" id="image_file" name="image_file" accept="image/*">
@@ -17,15 +44,9 @@
                     <label for="image_url">Or enter image URL:</label>
                     <input type="url" id="image_url" name="image_url">
                 </p>
-                <p>
-                    <label for="location">Location found: </label>
-                    <input type="text" id="location" name="location">
-                </p>
-                <p>
-                    <label for="description">Plant description: </label>
-                    <input type="text" id="description" name="description">
-                </p>
-                <h3>Plant size</h3>
+                <br>
+                <h3>Plant characteristics</h3>
+                <h4>Plant size</h4>
                 <p>
                     <label for="height">Plant height: </label>
                     <input type="text" id="height" name="height">
@@ -34,7 +55,7 @@
                     <label for="spread">Plant spread: </label>
                     <input type="text" id="spread" name="spread">
                 </p>
-                <h3>Plant characteristics</h3>
+
                 <p>
                     <label for="flowers">Does the plant have flowers?</label>
                     <input type="radio" id="flowers_yes" name="flowers" value="yes">
@@ -59,30 +80,14 @@
                 <p>
                     <label for="sun_exposure">What is the sun exposure in that area?</label>
                     <input type="radio" id="full_sun" name="sun_exposure" value="full_sun">
-                    <label for="fruits_seeds_full_sun">Full sun</label>
+                    <label for="full_sun"></label>
                     <input type="radio" id="partial_shade" name="sun_exposure" value="partial_shade">
                     <label for="partial_shade">Partial shade</label>
                     <input type="radio" id="full_shade" name="sun_exposure" value="full_shade">
                     <label for="full_shade">Full shade</label>
                 </p>
-                <h3>Identification</h3>
-                <p>
-                    <label for="plant_name">Plant name: </label>
-                    <input type="text" id="plant_name" name="plant_name" required>
-                </p>
-                <p>
-                    <label for="plant_certainty">Plant unknown or uncertain?</label>
-                    <input type="radio" id="unknown" name="plant_certainty" value="unknown">
-                    <label for="unknown">Unknown</label>
-                    <input type="radio" id="uncertain" name="plant_certainty" value="uncertain">
-                    <label for="uncertain">Uncertain</label>
-                </p>
-                <h3>Your username</h3>
-                <p>
-                    <label for="username">Username: </label>
-                    <input type="text" id="username" name="username">
-                </p>
-                <button id="create" type="submit">Create plant_entry</button>
+                <br>
+                <button id="create" type="submit">Create plant entry</button>
             </form>
         </div>
 
