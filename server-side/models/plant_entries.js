@@ -3,22 +3,21 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let PlantEntrySchema  = new Schema({
-        id: {type: Number},
-        username: {type: String, max: 100, required: true},
-        plant_name: {type: String, max: 100, required: true},
-        image: {type: String},
+        username: {type: String, max: 20, required: true},
+        plant_name: {type: String, max: 50, required: true},
+        image: {type: String, required: true},
         location: {type: String, max: 100, required: true},
-        description: {type: String, max: 100, required: true},
-        height: {type: String, max: 100},
-        spread: {type: String, max: 100},
-        flowers: {type: Boolean, required: true},
-        colour_flowers: {type: String, max: 100, required: true},
-        leaves: {type: Boolean, required: true},
-        fruits_seeds: {type: Boolean, required: true},
-        sun_exposure: {type: String, max: 100, required: true},
+        description: {type: String, max: 200, required: true},
+        height: {type: String, max: 4, required: false},
+        spread: {type: String, max: 4, required: false},
+        flowers: {type: Boolean, required: false},
+        colour_flowers: {type: String, max: 50, required: false},
+        leaves: {type: Boolean, required: false},
+        fruits_seeds: {type: Boolean, required: false},
+        sun_exposure: {type: String, max: 100, required: false},
         identification_status: {type: Boolean, required: true},
-        dbpedia_URI: {type: String, max: 100, required: true},
-        date: { type: Date, default: Date.now },
+        dbpedia_URI: {type: String, max: 100, required: false},
+        date: { type: Date, default: Date.now, required: true }
     }
 );
 
