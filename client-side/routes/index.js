@@ -35,24 +35,24 @@ router.get('/', function(req, res, next) {
         }
       }).then(data => {
         let plantData = JSON.parse(data);
-        res.render('index', { title: 'PlantHub', data: plantData});
+        res.render('index', { title: 'Plantgram', data: plantData});
       }).catch(error => {
-        res.render('index', { title: 'PlantHub', data: null });
+        res.render('index', { title: 'Plantgram', data: null });
       });
 });
 
 
 /* GET create plant entry page. */
-router.get('/create', function(req, res, next) {
-  res.render('create', { title: 'Create plant entry' });
+router.get('/create_entry', function(req, res, next) {
+  res.render('create_entry', { title: 'Create plant entry' });
 });
 
 /* POST create plant entry form. */
-router.post('/create', function(req, res, next) {
+router.post('/create_entry', function(req, res, next) {
   let plantData = req.body;
   let filePath = req.file ? req.file.path : null;
 
-  fetch('http://localhost:3001/create', {
+  fetch('http://localhost:3001/create_entry', {
     method: 'post',
     body: JSON.stringify({
       plantData: plantData,
@@ -91,7 +91,7 @@ router.get('/plant_entry/:id', function(req, res, next) {
           });
         }
       }).then(data => {
-        let plantData = JSON.parse(data.plant_enrty);
+        let plantData = JSON.parse(data.plant_entry);
         let commentsData = JSON.parse(data.comments);
         res.render('post', { plant_id: plant_id, post: plantData, comments: commentsData });
       }).catch(error => {

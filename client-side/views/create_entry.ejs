@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="/javascripts/index.js"></script>
+    <title><%= title %></title>
+    <%- include('partials/header') %>
+    <script src="/javascripts/create_entry.js"></script>
 </head>
-    <body>
+<body>
+    <div class="main_section">
         <h1></h1>
         <div id="create_plant_entry">
             <h2>New plant sightings</h2>
@@ -87,10 +89,12 @@
                     <label for="full_shade">Full shade</label>
                 </p>
                 <br>
-                <button id="create" type="submit">Create plant entry</button>
+                <button id="create" class="btn" type="submit">Create plant entry</button>
             </form>
         </div>
 
-        <button id="close_btn" onclick="returnHome()">Go Back</button>
-    </body>
+        <button id="close_btn" class="btn" onclick="returnHome()">Go Back</button>
+    </div>
+</body>
+<footer></footer>
 </html>

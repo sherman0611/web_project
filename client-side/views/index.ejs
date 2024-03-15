@@ -1,30 +1,64 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <%- include('partials/header') %>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="/javascripts/index.js"></script>
-  </head>
-  <body>
-    <select id="sort_by" onchange="sortBy(this.value)">
-      <option value="date">Sort by Date</option>
-      <option value="distance">Sort by Distance</option>
-    </select>
-
-    <% if (data === null) { %>
-      <p>Cannot connect to server</p>
-    <% } else if (data.length === 0) { %>
-      <p>No plant entries available currently.</p>
-    <% } else { %>
-      <% data.forEach(plant_entry => { %>
-        <div class="plant_enrty_container">
-          <a class="plant_link" href="/plant_entry/<%= plant_entry._id %>">
-            <img class="plant_image" src="/<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
-          </a>
-        </div>
-        <hr>
-      <% }); %>
-    <% } %>
-  </body>
+<head>
+  <title><%= title %></title>
+  <%- include('partials/header') %>
+  <script src="/javascripts/index.js"></script>
+</head>
+<body>
+  <div class="main_section">
+      <div class="utilities">
+          <input type="text" placeholder="Search plants..">
+          <button type="button"><i class="fa fa-search"></i></button>
+          <select id="sort_by" onchange="sortBy(this.value)">
+              <option value="date">Sort by Date</option>
+              <option value="distance">Sort by Distance</option>
+          </select>
+      </div>
+    <div class="plant_entries">
+<!--      <% if (data === null) { %>-->
+<!--        <p>Cannot connect to server</p>-->
+<!--      <% } else if (data.length === 0) { %>-->
+<!--        <p>No plant entries available currently.</p>-->
+<!--      <% } else { %>-->
+<!--        <% data.forEach(plant_entry => { %>-->
+<!--          <div class="plant_entry_container">-->
+<!--            <a class="plant_link" href="/plant_entry/<%= plant_entry._id %>">-->
+<!--              <img class="plant_image" src="/<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">-->
+<!--            </a>-->
+<!--          </div>-->
+<!--          <hr>-->
+<!--        <% }); %>-->
+<!--      <% } %>-->
+      <div class="plant_entry_container">
+        <a class="plant_link" href="/">
+          <img class="plant_image" src="/images/plant2.jpg" alt="">
+            <div class="img_info">
+                <p>Plant by User</p>
+                <p>24/02/2024, Sheffield</p>
+            </div>
+        </a>
+      </div>
+      <div class="plant_entry_container">
+        <a class="plant_link" href="/">
+          <img class="plant_image" src="/images/plant3.jpg" alt="">
+            <div class="img_info">
+                <p>Plant by User</p>
+                <p>24/02/2024, Sheffield</p>
+            </div>
+        </a>
+      </div>
+      <div class="plant_entry_container">
+        <a class="plant_link" href="/">
+          <img class="plant_image" src="/images/plant1.jpg" alt="">
+            <div class="img_info">
+                <p>Plant by User</p>
+                <p>24/02/2024, Sheffield</p>
+            </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+<footer></footer>
 </html>
