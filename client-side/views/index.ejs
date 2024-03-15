@@ -8,8 +8,10 @@
 <body>
   <div class="main_section">
       <div class="utilities">
-          <input type="text" placeholder="Search plants..">
-          <button type="button"><i class="fa fa-search"></i></button>
+          <div class="search_group">
+              <input class="text_input" type="text" placeholder="Search plants..">
+              <button class="btn" type="button"><img src="images/search_icon.png" alt="buttonpng"/></button>
+          </div>
           <select id="sort_by" onchange="sortBy(this.value)">
               <option value="date">Sort by Date</option>
               <option value="distance">Sort by Distance</option>
