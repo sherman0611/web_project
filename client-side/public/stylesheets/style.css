@@ -162,6 +162,30 @@ body {
   cursor: pointer;
 }
 
+.main_section .add_plant_entry_container{
+  text-align: center;
+  width: 50%;
+  height: fit-content;
+  background-color: antiquewhite;
+  border-radius: 20px;
+  padding: 5px;
+  margin: auto;
+  color:#AA7A54;
+}
+
+.main_section .text_description{
+    width: 90%;
+    height: 50px;
+
+    border-radius: 20px;
+    border: antiquewhite 2px solid;
+    padding: 5px;
+}
+
+.main_section .add_plant_entry_container .btn{
+  background-color: #AA7A54;
+}
+
 #plant_details {
   position: absolute;
   top: 50%;

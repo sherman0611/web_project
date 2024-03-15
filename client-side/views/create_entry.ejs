@@ -8,58 +8,76 @@
 <body>
     <div class="main_section">
         <h1></h1>
-        <div id="create_plant_entry">
+        <div id="create_plant_entry" class="add_plant_entry_container" >
             <h2>New plant sightings</h2>
-            <form id="create_plant_form" action="/create_entry" method="post" enctype="multipart/form-data">
+            <form id="create_plant_form" action="/create" method="post" enctype="multipart/form-data" >
+                <div>
                 <h3>Basic details</h3>
                 <p>
-                    <label for="username">Your username:</label>
+                    <label for="username">Your username</label>
+                    <br>
                     <input class="text_input" type="text" id="username" name="username">
                 </p>
                 <br>
                 <p>
-                    <label for="description">Plant description: </label>
-                    <input type="text" id="description" name="description">
+                    <label for="description">Plant description </label>
+                    <br>
+                    <input class="text_description" type="text" id="description" name="description">
                 </p>
                 <p>
-                    <label for="location">Location found: </label>
-                    <input type="text" id="location" name="location">
+                    <label for="location">Location found </label>
+                    <br>
+                    <input  class="text_input" type="text" id="location" name="location">
                 </p>
+                </div>
                 <br>
+                <div>
                 <h3>Identification</h3>
                 <p>
-                    <label for="plant_name">Plant name: </label>
-                    <input type="text" id="plant_name" name="plant_name" required>
+                    <label for="plant_name">Plant name </label>
+                    <input class="text_input" type="text" id="plant_name" name="plant_name" required>
                 </p>
                 <p>
                     <label for="plant_certainty">Plant unknown or uncertain?</label>
-                    <input type="radio" id="unknown" name="plant_certainty" value="unknown">
-                    <label for="unknown">Unknown</label>
-                    <input type="radio" id="uncertain" name="plant_certainty" value="uncertain">
-                    <label for="uncertain">Uncertain</label>
+                    <br>
+                    <form>
+                        <label for="plant_certainty_status">
+                            <select name="plant_certainty_status">
+                                <option value="unknown">Unknown</option>
+                                <option value="uncertain">Uncertain</option>
+                            </select>
+                        </label>
+                    </form>
                 </p>
                 <p>
-                    <label for="image_file">Upload image file:</label>
+                    <label for="image_file">Upload image file</label>
+                    <br>
                     <input type="file" id="image_file" name="image_file" accept="image/*">
                 </p>
                 <p>
-                    <label for="image_url">Or enter image URL:</label>
-                    <input type="url" id="image_url" name="image_url">
+                    <label for="image_url">Or enter image URL</label>
+                    <br>
+                    <input class="text_input" type="url" id="image_url" name="image_url">
                 </p>
+                </div>
                 <br>
+                <div>
                 <h3>Plant characteristics</h3>
                 <h4>Plant size</h4>
                 <p>
-                    <label for="height">Plant height: </label>
-                    <input type="text" id="height" name="height">
+                    <label for="height">Plant height </label>
+                    <br>
+                    <input class="text_input" type="text" id="height" name="height">
                 </p>
                 <p>
-                    <label for="spread">Plant spread: </label>
-                    <input type="text" id="spread" name="spread">
+                    <label for="spread">Plant spread </label>
+                    <br>
+                    <input class="text_input" type="text" id="spread" name="spread">
                 </p>
 
                 <p>
                     <label for="flowers">Does the plant have flowers?</label>
+                    <br>
                     <input type="radio" id="flowers_yes" name="flowers" value="yes">
                     <label for="flowers_yes">Yes</label>
                     <input type="radio" id="flowers_no" name="flowers" value="no">
@@ -67,6 +85,7 @@
                 </p>
                 <p>
                     <label for="leaves">Does the plant have leaves?</label>
+                    <br>
                     <input type="radio" id="leaves_yes" name="leaves" value="yes">
                     <label for="leaves_yes">Yes</label>
                     <input type="radio" id="leaves_no" name="leaves" value="no">
@@ -74,6 +93,7 @@
                 </p>
                 <p>
                     <label for="fruits_seeds">Does the plant have fruits or seeds?</label>
+                    <br>
                     <input type="radio" id="fruits_seeds_yes" name="fruits_seeds" value="yes">
                     <label for="fruits_seeds_yes">Yes</label>
                     <input type="radio" id="fruits_seeds_no" name="fruits_seeds" value="no">
@@ -81,13 +101,15 @@
                 </p>
                 <p>
                     <label for="sun_exposure">What is the sun exposure in that area?</label>
+                    <br>
                     <input type="radio" id="full_sun" name="sun_exposure" value="full_sun">
-                    <label for="full_sun"></label>
+                    <label for="full_sun">Full sun</label>
                     <input type="radio" id="partial_shade" name="sun_exposure" value="partial_shade">
                     <label for="partial_shade">Partial shade</label>
                     <input type="radio" id="full_shade" name="sun_exposure" value="full_shade">
                     <label for="full_shade">Full shade</label>
                 </p>
+                </div>
                 <br>
                 <button id="create" class="btn" type="submit">Create plant entry</button>
             </form>
