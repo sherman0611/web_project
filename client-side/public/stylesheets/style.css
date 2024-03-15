@@ -84,6 +84,12 @@ body {
   width: 90%;
 }
 
+.main_section select {
+  border-radius: 20px;
+  border: antiquewhite 2px solid;
+  padding: 5px;
+}
+
 .main_section .utilities {
   padding: 15px;
   background: antiquewhite;
