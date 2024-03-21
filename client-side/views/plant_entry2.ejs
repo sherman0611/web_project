@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <%- include('partials/header') %>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="/javascripts/index.js"></script>
+    <script src="/javascripts/plant_entry.js"></script>
+</head>
+<body onload="init()">
+    <div class="main_section view_plant">
+        <div class="plant_entry_container">
+            <img class="plant_image row" src="/images/plant3.jpg" alt="something" width="200" height="200">
+            <div class="row">
+                <div class="plant_details">
+                    <h1>[PLANT NAME]</h1>
+                    <h2>Submitted by: [USERNAME] on [DATE]</h2>
+                    <br>
+                    <h3>Location:</h3>
+                    <p>0.0 0.0</p>
+                    <br>
+                    <h3>Description:</h3>
+                    <p>lorem ipsum</p>
+                    <br>
+                    <h3>Characteristics:</h3>
+                    <p>Height: height</p>
+                    <p>Spread: spread</p>
+                    <p>Flowers:</p>
+                </div>
+                <br>
+                <div id="chat_interface">
+                    <h2>Comments</h2>
+                        <div id="history">
+
+                        </div>
+                    <div id="input">
+                        <form id="comment_form" action="/save-comment" method="plant_entry" onsubmit="return false;">
+                            <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
+                            <p><label for="name">Your name: </label>
+                                <input type="text" id="username" name="username">
+                            </p>
+                            <p>
+                                <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
+                                <button id="comment_send" onclick="sendCommentText()">Send</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="close_btn" onclick="returnHome()">Go Back</button>
+    </div>
+</body>
+</html>

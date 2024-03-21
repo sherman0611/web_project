@@ -6,18 +6,18 @@
   <script src="/javascripts/index.js"></script>
 </head>
 <body>
-  <div class="main_section">
-      <div class="utilities">
-          <div class="search_group">
-              <input class="text_input" type="text" placeholder="Search plants..">
-              <button class="btn" type="button"><img src="images/search_icon.png" alt="buttonpng"/></button>
-          </div>
-          <select id="sort_by" onchange="sortBy(this.value)">
-              <option value="date">Sort by Date</option>
-              <option value="distance">Sort by Distance</option>
-          </select>
-      </div>
-    <div class="plant_entries">
+    <div class="main_section">
+        <div class="utilities">
+            <div class="search_group">
+                <input class="text_input" type="text" placeholder="Search plants..">
+                <button class="btn" type="button"><img src="images/search_icon.png" alt="buttonpng"/></button>
+            </div>
+            <select id="sort_by" onchange="sortBy(this.value)">
+                <option value="date">Sort by Date</option>
+                <option value="distance">Sort by Distance</option>
+            </select>
+        </div>
+        <div class="plant_entries">
 <!--      <% if (data === null) { %>-->
 <!--        <p>Cannot connect to server</p>-->
 <!--      <% } else if (data.length === 0) { %>-->
@@ -32,35 +32,35 @@
 <!--          <hr>-->
 <!--        <% }); %>-->
 <!--      <% } %>-->
-      <div class="plant_entry_container">
-        <a class="plant_link" href="/">
-          <img class="plant_image" src="/images/plant2.jpg" alt="">
-            <div class="img_info">
-                <p>Plant by User</p>
-                <p>24/02/2024, Sheffield</p>
+            <div class="plant_entry_container">
+                <a class="plant_link" href="/plant_entry/2">
+                    <img class="plant_image" src="/images/plant2.jpg" alt="">
+                    <div class="img_info">
+                        <p>Plant by User</p>
+                        <p>24/02/2024, Sheffield</p>
+                    </div>
+                </a>
             </div>
-        </a>
-      </div>
-      <div class="plant_entry_container">
-        <a class="plant_link" href="/">
-          <img class="plant_image" src="/images/plant3.jpg" alt="">
-            <div class="img_info">
-                <p>Plant by User</p>
-                <p>24/02/2024, Sheffield</p>
+            <div class="plant_entry_container">
+                <a class="plant_link" href="/plant_entry/3">
+                    <img class="plant_image" src="/images/plant3.jpg" alt="">
+                    <div class="img_info">
+                        <p>Plant by User</p>
+                        <p>24/02/2024, Sheffield</p>
+                    </div>
+                </a>
             </div>
-        </a>
-      </div>
-      <div class="plant_entry_container">
-        <a class="plant_link" href="/">
-          <img class="plant_image" src="/images/plant1.jpg" alt="">
-            <div class="img_info">
-                <p>Plant by User</p>
-                <p>24/02/2024, Sheffield</p>
-            </div>
-        </a>
-      </div>
+            <div class="plant_entry_container">
+                <a class="plant_link" href="/">
+                    <img class="plant_image" src="/images/plant1.jpg" alt="">
+                    <div class="img_info">
+                        <p>Plant by User</p>
+                        <p>24/02/2024, Sheffield</p>
+                    </div>
+                </a>
+          </div>
+        </div>
     </div>
-  </div>
 </body>
 <footer></footer>
 </html>

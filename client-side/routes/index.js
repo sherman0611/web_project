@@ -35,9 +35,9 @@ router.get('/', function(req, res, next) {
         }
       }).then(data => {
         let plantData = JSON.parse(data);
-        res.render('index', { title: 'Plantgram', data: plantData});
+        res.render('enter_username', { title: 'Plantgram', data: plantData});
       }).catch(error => {
-        res.render('index', { title: 'Plantgram', data: null });
+        res.render('enter_username', { title: 'Plantgram', data: null });
       });
 });
 
@@ -71,10 +71,10 @@ router.post('/create_entry', function(req, res, next) {
 });
 
 /* GET plant entry details page. */
-router.get('/plant_entry/:id', function(req, res, next) {
+router.get('/plant_entry2/:id', function(req, res, next) { // TODO CHANGE
   const plant_id = req.params.id;
 
-  fetch('http://localhost:3001/plant_entry/' + plant_id)
+  fetch('http://localhost:3001/plant_entry2/' + plant_id) // TODO CHANGE
       .then(response => {
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
@@ -91,11 +91,11 @@ router.get('/plant_entry/:id', function(req, res, next) {
           });
         }
       }).then(data => {
-        let plantData = JSON.parse(data.plant_entry);
-        let commentsData = JSON.parse(data.comments);
-        res.render('post', { plant_id: plant_id, post: plantData, comments: commentsData });
+        // let plantData = JSON.parse(data.plant_entry); TODO UNCOMMENT
+        // let commentsData = JSON.parse(data.comments); TODO UNCOMMENT
+        res.render('plant_entry2', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData }); // TODO CHANGE
       }).catch(error => {
-        res.render('post', { plant_id: plant_id, post: null, comments: null });
+        res.render('plant_entry2', { title: 'View plant entry', plant_id: plant_id, plant_entry: null, comments: null }); // TODO CHANGE
       });
 });
 

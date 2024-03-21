@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <%- include('partials/header') %>
+    <script src="/javascripts/index.js"></script>
+</head>
+<body>
+<div class="main_section">
+    <h2>Enter your username: </h2>
+    <form id="create_plant_form" action="/save-username" method="post" enctype="multipart/form-data" >
+        <div>
+            <label for="username">Your username</label>
+            <br>
+            <input class="text_input" type="text" id="username" name="username">
+        </div>
+        <button id="create" class="form_btn" type="submit">View pages</button>
+    </form>
+
+
+</div>
+</body>
+<footer></footer>
+</html>
