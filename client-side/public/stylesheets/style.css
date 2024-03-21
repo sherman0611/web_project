@@ -173,17 +173,33 @@ body {
   color:#AA7A54;
 }
 
-.main_section .text_description{
-    width: 90%;
-    height: 50px;
-
-    border-radius: 20px;
-    border: antiquewhite 2px solid;
-    padding: 5px;
+.text_box{
+  height: 50px;
+  border-radius: 20px;
+  border: antiquewhite 2px solid;
+  padding: 5px;
+  width: 80%;
 }
 
-.main_section .add_plant_entry_container .btn{
+.main_section .create_entry_title{
+  color:#AA7A54;
+  text-align: center;
+}
+
+.main_section .form_div{
+  margin-left: 43%;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.form_btn{
   background-color: #AA7A54;
+  margin-right: 10px;
+  color: #E4C9AC;
+  transition-duration: 0.4s;
+  border-radius: 20px;
+  border: 0 hidden;
+  padding: 7px;
 }
 
 #plant_details {
@@ -214,8 +230,6 @@ body {
   text-decoration: none;
   color: inherit;
 }
-
-
 
 .plant_content {
   flex: 1;

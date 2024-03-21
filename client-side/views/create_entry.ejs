@@ -8,10 +8,10 @@
 <body>
     <div class="main_section">
         <h1></h1>
-        <div id="create_plant_entry" class="add_plant_entry_container" >
-            <h2>New plant sightings</h2>
+        <div id="create_plant_entry"  >
+            <h2 class="create_entry_title">New plant sightings</h2>
             <form id="create_plant_form" action="/create" method="post" enctype="multipart/form-data" >
-                <div>
+                <div class="add_plant_entry_container">
                 <h3>Basic details</h3>
                 <p>
                     <label for="username">Your username</label>
@@ -22,7 +22,7 @@
                 <p>
                     <label for="description">Plant description </label>
                     <br>
-                    <input class="text_description" type="text" id="description" name="description">
+                    <textarea class="text_box" name="description" rows="4" cols="50"></textarea>
                 </p>
                 <p>
                     <label for="location">Location found </label>
@@ -31,7 +31,7 @@
                 </p>
                 </div>
                 <br>
-                <div>
+                <div class="add_plant_entry_container">
                 <h3>Identification</h3>
                 <p>
                     <label for="plant_name">Plant name </label>
@@ -61,7 +61,7 @@
                 </p>
                 </div>
                 <br>
-                <div>
+                <div class="add_plant_entry_container">
                 <h3>Plant characteristics</h3>
                 <h4>Plant size</h4>
                 <p>
@@ -111,11 +111,14 @@
                 </p>
                 </div>
                 <br>
-                <button id="create" class="btn" type="submit">Create plant entry</button>
+                <div class="form_div">
+                    <button id="close_btn" class="form_btn" onclick="returnHome()">Go Back</button>
+                    <button id="create" class="form_btn" type="submit">Create plant entry</button>
+                </div>
             </form>
+
         </div>
 
-        <button id="close_btn" class="btn" onclick="returnHome()">Go Back</button>
     </div>
 </body>
 <footer></footer>
