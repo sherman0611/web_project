@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="/javascripts/index.js"></script>
+    <%- include('partials/header') %>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
     <body onload="init()">
@@ -40,7 +38,7 @@
                     </div>
                 <% }; %>
                 <div id="input">
-                    <form id="comment_form" action="/save-comment" method="plant_entry" onsubmit="return false;">
+                    <form id="comment_form" action="/create_comment" method="post" onsubmit="return false;">
                         <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
                         <p><label for="name">Your name: </label>
                             <input type="text" id="username" name="username">

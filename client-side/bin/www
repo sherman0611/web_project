@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('web-project:server');
 var http = require('http');
+var database = require('../databases/plant_entries');
 
 /**
  * Get port from environment and store in Express.

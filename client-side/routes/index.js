@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const plant_entries = require("../controllers/plant_entries");
+const comments = require("../controllers/comments");
 var multer = require("multer");
 
 var storage = multer.diskStorage({
@@ -17,30 +19,14 @@ let upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  fetch('http://localhost:3001/')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-        return response;
-      }).then(response => {
-        console.log(response.headers.get('Content-Type'));
-        if (response.headers.get('Content-Type').includes('application/json')) {
-          return response.json();
-        } else {
-          res.render('error', {
-            message: 'Invalid Content Type',
-            error: {status: 500, stack: 'Invalid Content type!'}
-          });
-        }
-      }).then(data => {
-        let plantData = JSON.parse(data);
-        res.render('index', { title: 'Plantgram', data: plantData});
-      }).catch(error => {
+    let result = plant_entries.getAll();
+    result.then(plant_entries => {
+        let data = JSON.parse(plant_entries);
+        res.render('index', { title: 'Plantgram', data: data});
+    }).catch(err => {
         res.render('index', { title: 'Plantgram', data: null });
-      });
+    });
 });
-
 
 /* GET create plant entry page. */
 router.get('/create_entry', function(req, res, next) {
@@ -48,79 +34,53 @@ router.get('/create_entry', function(req, res, next) {
 });
 
 /* POST create plant entry form. */
-router.post('/create_entry', function(req, res, next) {
+router.post('/create_entry', upload.single('image_file'), function(req, res, next) {
   let plantData = req.body;
   let filePath = req.file ? req.file.path : null;
-
-  fetch('http://localhost:3001/create_entry', {
-    method: 'post',
-    body: JSON.stringify({
-      plantData: plantData,
-      filePath: filePath
-    }),
-    headers: {'Content-Type': 'application/json'},
-  }).then(r => {
-    r.json()
-        .then(json => {
-          res.redirect('/');
-        })
-        .catch(err => {
-          console.log('Failed to create plant entry');
-        });
+  let result = plant_entries.create(plantData, filePath);
+  console.log(result);
+  result.then(plant_entry => {
+    res.redirect('/');
+  }).catch(err => {
+    console.log("cannot create post");
   });
 });
 
-/* GET plant entry details page. */
+/* GET plant entry page. */
 router.get('/plant_entry/:id', function(req, res, next) {
-  const plant_id = req.params.id;
+    const plant_id = req.params.id;
 
-  fetch('http://localhost:3001/plant_entry/' + plant_id)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-        return response;
-      }).then(response => {
-        console.log(response.headers.get('Content-Type'));
-        if (response.headers.get('Content-Type').includes('application/json')) {
-          return response.json();
-        } else {
-          res.render('error', {
-            message: 'Invalid Content Type',
-            error: {status: 500, stack: 'Invalid Content type!'}
-          });
-        }
-      }).then(data => {
-        let plantData = JSON.parse(data.plant_entry);
-        let commentsData = JSON.parse(data.comments);
-        res.render('post', { plant_id: plant_id, post: plantData, comments: commentsData });
-      }).catch(error => {
-        res.render('post', { plant_id: plant_id, post: null, comments: null });
-      });
+    let plantResult = plant_entries.getById(plant_id);
+    let commentsResult = comments.getAllByPlantId(plant_id);
+
+    Promise.all([plantResult, commentsResult])
+        .then(results => {
+            let plantData = JSON.parse(results[0]);
+            let commentsData = JSON.parse(results[1]);
+            res.render('plant_entry', { plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+        })
+        .catch(errors => {
+            let plantData = null;
+            let commentsData = null;
+            if (!errors[0]) {
+                plantData = JSON.parse(errors[0]);
+            }
+            if (!errors[1]) {
+                commentsData = JSON.parse(errors[1]);
+            }
+            res.render('plant_entry', { plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+        });
 });
 
 /* POST comment form. */
-router.post('/save-comment', function(req, res, next) {
-  // let commentData = req.body;
-  console.log(req);
-
-  fetch('http://localhost:3001/save-comment', {
-    method: 'post',
-    body: JSON.stringify({
-      plant_id: req.body.plant_id,
-      username: req.body.username,
-      commentText: req.body.commentText
-    }),
-    headers: {'Content-Type': 'application/json'},
-  }).then(r => {
-    r.json()
-        .then(json => {
-          console.log('Comment sent');
-          res.redirect('/');
-        })
-        .catch(err => {
-          console.log('Failed to send comment');
-        });
+router.post('/create_comment', function(req, res, next) {
+  let commentData = req.body;
+  let result = comments.create(commentData);
+  console.log(result);
+  result.then(comment => {
+      res.redirect('/');
+  }).catch(err => {
+      console.log("cannot create comment");
   });
 });
 

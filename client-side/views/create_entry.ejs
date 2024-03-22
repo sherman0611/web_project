@@ -10,13 +10,12 @@
         <h1></h1>
         <div id="create_plant_entry" class="add_plant_entry_container" >
             <h2>New plant sightings</h2>
-            <form id="create_plant_form" action="/create" method="post" enctype="multipart/form-data" >
-                <div>
+            <form id="create_plant_form" action="/create_entry" method="post" enctype="multipart/form-data" >
                 <h3>Basic details</h3>
                 <p>
                     <label for="username">Your username</label>
                     <br>
-                    <input class="text_input" type="text" id="username" name="username">
+                    <input class="text_input" type="text" id="username" name="username" required>
                 </p>
                 <br>
                 <p>
@@ -29,9 +28,7 @@
                     <br>
                     <input  class="text_input" type="text" id="location" name="location">
                 </p>
-                </div>
                 <br>
-                <div>
                 <h3>Identification</h3>
                 <p>
                     <label for="plant_name">Plant name </label>
@@ -40,14 +37,12 @@
                 <p>
                     <label for="plant_certainty">Plant unknown or uncertain?</label>
                     <br>
-                    <form>
-                        <label for="plant_certainty_status">
-                            <select name="plant_certainty_status">
-                                <option value="unknown">Unknown</option>
-                                <option value="uncertain">Uncertain</option>
-                            </select>
-                        </label>
-                    </form>
+                    <label for="plant_certainty_status">
+                        <select name="plant_certainty_status">
+                            <option value="unknown">Unknown</option>
+                            <option value="uncertain">Uncertain</option>
+                        </select>
+                    </label>
                 </p>
                 <p>
                     <label for="image_file">Upload image file</label>
@@ -59,9 +54,7 @@
                     <br>
                     <input class="text_input" type="url" id="image_url" name="image_url">
                 </p>
-                </div>
                 <br>
-                <div>
                 <h3>Plant characteristics</h3>
                 <h4>Plant size</h4>
                 <p>
@@ -109,7 +102,6 @@
                     <input type="radio" id="full_shade" name="sun_exposure" value="full_shade">
                     <label for="full_shade">Full shade</label>
                 </p>
-                </div>
                 <br>
                 <button id="create" class="btn" type="submit">Create plant entry</button>
             </form>
