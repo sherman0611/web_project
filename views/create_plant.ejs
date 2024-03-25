@@ -22,12 +22,26 @@
                 <p>
                     <label for="description">Plant description </label>
                     <br>
-                    <textarea class="text_box" name="description" rows="4" cols="50"></textarea>
+                    <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
                 </p>
                 <p>
                     <label for="location">Location found </label>
                     <br>
-                    <input  class="text_input" type="text" id="location" name="location">
+                    <input  class="text_input" type="text" id="location" name="location" placeholder="Location...">
+                </p>
+                <p>
+                    <label for="coordinates">Coordinates of the finding</label>
+                    <br>
+                    <input  class="text_input" type="text" id="coordinates_latitude" name="coordinates_latitude" value="00.00">
+                    <select name="cars" id="cars">
+                        <option value="N">N</option>
+                        <option value="S">S</option>
+                    </select>
+                    <input  class="text_input" type="text" id="coordinates_longitude" name="coordinates_longitude" value="00.00">
+                    <select name="cars" id="cars">
+                        <option value="E">E</option>
+                        <option value="W">W</option>
+                    </select>
                 </p>
             </div>
             <br>
@@ -35,7 +49,7 @@
                 <h3>Identification</h3>
                 <p>
                     <label for="plant_name">Plant name </label>
-                    <input class="text_input" type="text" id="plant_name" name="plant_name" required>
+                    <input class="text_input" type="text" id="plant_name" name="plant_name" placeholder="Name..." required>
                 </p>
                 <p>
                     <label for="plant_certainty">Plant unknown or uncertain?</label>
@@ -65,18 +79,18 @@
                 <p>
                     <label for="height">Plant height </label>
                     <br>
-                    <input class="text_input" type="text" id="height" name="height">
+                    <input class="text_input" type="text" id="height" name="height" placeholder="0">
                 </p>
                 <p>
                     <label for="spread">Plant spread </label>
                     <br>
-                    <input class="text_input" type="text" id="spread" name="spread">
+                    <input class="text_input" type="text" id="spread" name="spread" placeholder="0">
                 </p>
                 <h4>Other information</h4>
                 <p>
                     <label for="colour">Colour</label>
                     <br>
-                    <input type="color">
+                    <input type="color" id="colour" name="colour">
                 </p>
 
                 <p>

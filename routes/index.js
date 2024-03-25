@@ -18,7 +18,7 @@ var storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/home', function(req, res, next) {
     let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
@@ -27,6 +27,16 @@ router.get('/', function(req, res, next) {
         res.render('index', { title: 'Plantgram', data: null });
     });
 });
+
+/* GET index page. */
+router.get('/enter_username', function(req, res, next) {
+    res.render('enter_username', { title: 'Enter your username' });
+});
+
+router.get('/', function(req, res, next) {
+    res.render('enter_username', { title: 'Enter your username' });
+});
+
 
 /* GET create plant entry page. */
 router.get('/create_plant', function(req, res, next) {
@@ -57,7 +67,7 @@ router.get('/view_plant/:id', function(req, res, next) {
         .then(results => {
             let plantData = JSON.parse(results[0]);
             let commentsData = JSON.parse(results[1]);
-            res.render('view_plant', { plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
         })
         .catch(errors => {
             let plantData = null;
@@ -68,8 +78,13 @@ router.get('/view_plant/:id', function(req, res, next) {
             if (!errors[1]) {
                 commentsData = JSON.parse(errors[1]);
             }
-            res.render('view_plant', { plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
         });
+});
+
+router.get('/view_plant2/:id',function(req, res, next) {
+    const plant_id = req.params.id;
+    res.render('view_plant2', { title: 'View plant entry', plant_id: plant_id });
 });
 
 /* POST comment form. */

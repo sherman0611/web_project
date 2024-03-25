@@ -25,7 +25,7 @@
       <% } else { %>
         <% data.forEach(plant_entry => { %>
           <div class="plant_entry_container">
-            <a class="plant_link" href="/plant_entry/<%= plant_entry._id %>">
+            <a class="plant_link" href="/view_plant/<%= plant_entry._id %>">
               <img class="plant_image" src="/<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
                 <div class="img_info">
                     <p>Plant by <%= plant_entry.username %></p>

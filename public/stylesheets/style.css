@@ -154,6 +154,7 @@ body {
 
 .main_section .plant_entry_container .img_info {
   text-align: center;
+  max-width: 200px;
 }
 
 .main_section .btn:hover{
