@@ -5,7 +5,7 @@ let Schema = mongoose.Schema;
 let PlantEntrySchema  = new Schema({
         username: {type: String, max: 20, required: true},
         plant_name: {type: String, max: 50, required: true},
-        image: {type: String, required: true},
+        image: {type: String},
         location: {type: String, max: 100, required: false},
         description: {type: String, max: 200, required: false},
         height: {type: String, max: 4, required: false},

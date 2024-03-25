@@ -5,14 +5,12 @@ const comments = require("../controllers/comments");
 var multer = require("multer");
 
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/images/uploads/');
-  },
+  destination: './public/images/uploads/',
   filename: function (req, file, cb) {
-    var original = file.originalname;
-    var file_extension = original.split(".");
-    filename = Date.now() + '.' + file_extension[file_extension.length-1];
-    cb(null, filename);
+      var original = file.originalname;
+      var file_extension = original.split(".");
+      filename = Date.now() + '.' + file_extension[file_extension.length - 1];
+      cb(null, filename);
   }
 });
 let upload = multer({ storage: storage });
@@ -34,9 +32,10 @@ router.get('/create_plant', function(req, res, next) {
 });
 
 /* POST create plant entry form. */
-router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
+router.post('/create_plant', upload.single('myImg'), function(req, res, next) {
   let plantData = req.body;
-  let filePath = req.file ? req.file.path : null;
+  let filePath = req.file.path;
+  console.log(req.file);
   let result = plant_entries.create(plantData, filePath);
   console.log(result);
   result.then(plant_entry => {

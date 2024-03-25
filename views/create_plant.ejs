@@ -10,7 +10,7 @@
     <h1></h1>
     <div id="create_plant_entry"  >
         <h2 class="create_entry_title">New plant sightings</h2>
-        <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
+        <form  action="/create_plant" id="create_plant_form" method="post" enctype="multipart/form-data" >
             <div class="add_plant_entry_container">
                 <h3>Basic details</h3>
                 <!--                <p>-->
@@ -48,15 +48,15 @@
                     </label>
                 </p>
                 <p>
-                    <label for="image_file">Upload image file</label>
+                    <label for="myImage">Upload image file</label>
                     <br>
-                    <input type="file" id="image_file" name="image_file" accept="image/*">
+                    <input type="file" id="myImage" name="myImg" accept="image/*" required>
                 </p>
-                <p>
-                    <label for="image_url">Or enter image URL</label>
-                    <br>
-                    <input class="text_input" type="url" id="image_url" name="image_url">
-                </p>
+<!--                <p>-->
+<!--                    <label for="image_url">Or enter image URL</label>-->
+<!--                    <br>-->
+<!--                    <input class="text_input" type="url" id="image_url" name="image_url">-->
+<!--                </p>-->
             </div>
             <br>
             <div class="add_plant_entry_container">
