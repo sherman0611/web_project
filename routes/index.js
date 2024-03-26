@@ -5,7 +5,7 @@ const comments = require("../controllers/comments");
 var multer = require("multer");
 
 var storage = multer.diskStorage({
-  destination: './public/images/uploads/',
+  destination: '../public/images/uploads/',
   filename: function (req, file, cb) {
       var original = file.originalname;
       var file_extension = original.split(".");
