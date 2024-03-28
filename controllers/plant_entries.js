@@ -11,7 +11,7 @@ exports.create = function (plantData, filePath) {
         height: plantData.height,
         spread: plantData.spread,
         flowers: plantData.flowers,
-        // colour_flowers: plantData.colour_flowers,
+        colour_flowers: plantData.colour_flowers,
         leaves: plantData.leaves,
         fruits_seeds: plantData.fruits_seeds,
         sun_exposure: plantData.sun_exposure,
