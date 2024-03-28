@@ -20,10 +20,15 @@
                         <div class="plant_details">
                             <h1><%= plant_entry.plant_name %></h1>
                             <% if(plant_entry.date) { %>
-                                <h2>Submitted by: <%= plant_entry.username %> on <%= plant_entry.date.substring(0,10) %></h2>
+                                <h2>Submitted by: <%= plant_entry.username %> on <%= plant_entry.date.substring(0,10) %>
+                                <% if(plant_entry.time) { %>
+                                    at <%= plant_entry.time %></h2>
+                                <% } %>
+                                </h2>
                             <% } else { %>
                                 <h2>Submitted by: <%= plant_entry.username %></h2>
                             <% } %>
+
                             <br>
                             <h3>Location: </h3>
                             <p><%= plant_entry.location %></p>
