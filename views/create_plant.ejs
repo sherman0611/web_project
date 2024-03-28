@@ -13,11 +13,13 @@
         <form action="/create_plant" id="create_plant_form" method="post" enctype="multipart/form-data" >
             <div class="add_plant_entry_container">
                 <h3>Basic details</h3>
-                <!--                <p>-->
-                <!--                    <label for="username">Your username</label>-->
-                <!--                    <br>-->
-                <!--                    <input class="text_input" type="text" id="username" name="username">-->
-                <!--                </p>-->
+                <% if (active_username == null) { %>
+                    <p>
+                        <label for="username">Your username</label>
+                        <br>
+                        <input class="text_input" type="text" id="username" name="username">
+                    </p>
+                <% } %>
                 <br>
                 <p>
                     <label for="description">Plant description</label>
@@ -132,7 +134,7 @@
             <br>
             <button id="create" class="form_btn" type="submit">Create plant entry</button>
         </form>
-        <button id="close_btn" class="form_btn" onclick="returnHome()">Go Back</button>
+        <button id="close_btn" class="form_btn" onclick="return_home()">Go Back</button>
     </div>
 
 </div>

@@ -6,19 +6,18 @@
     <script src="/javascripts/main.js"></script>
 </head>
 <body>
-<div class="main_section">
-    <h2>Enter your username: </h2>
-    <form id="create_plant_form" action="/save-username" method="post" enctype="multipart/form-data" >
-        <div>
-            <label for="username">Your username</label>
-            <br>
-            <input class="text_input" type="text" id="username" name="username">
-        </div>
-        <button id="create" class="form_btn" type="submit">View pages</button>
-    </form>
-
-
-</div>
+    <div class="main_section">
+        <h2>Enter your username: </h2>
+        <form id="create_username_form" action="enter_username" method="post">
+            <div>
+                <label for="username">Your username</label>
+                <br>
+                <input class="text_input" oninput="save_username()" type="text" id="username" name="username">
+            </div>
+            <button id="create" class="form_btn" type="submit">Save username</button>
+        </form>
+        <button id="close_btn" class="form_btn" onclick="return_home()">Go To Homepage</button>
+    </div>
 </body>
 <footer></footer>
 </html>
