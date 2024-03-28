@@ -5,7 +5,8 @@ let Schema = mongoose.Schema;
 let PlantEntrySchema  = new Schema({
         // username: {type: String, max: 20, required: true},
         plant_name: {type: String, max: 50, required: true},
-        image: {type: String},
+        image: {type: String, required: false},
+        image_url : {type: String, required: false},
         location: {type: String, max: 100, required: false},
         latitude:{type: String, max: 50, required: false},
         longitude:{type: String, max: 50, required: false},

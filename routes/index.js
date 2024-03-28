@@ -47,7 +47,11 @@ router.get('/create_plant', function(req, res, next) {
 router.post('/create_plant', upload.single('plantImg'), function(req, res, next) {
   let plantData = req.body;
   console.log(req.body);
-  let filePath = req.file.path;
+  let filePath = null;
+  if (req.file && req.file.path) {
+        filePath = req.file.path;
+        console.log(req.file);
+    }
   console.log(req.file);
   let result = plant_entries.create(plantData, filePath);
   console.log(result);
