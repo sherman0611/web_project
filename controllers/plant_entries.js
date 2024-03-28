@@ -6,6 +6,7 @@ exports.create = function (plantData, filePath) {
         // username: plantData.username,
         plant_name: plantData.plant_name,
         image: filePath,
+        image_url: plantData.image_url,
         location: plantData.location,
         latitude: plantData.latitude,
         longitude: plantData.longitude,

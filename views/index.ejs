@@ -17,34 +17,37 @@
               <option value="distance">Sort by Distance</option>
           </select>
       </div>
-    <div class="plant_entries">
-      <% if (data === null) { %>
-        <p>Cannot connect to server</p>
-      <% } else if (data.length === 0) { %>
-        <p>No plant entries currently.</p>
-      <% } else { %>
-        <% data.forEach(plant_entry => { %>
-          <div class="plant_entry_container">
-            <a class="plant_link" href="/view_plant/<%= plant_entry._id %>">
-              <% if(plant_entry.image.includes('public')) { %>
-                    <img class="plant_image" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>">
-              <% } else { %>
-                <img class="plant_image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
-              <% } %>
-                    <div class="img_info">
-                        <p>Plant by <%= plant_entry.username %></p>
-                        <% if (plant_entry.date) { %>
-                            <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
-                        <% } else { %>
-                            <p><%= plant_entry.location %></p>
-                        <% } %>
-                    </div>
-            </a>
-          </div>
-          <hr>
-        <% }); %>
-      <% } %>
-    </div>
+      <div class="plant_entries">
+          <% if (data === null) { %>
+              <p>Cannot connect to server</p>
+          <% } else if (data.length === 0) { %>
+              <p>No plant entries currently.</p>
+          <% } else { %>
+              <% data.forEach(plant_entry => { %>
+                  <div class="plant_entry_container">
+                      <a class="plant_link" href="/view_plant/<%= plant_entry._id %>">
+                          <% if(plant_entry.image) { %>
+                              <% if(plant_entry.image.includes('public')) { %>
+                                  <img class="plant_image" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>">
+                              <% } else { %>
+                                  <img class="plant_image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
+                              <% } %>
+                          <% } else if(plant_entry.image_url) { %>
+                              <img class="plant_image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
+                          <% } %>
+                          <div class="img_info">
+                              <p>Plant by <%= plant_entry.username %></p>
+                              <% if (plant_entry.date) { %>
+                                  <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
+                              <% } else { %>
+                                  <p><%= plant_entry.location %></p>
+                              <% } %>
+                          </div>
+                      </a>
+                  </div>
+              <% }); %>
+          <% } %>
+      </div>
   </div>
 </body>
 <footer></footer>

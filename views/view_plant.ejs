@@ -5,75 +5,85 @@
     <script src="/javascripts/home.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
-    <body onload="init()">
-        <div class="main_section view_plant">
-            <% if (plant_entry === null) { %>
-                <p>Cannot load plant_entry</p>
-            <% } else { %>
-                <div class="plant_entry_container">
+<body onload="init()">
+    <div class="main_section view_plant">
+        <% if (plant_entry === null) { %>
+            <p>Cannot load plant_entry</p>
+        <% } else { %>
+            <div class="plant_entry_container">
+                <% if(plant_entry.image) { %>
                     <% if(plant_entry.image.includes('public')) { %>
-                        <img class="plant_image row" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
+                        <img class="plant_image" src="<%= plant_entry.image.replace('public', '') %>" alt="<%= plant_entry.plant_name %>">
                     <% } else { %>
-                        <img class="plant_image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
+                        <img class="plant_image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
                     <% } %>
-                    <div class="row">
-                        <div class="plant_details">
-                            <h1><%= plant_entry.plant_name %></h1>
-                            <% if(plant_entry.date) { %>
-                                <h2>Submitted by: <%= plant_entry.username %> on <%= plant_entry.date.substring(0,10) %>
+                <% } else if(plant_entry.image_url) { %>
+                    <img class="plant_image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
+                <% } %>
+<!--                <div class="img_info">-->
+<!--                    <p>Plant by <%= plant_entry.username %></p>-->
+<!--                    <% if (plant_entry.date) { %>-->
+<!--                        <p><%= plant_entry.date.substring(0, 10) %>, <%= plant_entry.location %></p>-->
+<!--                    <% } else { %>-->
+<!--                        <p><%= plant_entry.location %></p>-->
+<!--                    <% } %>-->
+<!--                </div>-->
+                <div class="row">
+                    <div class="plant_details">
+                        <h1><%= plant_entry.plant_name %></h1>
+                        <% if(plant_entry.date) { %>
+                            <h2>Submitted by: <%= plant_entry.username %> on <%= plant_entry.date.substring(0, 10) %>
                                 <% if(plant_entry.time) { %>
-                                    at <%= plant_entry.time %></h2>
+                                    at <%= plant_entry.time %>
                                 <% } %>
-                                </h2>
-                            <% } else { %>
-                                <h2>Submitted by: <%= plant_entry.username %></h2>
-                            <% } %>
-
-                            <br>
-                            <h3>Location: </h3>
-                            <p><%= plant_entry.location %></p>
-                            <br>
-                            <h3>Description:</h3>
-                            <p><%= plant_entry.description %></p>
-                            <br>
-                            <h3>Characteristics:</h3>
-                            <p>Height: <%= plant_entry.height %></p>
-                            <p>Spread: <%= plant_entry.spread %></p>
-                            <p>Flowers:</p>
-                        </div>
-            <% }; %>
-                        <div id="chat_interface">
-                            <h2>Comments</h2>
-                            <% if (comments === null) { %>
-                                <p>Cannot load comments</p>
-                            <% } else { %>
-                                <div id="history">
-                                    <% comments.forEach(comment => { %>
-                                        <div class="plant_content">
-                                            <p><strong><%= comment.username %></strong></p>
-                                            <p><%= comment.commentText %></p>
-                                            <p><%= comment.date %></p>
-                                        </div>
-                                        <hr>
-                                    <% }); %>
-                                </div>
-                            <% }; %>
-                            <div id="input">
-                                <form id="comment_form" action="/create_comment" method="post" onsubmit="return false;">
-                                    <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
-                                    <p><label for="name">Your name: </label>
-                                        <input type="text" id="username" name="username">
-                                    </p>
-                                    <p>
-                                        <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
-                                        <button id="comment_send" onclick="sendCommentText()">Send</button>
-                                    </p>
-                                </form>
+                            </h2>
+                        <% } else { %>
+                            <h2>Submitted by: <%= plant_entry.username %></h2>
+                        <% } %>
+                        <h3>Location: </h3>
+                        <p><%= plant_entry.location %></p>
+                        <h3>Description:</h3>
+                        <p><%= plant_entry.description %></p>
+                        <h3>Characteristics:</h3>
+                        <p>Height: <%= plant_entry.height %></p>
+                        <p>Spread: <%= plant_entry.spread %></p>
+                        <p>Flowers:</p>
+                    </div>
+                    <% } %>
+                    <div id="chat_interface">
+                        <h2>Comments</h2>
+                        <% if (comments === null) { %>
+                            <p>Cannot load comments</p>
+                        <% } else { %>
+                            <div id="history">
+                                <% comments.forEach(comment => { %>
+                                    <div class="plant_content">
+                                        <p><strong><%= comment.username %></strong></p>
+                                        <p><%= comment.commentText %></p>
+                                        <p><%= comment.date %></p>
+                                    </div>
+                                    <hr>
+                                <% }); %>
                             </div>
+                        <% } %>
+                        <div id="input">
+                            <form id="comment_form" action="/create_comment" method="post" onsubmit="return false;">
+                                <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
+                                <p>
+                                    <label for="name">Your name: </label>
+                                    <input type="text" id="username" name="username">
+                                </p>
+                                <p>
+                                    <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
+                                    <button id="comment_send" onclick="sendCommentText()">Send</button>
+                                </p>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-        <button id="close_btn" onclick="return_home()">Go Back</button>
-    </body>
+    <button id="close_btn" onclick="returnHome()">Go Back</button>
+</body>
+
 </html>
