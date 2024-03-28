@@ -20,33 +20,25 @@
                 <!--                </p>-->
                 <br>
                 <p>
-                    <label for="description">Plant description </label>
+                    <label for="description">Plant description</label>
                     <br>
-                    <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
+                    <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..." value="Name"></textarea>
+                </p>
+                <p>
+                    <label for="date">Date found</label>
+                    <br>
+                    <input class="text_input" type="date" id="date" name="date">
                 </p>
                 <p>
                     <label for="location">Location found </label>
                     <br>
-                    <input  class="text_input" type="text" id="location" name="location" placeholder="Location...">
+                    <input class="text_input" type="text" id="location" name="location" placeholder="Location..." value="Name">
                 </p>
                 <p>
                     <p>Click the button to get your coordinates.</p>
-
-                <button type="button" onclick="getLocation()">Try It</button>
-                    <div id="location_container" ></div>
-                    <div id="map"></div>
-<!--                    <label for="coordinates">Coordinates of the finding</label>-->
-<!--                    <br>-->
-<!--                    <input  class="text_input" type="text" id="coordinates_latitude" name="coordinates_latitude" value="0">-->
-<!--                    <select name="coordinates_latitude" id="coordinates_latitude">-->
-<!--                        <option value="N">N</option>-->
-<!--                        <option value="S">S</option>-->
-<!--                    </select>-->
-<!--                    <input  class="text_input" type="text" id="coordinates_longitude" name="coordinates_longitude" value="0">-->
-<!--                    <select name="coordinates_longitude" id="coordinates_longitude">-->
-<!--                        <option value="E">E</option>-->
-<!--                        <option value="W">W</option>-->
-<!--                    </select>-->
+                    <button type="button" onclick="getLocation()">Try It</button>
+                        <div id="location_container" ></div>
+                        <div id="map"></div>
                 </p>
             </div>
             <br>
@@ -54,7 +46,7 @@
                 <h3>Identification</h3>
                 <p>
                     <label for="plant_name">Plant name </label>
-                    <input class="text_input" type="text" id="plant_name" name="plant_name" placeholder="Name..." required>
+                    <input class="text_input" type="text" id="plant_name" name="plant_name" placeholder="Name..." value="Name" required>
                 </p>
                 <p>
                     <label for="plant_certainty">Plant unknown or uncertain?</label>

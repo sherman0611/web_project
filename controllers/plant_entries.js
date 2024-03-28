@@ -17,9 +17,9 @@ exports.create = function (plantData, filePath) {
         leaves: plantData.leaves,
         fruits_seeds: plantData.fruits_seeds,
         sun_exposure: plantData.sun_exposure,
-        identification_status: false
+        identification_status: false,
         // dbpedia_URI: null,
-        // date: new Date()
+        date: plantData.date
     });
 
     return plant_entry.save().then(plantEntry => {

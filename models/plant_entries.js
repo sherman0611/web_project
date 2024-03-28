@@ -17,9 +17,9 @@ let PlantEntrySchema  = new Schema({
         leaves: {type: Boolean, required: false},
         fruits_seeds: {type: Boolean, required: false},
         sun_exposure: {type: String, max: 100, required: false},
-        identification_status: {type: Boolean, required: false}
+        identification_status: {type: Boolean, required: false},
         // dbpedia_URI: {type: String, max: 100, required: false},
-        // date: { type: Date, default: Date.now}
+        date: { type: Date, default: Date.now }
     }
 );
 
