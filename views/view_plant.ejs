@@ -2,55 +2,72 @@
 <html>
 <head>
     <%- include('partials/header') %>
+    <script src="/javascripts/home.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
     <body onload="init()">
-        <div class="container">
+        <div class="main_section view_plant">
             <% if (plant_entry === null) { %>
                 <p>Cannot load plant_entry</p>
             <% } else { %>
-                <div class="plant_details">
-                    <img src="/<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
-                    <p>Plant name:<%= plant_entry.plant_name %></p>
-                    <p>Location: <%= plant_entry.location %></p>
-                    <p>Description: <%= plant_entry.description %></p>
-                    <p>Colour:  <%= plant_entry.colour_flowers %></p>
-                    <p>Date: <%= plant_entry.date %></p>
-                    <p>Height: <%= plant_entry.height %></p>
-                    <p>Spread: <%= plant_entry.spread %></p>
-                    <p>User: <%= plant_entry.username %></p>
-                </div>
+                <div class="plant_entry_container">
+                    <% if(plant_entry.image.includes('public')) { %>
+                        <img class="plant_image row" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
+                    <% } else { %>
+                        <img class="plant_image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>" width="200" height="200">
+                    <% } %>
+                    <div class="row">
+                        <div class="plant_details">
+                            <h1><%= plant_entry.plant_name %></h1>
+                            <% if(plant_entry.date) { %>
+                                <h2>Submitted by: <%= plant_entry.username %> on <%= plant_entry.date.substring(0,10) %></h2>
+                            <% } else { %>
+                                <h2>Submitted by: <%= plant_entry.username %></h2>
+                            <% } %>
+                            <br>
+                            <h3>Location: </h3>
+                            <p><%= plant_entry.location %></p>
+                            <br>
+                            <h3>Description:</h3>
+                            <p><%= plant_entry.description %></p>
+                            <br>
+                            <h3>Characteristics:</h3>
+                            <p>Height: <%= plant_entry.height %></p>
+                            <p>Spread: <%= plant_entry.spread %></p>
+                            <p>Flowers:</p>
+                        </div>
             <% }; %>
-
-            <div id="chat_interface">
-                <h2>Comments</h2>
-                <% if (comments === null) { %>
-                    <p>Cannot load comments</p>
-                <% } else { %>
-                    <div id="history">
-                        <% comments.forEach(comment => { %>
-                            <div class="plant_content">
-                                <p><strong><%= comment.username %></strong></p>
-                                <p><%= comment.commentText %></p>
-                                <p><%= comment.date %></p>
+                        <div id="chat_interface">
+                            <h2>Comments</h2>
+                            <% if (comments === null) { %>
+                                <p>Cannot load comments</p>
+                            <% } else { %>
+                                <div id="history">
+                                    <% comments.forEach(comment => { %>
+                                        <div class="plant_content">
+                                            <p><strong><%= comment.username %></strong></p>
+                                            <p><%= comment.commentText %></p>
+                                            <p><%= comment.date %></p>
+                                        </div>
+                                        <hr>
+                                    <% }); %>
+                                </div>
+                            <% }; %>
+                            <div id="input">
+                                <form id="comment_form" action="/create_comment" method="post" onsubmit="return false;">
+                                    <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
+                                    <p><label for="name">Your name: </label>
+                                        <input type="text" id="username" name="username">
+                                    </p>
+                                    <p>
+                                        <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
+                                        <button id="comment_send" onclick="sendCommentText()">Send</button>
+                                    </p>
+                                </form>
                             </div>
-                            <hr>
-                        <% }); %>
+                        </div>
                     </div>
-                <% }; %>
-                <div id="input">
-                    <form id="comment_form" action="/create_comment" method="post" onsubmit="return false;">
-                        <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
-                        <p><label for="name">Your name: </label>
-                            <input type="text" id="username" name="username">
-                        </p>
-                        <p>
-                            <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
-                            <button id="comment_send" onclick="sendCommentText()">Send</button>
-                        </p>
-                    </form>
                 </div>
-            </div>
         </div>
         <button id="close_btn" onclick="returnHome()">Go Back</button>
     </body>

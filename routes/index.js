@@ -84,11 +84,6 @@ router.get('/view_plant/:id', function(req, res, next) {
         });
 });
 
-router.get('/view_plant2/:id',function(req, res, next) {
-    const plant_id = req.params.id;
-    res.render('view_plant2', { title: 'View plant entry', plant_id: plant_id });
-});
-
 /* POST comment form. */
 router.post('/create_comment', function(req, res, next) {
   let commentData = req.body;

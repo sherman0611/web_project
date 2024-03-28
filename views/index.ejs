@@ -35,7 +35,11 @@
               <% } %>
                     <div class="img_info">
                         <p>Plant by <%= plant_entry.username %></p>
-                        <p><%= plant_entry.date %>, <%= plant_entry.location %></p>
+                        <% if (plant_entry.date) { %>
+                            <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
+                        <% } else { %>
+                            <p><%= plant_entry.location %></p>
+                        <% } %>
                     </div>
             </a>
           </div>
