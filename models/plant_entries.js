@@ -7,6 +7,8 @@ let PlantEntrySchema  = new Schema({
         plant_name: {type: String, max: 50, required: true},
         image: {type: String},
         location: {type: String, max: 100, required: false},
+        latitude:{type: String, max: 50, required: false},
+        longitude:{type: String, max: 50, required: false},
         description: {type: String, max: 200, required: false},
         height: {type: String, max: 4, required: false},
         spread: {type: String, max: 4, required: false},

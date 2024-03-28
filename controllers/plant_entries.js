@@ -7,6 +7,8 @@ exports.create = function (plantData, filePath) {
         plant_name: plantData.plant_name,
         image: filePath,
         location: plantData.location,
+        latitude: plantData.latitude,
+        longitude: plantData.longitude,
         description: plantData.description,
         height: plantData.height,
         spread: plantData.spread,

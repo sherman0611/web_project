@@ -44,7 +44,7 @@ router.get('/create_plant', function(req, res, next) {
 });
 
 /* POST create plant entry form. */
-router.post('/create_plant', upload.single('myImg'), function(req, res, next) {
+router.post('/create_plant', upload.single('plantImg'), function(req, res, next) {
   let plantData = req.body;
   console.log(req.body);
   let filePath = req.file.path;
@@ -52,7 +52,7 @@ router.post('/create_plant', upload.single('myImg'), function(req, res, next) {
   let result = plant_entries.create(plantData, filePath);
   console.log(result);
   result.then(plant_entry => {
-    res.redirect('/');
+    res.redirect('/home');
   }).catch(err => {
     console.log("cannot create post");
   });

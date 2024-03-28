@@ -3,7 +3,7 @@
 <head>
   <title><%= title %></title>
   <%- include('partials/header') %>
-  <script src="/javascripts/main.js"></script>
+  <script src="javascripts/main.js"></script>
 </head>
 <body>
   <div class="main_section">
@@ -26,9 +26,7 @@
         <% data.forEach(plant_entry => { %>
           <div class="plant_entry_container">
             <a class="plant_link" href="/view_plant/<%= plant_entry._id %>">
-              <% console.log(plant_entry.image)%>
               <% if(plant_entry.image.includes('public')) { %>
-                    <% console.log(plant_entry.image)%>
                     <img class="plant_image" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>">
               <% } else { %>
                 <img class="plant_image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">

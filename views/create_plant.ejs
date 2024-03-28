@@ -3,14 +3,14 @@
 <head>
     <title><%= title %></title>
     <%- include('partials/header') %>
-    <script src="/javascripts/plant_entry.js"></script>
+    <script src="/javascripts/create_plant.js"></script>
 </head>
 <body>
 <div class="main_section">
     <h1></h1>
     <div id="create_plant_entry"  >
         <h2 class="create_entry_title">New plant sightings</h2>
-        <form  action="/create_plant" id="create_plant_form" method="post" enctype="multipart/form-data" >
+        <form action="/create_plant" id="create_plant_form" method="post" enctype="multipart/form-data" >
             <div class="add_plant_entry_container">
                 <h3>Basic details</h3>
                 <!--                <p>-->
@@ -29,20 +29,25 @@
                     <br>
                     <input  class="text_input" type="text" id="location" name="location" placeholder="Location...">
                 </p>
-<!--                <p>-->
+                <p>
+                    <p>Click the button to get your coordinates.</p>
+
+                <button type="button" onclick="getLocation()">Try It</button>
+                    <div id="location_container" ></div>
+                    <div id="map"></div>
 <!--                    <label for="coordinates">Coordinates of the finding</label>-->
 <!--                    <br>-->
-<!--                    <input  class="text_input" type="text" id="coordinates_latitude" name="coordinates_latitude" value="00.00">-->
-<!--                    <select name="cars" id="cars">-->
+<!--                    <input  class="text_input" type="text" id="coordinates_latitude" name="coordinates_latitude" value="0">-->
+<!--                    <select name="coordinates_latitude" id="coordinates_latitude">-->
 <!--                        <option value="N">N</option>-->
 <!--                        <option value="S">S</option>-->
 <!--                    </select>-->
-<!--                    <input  class="text_input" type="text" id="coordinates_longitude" name="coordinates_longitude" value="00.00">-->
-<!--                    <select name="cars" id="cars">-->
+<!--                    <input  class="text_input" type="text" id="coordinates_longitude" name="coordinates_longitude" value="0">-->
+<!--                    <select name="coordinates_longitude" id="coordinates_longitude">-->
 <!--                        <option value="E">E</option>-->
 <!--                        <option value="W">W</option>-->
 <!--                    </select>-->
-<!--                </p>-->
+                </p>
             </div>
             <br>
             <div class="add_plant_entry_container">
@@ -64,7 +69,7 @@
                 <p>
                     <label for="myImage">Upload image file</label>
                     <br>
-                    <input type="file" id="myImage" name="myImg" accept="image/*" >
+                    <input type="file" id="myImage" name="plantImg" accept="image/*" >
                 </p>
 <!--                <p>-->
 <!--                    <label for="image_url">Or enter image URL</label>-->
