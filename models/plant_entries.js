@@ -14,7 +14,7 @@ let PlantEntrySchema  = new Schema({
         height: {type: String, max: 4, required: false},
         spread: {type: String, max: 4, required: false},
         flowers: {type: Boolean, required: false},
-        colour_flowers: {type: String, max: 10, required: false},
+        colour: {type: String, max: 10, required: false},
         leaves: {type: Boolean, required: false},
         fruits_seeds: {type: Boolean, required: false},
         sun_exposure: {type: String, max: 100, required: false},

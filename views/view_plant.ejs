@@ -2,8 +2,8 @@
 <html>
 <head>
     <%- include('partials/header') %>
-    <script src="/javascripts/home.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body onload="init()">
     <div class="main_section view_plant">
@@ -55,7 +55,7 @@
                         <% if (comments === null) { %>
                             <p>Cannot load comments</p>
                         <% } else { %>
-                            <div id="history">
+                            <div id="all_comments">
                                 <% comments.forEach(comment => { %>
                                     <div class="plant_content">
                                         <p><strong><%= comment.username %></strong></p>
@@ -67,7 +67,7 @@
                             </div>
                         <% } %>
                         <div id="input">
-                            <form id="comment_form" action="/create_comment" method="post" onsubmit="return false;">
+                            <form id="comment_form" onsubmit="return false;">
                                 <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
                                 <p>
                                     <label for="name">Your name: </label>
@@ -75,7 +75,8 @@
                                 </p>
                                 <p>
                                     <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
-                                    <button id="comment_send" onclick="sendCommentText()">Send</button>
+                                    <button id="comment_send" onclick="sendComment()">Send</button>
+<!--                                    <button id="comment_send" class="form_btn" type="submit">Send</button>-->
                                 </p>
                             </form>
                         </div>
@@ -83,7 +84,7 @@
                 </div>
             </div>
         </div>
-    <button id="close_btn" onclick="return_home()">Go Back</button>
+    <button id="close_btn" onclick="returnHome()">Go Back</button>
 </body>
 
 </html>

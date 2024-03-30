@@ -97,14 +97,15 @@ router.get('/view_plant/:id', function(req, res, next) {
 
 /* POST comment form. */
 router.post('/create_comment', function(req, res, next) {
-  let commentData = req.body;
-  let result = comments.create(commentData);
-  console.log(result);
-  result.then(comment => {
-      res.redirect('/');
-  }).catch(err => {
-      console.log("cannot create comment");
-  });
+    let commentData = req.body;
+    let result = comments.create(commentData);
+    result.then(comment => {
+        let data = JSON.parse(comment);
+        res.send(data);
+    }).catch(err => {
+        console.log("cannot create comment");
+        res.status(500).send("Cannot create comment");
+    });
 });
 
 module.exports = router;

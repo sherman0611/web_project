@@ -15,16 +15,35 @@ function init() {
     // });
 }
 
-function sendCommentText() {
-    username = document.getElementById('username').value;
-    if (!username) {
-        username = 'Anon' + Math.floor(Math.random() * 1000);
-        document.getElementById('username').value = username;
-    }
-    // let commentText = document.getElementById('commentText').value;
-    // socket.emit('comment', plant_id, username, commentText);
+// function sendComment() {
+//     username = document.getElementById('username').value;
+//     if (!username) {
+//         username = 'Anon' + Math.floor(Math.random() * 1000);
+//         document.getElementById('username').value = username;
+//     }
+//     // let commentText = document.getElementById('commentText').value;
+//     // socket.emit('comment', plant_id, username, commentText);
+//
+//     document.getElementById('comment_form').submit();
+// }
 
-    document.getElementById('comment_form').submit();
+function sendComment() {
+    $.ajax({
+        url: '/create_comment',
+        type: 'POST',
+        data: $('#comment_form').serialize(),
+        success: function(data) {
+            let commentHtml = '<div class="comment">' +
+                '<p><strong>' + data.username + '</strong></p>' +
+                '<p>' + data.commentText + '</p>' +
+                '<p>' + data.date + '</p>' +
+                '</div><hr>';
+            $('#all_comments').append(commentHtml);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error creating comment:", error);
+        }
+    });
 }
 
 function writeOnHistory(text) {

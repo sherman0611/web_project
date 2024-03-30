@@ -3,49 +3,45 @@
 <head>
     <title><%= title %></title>
     <%- include('partials/header') %>
-    <script src="/javascripts/create_plant.js"></script>
+    <script src="/javascripts/plant_entry.js"></script>
 </head>
 <body>
 <div class="main_section">
     <h1></h1>
     <div id="create_plant_entry"  >
         <h2 class="create_entry_title">New plant sightings</h2>
-        <form action="/create_plant" id="create_plant_form" method="post" enctype="multipart/form-data" >
+        <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
             <div class="add_plant_entry_container">
                 <h3>Basic details</h3>
-                <% if (active_username == null) { %>
-                    <p>
-                        <label for="username">Your username</label>
-                        <br>
-                        <input class="text_input" type="text" id="username" name="username">
-                    </p>
-                <% } %>
+                <!--                <p>-->
+                <!--                    <label for="username">Your username</label>-->
+                <!--                    <br>-->
+                <!--                    <input class="text_input" type="text" id="username" name="username">-->
+                <!--                </p>-->
                 <br>
                 <p>
-                    <label for="description">Plant description</label>
+                    <label for="description">Plant description </label>
                     <br>
-                    <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..." value="Name"></textarea>
-                </p>
-                <p>
-                    <label for="date">Date found</label>
-                    <br>
-                    <input class="text_input" type="date" id="date" name="date">
-                </p>
-                <p>
-                    <label for="time">Time found</label>
-                    <br>
-                    <input class="text_input" type="time" id="time" name="time">
+                    <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
                 </p>
                 <p>
                     <label for="location">Location found </label>
                     <br>
-                    <input class="text_input" type="text" id="location" name="location" placeholder="Location..." value="Name">
+                    <input  class="text_input" type="text" id="location" name="location" placeholder="Location...">
                 </p>
                 <p>
-                    <p>Click the button to get your coordinates.</p>
-                    <button type="button" onclick="getLocation()">Try It</button>
-                        <div id="location_container" ></div>
-                        <div id="map"></div>
+                    <label for="coordinates">Coordinates of the finding</label>
+                    <br>
+                    <input  class="text_input" type="text" id="coordinates_latitude" name="coordinates_latitude" value="00.00">
+                    <select name="cars" id="cars">
+                        <option value="N">N</option>
+                        <option value="S">S</option>
+                    </select>
+                    <input  class="text_input" type="text" id="coordinates_longitude" name="coordinates_longitude" value="00.00">
+                    <select name="cars" id="cars">
+                        <option value="E">E</option>
+                        <option value="W">W</option>
+                    </select>
                 </p>
             </div>
             <br>
@@ -53,7 +49,7 @@
                 <h3>Identification</h3>
                 <p>
                     <label for="plant_name">Plant name </label>
-                    <input class="text_input" type="text" id="plant_name" name="plant_name" placeholder="Name..." value="Name" required>
+                    <input class="text_input" type="text" id="plant_name" name="plant_name" placeholder="Name..." required>
                 </p>
                 <p>
                     <label for="plant_certainty">Plant unknown or uncertain?</label>
@@ -66,9 +62,9 @@
                     </label>
                 </p>
                 <p>
-                    <label for="myImage">Upload image file</label>
+                    <label for="image_file">Upload image file</label>
                     <br>
-                    <input type="file" id="myImage" name="plantImg" accept="image/*" >
+                    <input type="file" id="image_file" name="image_file" accept="image/*">
                 </p>
                 <p>
                     <label for="image_url">Or enter image URL</label>
@@ -92,10 +88,11 @@
                 </p>
                 <h4>Other information</h4>
                 <p>
-                    <label for="colour_flowers">Colour</label>
+                    <label for="colour">Colour</label>
                     <br>
-                    <input type="color" id="colour" name="colour_flowers">
+                    <input class="text_input" type="text" id="colour" name="colour">
                 </p>
+
                 <p>
                     <label for="flowers">Does the plant have flowers?</label>
                     <br>
@@ -134,7 +131,7 @@
             <br>
             <button id="create" class="form_btn" type="submit">Create plant entry</button>
         </form>
-        <button id="close_btn" class="form_btn" onclick="return_home()">Go Back</button>
+        <button id="close_btn" class="form_btn" onclick="returnHome()">Go Back</button>
     </div>
 
 </div>
