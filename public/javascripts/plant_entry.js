@@ -31,7 +31,7 @@ function sendComment() {
             let commentHtml = '<div class="comment">' +
                 '<p><strong>' + data.username + '</strong></p>' +
                 '<p>' + data.commentText + '</p>' +
-                '<p>' + data.date + '</p>' +
+                '<p>' + 'Sent on ' + data.date.substring(0, 10) + '</p>' +
                 '</div><hr>';
             $('#all_comments').append(commentHtml);
 

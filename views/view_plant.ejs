@@ -60,7 +60,7 @@
                                     <div class="plant_content">
                                         <p><strong><%= comment.username %></strong></p>
                                         <p><%= comment.commentText %></p>
-                                        <p><%= comment.date %></p>
+                                        <p>Sent on <%= comment.date.substring(0, 10) %></p>
                                     </div>
                                     <hr>
                                 <% }); %>
