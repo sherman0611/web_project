@@ -5,7 +5,7 @@ exports.create = function (commentData) {
     let comment = new commentModel({
         plant_id: commentData.plant_id,
         username: commentData.username,
-        commentText: commentData.commentText,
+        comment_text: commentData.comment_text,
     });
 
     return comment.save().then(comment => {

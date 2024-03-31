@@ -3,39 +3,32 @@ let plant_id = null;
 let socket = io();
 
 function init() {
-    plant_id = document.getElementById('plant_id').value;
+    plant_id = document.getElementById('plant-id').value;
 
     socket.emit('join', plant_id);
 
     // called when a message is received
-    // socket.on('comment', function (room, userId, chatText) {
-    //     let who = userId
-    //     if (userId === username) who = 'Me';
-    //     writeOnHistory('<b>' + who + ':</b> ' + chatText);
-    // });
+    socket.on('comment', function (room, data) {
+        writeNewComment(data);
+    });
 }
 
-function sendComment() {
+function sendComment(event) {
+    event.preventDefault();
+
     username = document.getElementById('username').value;
     if (!username) {
         username = 'Anon' + Math.floor(Math.random() * 1000);
         document.getElementById('username').value = username;
     }
 
+    // Send AJAX request to the server to create comment
     $.ajax({
-        url: '/create_comment',
         type: 'POST',
-        data: $('#comment_form').serialize(),
+        url: '/create_comment',
+        data: $('#comment-form').serialize(),
         success: function(data) {
-            // update comments
-            let commentHtml = '<div class="comment">' +
-                '<p><strong>' + data.username + '</strong></p>' +
-                '<p>' + data.commentText + '</p>' +
-                '<p>' + 'Sent on ' + data.date.substring(0, 10) + '</p>' +
-                '</div><hr>';
-            $('#all_comments').append(commentHtml);
-
-            $('#commentText').val(''); // clear comment input
+            socket.emit('comment', plant_id, data);
         },
         error: function(xhr, status, error) {
             console.error("Error creating comment:", error);
@@ -43,10 +36,31 @@ function sendComment() {
     });
 }
 
-function writeOnHistory(text) {
-    let history = document.getElementById('history');
-    let paragraph = document.createElement('p');
-    paragraph.innerHTML = text;
-    history.appendChild(paragraph);
-    document.getElementById('commentText').value = '';
+function writeNewComment(data) {
+    let commentsContainer = document.getElementById('comments-container');
+
+    let commentContainer = document.createElement('div');
+    commentContainer.classList.add('comment-container');
+
+    let usernameParagraph = document.createElement('p');
+    let usernameStrong = document.createElement('strong');
+    usernameStrong.textContent = data.username;
+    usernameParagraph.appendChild(usernameStrong);
+
+    let commentParagraph = document.createElement('p');
+    commentParagraph.textContent = data.comment_text;
+
+    let dateParagraph = document.createElement('p');
+    dateParagraph.textContent = 'Sent on ' + data.date.substring(0, 10);
+
+    let hr = document.createElement('hr');
+
+    commentContainer.appendChild(usernameParagraph);
+    commentContainer.appendChild(commentParagraph);
+    commentContainer.appendChild(dateParagraph);
+    commentContainer.appendChild(hr);
+
+    commentsContainer.appendChild(commentContainer);
+
+    document.getElementById('comment-text').value = '';
 }

@@ -205,7 +205,7 @@ button:hover{
 /*  object-position: 25% 25%;*/
 /*}*/
 
-.form_btn{
+.form-button{
   background-color: #AA7A54;
   margin-right: 10px;
   color: #E4C9AC;
@@ -235,7 +235,7 @@ button:hover{
   color: inherit;
 }
 
-.plant_content {
+.comment-container {
   flex: 1;
 }
 

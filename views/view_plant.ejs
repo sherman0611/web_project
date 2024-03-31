@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/javascripts/main.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body onload="init()">
     <%- include('partials/header') %>
@@ -53,32 +54,30 @@
             <% if (comments === null) { %>
                 <p>Cannot load comments</p>
             <% } else { %>
-                <div id="all_comments">
+                <div id="comments-container">
                     <% comments.forEach(comment => { %>
-                        <div class="plant_content">
+                        <div class="comment-container">
                             <p><strong><%= comment.username %></strong></p>
-                            <p><%= comment.commentText %></p>
+                            <p><%= comment.comment_text %></p>
                             <p>Sent on <%= comment.date.substring(0, 10) %></p>
                         </div>
                         <hr>
                     <% }); %>
                 </div>
             <% } %>
-            <div id="input">
-                <form id="comment_form" onsubmit="return false;">
-                    <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_id %>">
-                    <p>
-                        <label for="name">Your name: </label>
-                        <input type="text" id="username" name="username">
-                    </p>
-                    <p>
-                        <input type="text" id="commentText" name="commentText" placeholder="Enter your reply...">
-                        <button id="comment_send" onclick="sendComment()">Send</button>
-                    </p>
-                </form>
-            </div>
+            <form id="comment-form" onsubmit="sendComment(event)">
+                <input type="hidden" id="plant-id" name="plant_id" value="<%= plant_id %>">
+                <p>
+                    <label for="name">Your name: </label>
+                    <input type="text" id="username" name="username">
+                </p>
+                <p>
+                    <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
+                    <button class="form-button">Send</button>
+                </p>
+            </form>
         </div>
     <% } %>
-    <button id="close_btn" class="form_btn" onclick="returnHome()">Go Back</button>
+    <button class="return-button" onclick="returnHome()">Go Back</button>
 </body>
 </html>
