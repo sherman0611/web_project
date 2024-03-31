@@ -1,54 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title><%= title %></title>
-  <%- include('partials/header') %>
-  <script src="javascripts/main.js"></script>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="javascripts/main.js"></script>
 </head>
 <body>
-  <div class="main_section">
-      <div class="utilities">
-          <div class="search_group">
-              <input class="text_input" type="text" placeholder="Search plants..">
-              <button class="btn" type="button"><img src="images/search_icon.png" alt="search button"/></button>
-          </div>
-          <select id="sort_by" onchange="sortBy(this.value)">
-              <option value="date">Sort by Date</option>
-              <option value="distance">Sort by Distance</option>
-          </select>
-      </div>
-      <div class="plant_entries">
-          <% if (data === null) { %>
-              <p>Cannot connect to server</p>
-          <% } else if (data.length === 0) { %>
-              <p>No plant entries currently.</p>
-          <% } else { %>
-              <% data.forEach(plant_entry => { %>
-                  <div class="plant_entry_container">
-                      <a class="plant_link" href="/view_plant/<%= plant_entry._id %>">
-                          <% if(plant_entry.image) { %>
-                              <% if(plant_entry.image.includes('public')) { %>
-                                  <img class="plant_image" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>">
-                              <% } else { %>
-                                  <img class="plant_image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
-                              <% } %>
-                          <% } else if(plant_entry.image_url) { %>
-                              <img class="plant_image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
-                          <% } %>
-                          <div class="img_info">
-                              <p>Plant by <%= plant_entry.username %></p>
-                              <% if (plant_entry.date) { %>
-                                  <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
-                              <% } else { %>
-                                  <p><%= plant_entry.location %></p>
-                              <% } %>
-                          </div>
-                      </a>
-                  </div>
-              <% }); %>
-          <% } %>
-      </div>
-  </div>
+    <%- include('partials/header') %>
+
+    <div class="search-and-sort">
+        <div class="search">
+            <input id="search-input" type="text" placeholder="Search plants..">
+            <button><img src="images/search_icon.png" alt="search button"/></button>
+        </div>
+        <select id="sort-by" onchange="sortBy(this.value)">
+            <option value="date">Sort by Date</option>
+            <option value="distance">Sort by Distance</option>
+        </select>
+    </div>
+
+    <div class="plant-entries-container">
+        <% if (data === null) { %>
+            <p>Cannot connect to server</p>
+        <% } else if (data.length === 0) { %>
+            <p>No plant entries currently.</p>
+        <% } else { %>
+            <% data.forEach(plant_entry => { %>
+                <div class="plant-entry-container">
+                    <a href="/view_plant/<%= plant_entry._id %>">
+                        <% if(plant_entry.image) { %>
+                            <% if(plant_entry.image.includes('public')) { %>
+                                <img class="plant-image" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>">
+                            <% } else { %>
+                                <img class="plant-image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
+                            <% } %>
+                        <% } else if(plant_entry.image_url) { %>
+                            <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
+                        <% } %>
+                        <div class="plant-info">
+                            <p>Plant by <%= plant_entry.username %></p>
+                            <% if (plant_entry.date) { %>
+                                <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
+                            <% } else { %>
+                                <p><%= plant_entry.location %></p>
+                            <% } %>
+                        </div>
+                    </a>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
 </body>
 <footer></footer>
 </html>
