@@ -16,18 +16,15 @@ var storage = multer.diskStorage({
     }
 });
 let upload = multer({ storage: storage });
-let active_username = null;
 
 /* GET home page. */
 router.get('/home', function(req, res, next) {
-    const username = req.query.username;
-    console.log(username)
     let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', active_username: username, data: data});
+        res.render('index', { title: 'Plantgram', data: data});
     }).catch(err => {
-        res.render('index', { title: 'Plantgram', active_username: username, data: null });
+        res.render('index', { title: 'Plantgram', data: null });
     });
 });
 
@@ -41,15 +38,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/enter_username', function(req, res, next) {
-    const username = req.body.username;
-    const home_with_uname = `/home?username=${username}`; // TODO is there a better way to do this?
-    res.redirect(home_with_uname);
+    res.redirect('/home');
 });
 
 
 /* GET create plant entry page. */
 router.get('/create_plant', function(req, res, next) {
-  res.render('create_plant', { title: 'Create plant entry', active_username: active_username });
+  res.render('create_plant', { title: 'Create plant entry' });
 });
 
 /* POST create plant entry form. */
@@ -80,7 +75,7 @@ router.get('/view_plant/:id', function(req, res, next) {
         .then(results => {
             let plantData = JSON.parse(results[0]);
             let commentsData = JSON.parse(results[1]);
-            res.render('view_plant', { title: 'View plant entry', active_username: active_username, plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
         })
         .catch(errors => {
             let plantData = null;
@@ -91,7 +86,7 @@ router.get('/view_plant/:id', function(req, res, next) {
             if (!errors[1]) {
                 commentsData = JSON.parse(errors[1]);
             }
-            res.render('view_plant', { title: 'View plant entry', active_username: active_username, plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
         });
 });
 

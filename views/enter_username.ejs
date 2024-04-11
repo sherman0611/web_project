@@ -16,7 +16,7 @@
                     <br>
                     <input class="text-input" oninput="saveUsername()" type="text" id="username" name="username">
                 </div>
-                <button id="create" class="form-button" type="submit">Save username</button>
+                <button id="create" class="form-button" onclick="localStorage.setItem('username', getUsername())">Save username</button>
                 <button id="close_btn" class="form-button" onclick="returnHome()">Go To Homepage</button>
             </form>
         </div>

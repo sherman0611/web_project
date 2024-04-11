@@ -22,6 +22,12 @@ footer {
   min-height: 100vh;
 }
 
+.two-columns.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 .main_section{
   padding: 2%;
   width: 100%;
@@ -64,6 +70,16 @@ select {
   flex-direction: column;
 }
 
+.nav-button, .logo {
+  background-color: #758874;
+  color: #F4EDB3;
+  padding: 10px;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  border-radius: 20px;
+}
+
 .logo {
   background-color: #758874;
   text-align: center;
@@ -73,14 +89,11 @@ select {
   flex-shrink: 0;
 }
 
-.nav-button, .logo {
-  background-color: #758874;
-  color: #F4EDB3;
-  padding: 10px;
-  font-size: 1.2rem;
-  transition: background-color 0.3s ease;
-  text-decoration: none;
-  border-radius: 20px;
+.arrow-left-icon {
+  height:20px;
+  position: absolute;
+  top: 5%;
+  left: calc(230px + 3%);
 }
 
 .nav-button.active {
@@ -147,9 +160,16 @@ select {
   border-radius: 25px;
   display: flex;
   width: calc(50% - 10px);
+  min-width: 285px;
+  max-width: 500px;
   margin-bottom: 20px;
   padding: 20px;
   box-sizing: border-box;
+  transition-duration: 0.4s;
+}
+
+.plant-entry-container:hover{
+  background-color: #AA7A54;
 }
 
 .plant-entry-container:last-child {
@@ -160,6 +180,28 @@ select {
   text-decoration: none;
   display: flex;
   width: 100%;
+  font-size: 0.9rem;
+  color: #21251E;
+}
+
+.view.plant-entry-container > a {
+  height: fit-content;
+  width: fit-content;
+}
+
+.view.plant-entry-container {
+  width: 100%;
+  max-width: unset;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.view.plant-entry-container:hover{
+  background-color: antiquewhite;
+}
+
+.view.plant-entry-container .txt-container {
+  flex-direction: column;
 }
 
 .plant-image {
@@ -171,9 +213,9 @@ select {
   border-radius: 15px;
 }
 
-/*.plant-info {*/
-/*  flex: 1;*/
-/*}*/
+.plant-entry-container .plant-info {
+  margin: auto;
+}
 
 /*END OF HOME PAGE*/
 
@@ -224,9 +266,10 @@ button:hover{
 /*  object-position: 25% 25%;*/
 /*}*/
 
-.form-button{
+.form-button, .return-button{
+  display: flex;
   background-color: #AA7A54;
-  margin-right: 10px;
+  margin: auto;
   color: #E4C9AC;
   transition-duration: 0.4s;
   border-radius: 20px;
@@ -234,12 +277,15 @@ button:hover{
   padding: 7px;
 }
 
+.return-button {
+  margin-top: 10px;
+}
+
 .container {
   display: flex;
 }
 
 .plant_details {
-  flex: 1;
   margin-right: 20px;
 }
 

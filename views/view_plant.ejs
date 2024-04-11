@@ -11,73 +11,80 @@
     <script src="/javascripts/plant_entry.js"></script>
 </head>
 <body onload="init()">
-    <%- include('partials/header') %>
-
-    <% if (plant_entry === null) { %>
-        <p>Cannot load plant_entry</p>
-    <% } else { %>
-        <% if(plant_entry.image) { %>
-            <% if(plant_entry.image.includes('public')) { %>
-                <img class="plant-image" src="<%= plant_entry.image.replace('public', '') %>" alt="<%= plant_entry.plant_name %>">
-            <% } else { %>
-                <img class="plant-image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
-            <% } %>
-        <% } else if(plant_entry.image_url) { %>
-            <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
-        <% } %>
-
-        <div class="plant_details">
-            <p>Plant submitted by <%= plant_entry.username %></p>
-            <p><%= plant_entry.date.substring(0, 10) %>, <%= plant_entry.location %></p>
-            <h1><%= plant_entry.plant_name %></h1>
-            <% if(plant_entry.date) { %>
-                <h2>Submitted by: <%= plant_entry.username %> on <%= plant_entry.date.substring(0, 10) %>
-                    <% if(plant_entry.time) { %>
-                        at <%= plant_entry.time %>
+    <div class="body_container">
+        <%- include('partials/header') %>
+        <div class="main_section">
+            <div class="view plant-entry-container">
+<!--                <button class="return-button" onclick="returnHome()">Go Back</button>-->
+                <a href="/home"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
+                <% if (plant_entry === null) { %>
+                    <p>Cannot load plant_entry</p>
+                <% } else { %>
+                    <% if(plant_entry.image) { %>
+                        <% if(plant_entry.image.includes('public')) { %>
+                            <img class="plant-image" src="<%= plant_entry.image.replace('public', '') %>" alt="<%= plant_entry.plant_name %>">
+                        <% } else { %>
+                            <img class="plant-image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
+                        <% } %>
+                    <% } else if(plant_entry.image_url) { %>
+                        <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
                     <% } %>
-                </h2>
-            <% } else { %>
-                <h2>Submitted by: <%= plant_entry.username %></h2>
-            <% } %>
-            <h3>Location: </h3>
-            <p><%= plant_entry.location %></p>
-            <h3>Description:</h3>
-            <p><%= plant_entry.description %></p>
-            <h3>Characteristics:</h3>
-            <p>Height: <%= plant_entry.height %></p>
-            <p>Spread: <%= plant_entry.spread %></p>
-            <p>Flowers:</p>
-        </div>
-
-        <div id="chat_interface">
-            <h2>Comments</h2>
-            <% if (comments === null) { %>
-                <p>Cannot load comments</p>
-            <% } else { %>
-                <div id="comments-container">
-                    <% comments.forEach(comment => { %>
-                        <div class="comment-container">
-                            <p><strong><%= comment.username %></strong></p>
-                            <p><%= comment.comment_text %></p>
-                            <p>Sent on <%= comment.date.substring(0, 10) %></p>
+                        <div class="txt-container">
+                            <h1><%= plant_entry.plant_name %></h1>
+                            <h2>Submitted by <%= plant_entry.username %></h2>
+                            <% if(plant_entry.date) { %>
+                                <p><%= plant_entry.date.substring(0, 10) %>,
+                            <% } else if(plant_entry.location) {%>
+                                <p>
+                            <% } if(plant_entry.location){%>
+                                <%= plant_entry.location %></p>
+                            <% }%>
                         </div>
-                        <hr>
-                    <% }); %>
+
+            </div>
+            <div class="two-columns container">
+                <div class="plant_details">
+                    <h3>Location: </h3>
+                    <p><%= plant_entry.location %></p>
+                    <h3>Description:</h3>
+                    <p><%= plant_entry.description %></p>
+                    <h3>Characteristics:</h3>
+                    <p>Height: <%= plant_entry.height %></p>
+                    <p>Spread: <%= plant_entry.spread %></p>
+                    <p>Flowers: <%= plant_entry.flowers %></p>
                 </div>
+                <div id="chat_interface">
+                    <h2>Comments</h2>
+                    <% if (comments === null) { %>
+                        <p>Cannot load comments</p>
+                    <% } else { %>
+                        <div id="comments-container">
+                            <% comments.forEach(comment => { %>
+                                <div class="comment-container">
+                                    <p><strong><%= comment.username %></strong></p>
+                                    <p><%= comment.comment_text %></p>
+                                    <p>Sent on <%= comment.date.substring(0, 10) %></p>
+                                </div>
+                                <hr>
+                            <% }); %>
+                        </div>
+                    <% } %>
+                    <form id="comment-form" onsubmit="sendComment(event)">
+                        <input type="hidden" id="plant-id" name="plant_id" value="<%= plant_id %>">
+                        <p>
+                            <label for="name">Your name: </label>
+                            <input type="text" id="username" name="username">
+                        </p>
+                        <p>
+                            <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
+                            <button class="form-button">Send</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
             <% } %>
-            <form id="comment-form" onsubmit="sendComment(event)">
-                <input type="hidden" id="plant-id" name="plant_id" value="<%= plant_id %>">
-                <p>
-                    <label for="name">Your name: </label>
-                    <input type="text" id="username" name="username">
-                </p>
-                <p>
-                    <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
-                    <button class="form-button">Send</button>
-                </p>
-            </form>
         </div>
-    <% } %>
-    <button class="return-button" onclick="returnHome()">Go Back</button>
+    </div>
+    <footer></footer>
 </body>
 </html>
