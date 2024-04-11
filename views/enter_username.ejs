@@ -2,22 +2,25 @@
 <html>
 <head>
     <title><%= title %></title>
-    <%- include('partials/header') %>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script src="/javascripts/main.js"></script>
 </head>
 <body>
-    <div class="main_section">
-        <h2>Enter your username: </h2>
-        <form id="create_username_form" action="enter_username" method="post">
-            <div>
-                <label for="username">Your username</label>
-                <br>
-                <input class="text-input" oninput="saveUsername()" type="text" id="username" name="username">
-            </div>
-            <button id="create" class="form-button" type="submit">Save username</button>
-        </form>
-        <button id="close_btn" class="form-button" onclick="returnHome()">Go To Homepage</button>
+    <div class="body_container">
+        <%- include('partials/header') %>
+        <div class="main_section">
+            <h2>Enter your username: </h2>
+            <form id="create_username_form" action="enter_username" method="post">
+                <div>
+                    <label for="username">Your username</label>
+                    <br>
+                    <input class="text-input" oninput="saveUsername()" type="text" id="username" name="username">
+                </div>
+                <button id="create" class="form-button" type="submit">Save username</button>
+                <button id="close_btn" class="form-button" onclick="returnHome()">Go To Homepage</button>
+            </form>
+        </div>
     </div>
+    <footer></footer>
 </body>
-<footer></footer>
 </html>
