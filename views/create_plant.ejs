@@ -7,6 +7,7 @@
         <link rel='stylesheet' href='/stylesheets/style.css'/>
         <script src="/javascripts/main.js"></script>
         <script src="/javascripts/create_plant.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
     <body>
         <div class="body_container">
@@ -35,18 +36,29 @@
                         <p>
                             <label for="coordinates">Coordinates of the finding</label>
                             <br>
-                            <input class="text-input" type="text" id="coordinates_latitude" name="coordinates_latitude" value="00.00">
-                            <select name="cars" id="cars">
-                                <option value="N">N</option>
-                                <option value="S">S</option>
-                            </select>
-                            <input class="text-input" type="text" id="coordinates_longitude" name="coordinates_longitude" value="00.00">
-                            <select name="cars" id="cars">
-                                <option value="E">E</option>
-                                <option value="W">W</option>
-                            </select>
+                            <button type="button" onclick="getLocation()">Try It</button>
+                            <div id="location_container" ></div>
+                            <div id="map"></div>
+<!--                            <button onclick="getLocation()">Get Location</button>-->
+<!--                            <p id="location">-->
+<!--                             Latitude: <input type="text" name="latitude" id="latitude">-->
+<!--                             Longitude: <input type="text" name="longitude" id="longitude">-->
+<!--                            </p>-->
+<!--                            <input class="text-input" type="text" id="coordinates_latitude" name="coordinates_latitude" value="00.00">-->
+<!--                            <select name="cars" id="cars">-->
+<!--                                <option value="N">N</option>-->
+<!--                                <option value="S">S</option>-->
+<!--                            </select>-->
+<!--                            <input class="text-input" type="text" id="coordinates_longitude" name="coordinates_longitude" value="00.00">-->
+<!--                            <select name="cars" id="cars">-->
+<!--                                <option value="E">E</option>-->
+<!--                                <option value="W">W</option>-->
+<!--                            </select>-->
                         </p>
+
                     </div>
+
+
                     <br>
                     <div class="add_plant_entry_container">
                         <h3>Identification</h3>

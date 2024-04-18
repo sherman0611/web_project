@@ -2,6 +2,7 @@ let username = null;
 let plant_id = null;
 let socket = io();
 
+let map, infoWindow
 function init() {
     plant_id = document.getElementById('plant-id').value;
 
@@ -64,3 +65,60 @@ function writeNewComment(data) {
 
     document.getElementById('comment-text').value = '';
 }
+// function initMap() {
+//     // Coordinates will be set dynamically via HTML data attributes
+//     const mapElement = document.getElementById('map');
+//     const lat = parseFloat(mapElement.dataset.lat);
+//     const lng = parseFloat(mapElement.dataset.lng);
+//
+//     const location = {lat: lat, lng: lng};
+//     const map = new google.maps.Map(mapElement, {
+//         zoom: 8,
+//         center: location
+//     });
+//     const marker = new google.maps.Marker({
+//         position: location,
+//         map: map
+//     });
+// }
+// function initMap() {
+//     var location = {lat: <%= plant_entry.latitude %>, lng: <%= plant_entry.longitude %>};
+//     var map = new google.maps.Map(document.getElementById('map'), {
+//         zoom: 8,
+//         center: location
+//     });
+//     var marker = new google.maps.Marker({
+//         position: location,
+//         map: map
+//     });
+// }
+
+
+
+async function initMap() {
+    // The location of Uluru
+
+    const mapElement = document.getElementById('map');
+    const lat = parseFloat(mapElement.dataset.lat);
+    const lng = parseFloat(mapElement.dataset.lng);
+
+    const location = {lat: lat, lng: lng};
+
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+    map = new Map(mapElement, {
+        zoom: 4,
+        center: location,
+        mapId: "DEMO_MAP_ID",
+    });
+
+    const marker = new AdvancedMarkerElement({
+        map: map,
+        position: location,
+        title: "Uluru",
+    });
+}
+initMap();
+
+
