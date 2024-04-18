@@ -18,3 +18,8 @@ function saveUsername(){
 function getUsername(){
     return localStorage.getItem("username")
 }
+
+function sortPlants() {
+    var sortValue = document.getElementById('sort-select').value;
+    window.location.href = '/home?sort=' + sortValue;
+}
