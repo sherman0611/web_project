@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/style.css'/>
         <script src="javascripts/main.js"></script>
+        <script src="javascripts/index.js"></script>
     </head>
     <body>
         <div class="body_container">
@@ -16,9 +17,10 @@
                         <input id="search-input" type="text" placeholder="Search plants..">
                         <button><img src="images/search_icon.png" alt="search button"/></button>
                     </div>
-                    <select id="sort-select" onchange="sortPlants()">
-                        <option value="date-asc" <%= sortOption === 'date-asc' ? 'selected' : '' %>>Sort by Date Ascending</option>
-                        <option value="date-desc" <%= sortOption === 'date-desc' ? 'selected' : '' %>>Sort by Date Descending</option>
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select" onchange="sortPlants(<%data%>)">
+                        <option value="date-asc">Date Ascending</option>
+                        <option value="date-desc" selected="selected">Date Descending</option>
                     </select>
                 </div>
 

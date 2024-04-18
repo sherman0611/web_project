@@ -3,6 +3,7 @@ var router = express.Router();
 const plant_entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
 var multer = require("multer");
+var sortOption = ''
 
 var storage = multer.diskStorage({
     destination :function(req, file, cb){
@@ -30,16 +31,8 @@ let upload = multer({ storage: storage });
 
 /* GET home page with sorting. */
 router.get('/home', function(req, res, next) {
-    console.log('Query parameter - sort:', req.query.sort);
-    let sortOrder = { date: (sortOption === 'date-desc' ? -1 : 1) };
 
-    if (sortOption === 'date-asc') {
-        sortOrder = { date: 1 }; // Ascending order
-    } else if (sortOption === 'date-desc') {
-        sortOrder = { date: -1 }; // Descending order
-    }
-
-    let result = plant_entries.getAll(sortOrder);
+    let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
         res.render('index', { title: 'Plantgram', data: data, sortOption: sortOption });
