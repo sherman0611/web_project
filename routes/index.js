@@ -130,6 +130,7 @@ router.get('/edit_plant/:id', function(req, res, next) {
     Promise.all([plantResult])
         .then(results => {
             let plantData = JSON.parse(results[0]);
+            console.log(plantResult)
             res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
         })
         .catch(errors => {

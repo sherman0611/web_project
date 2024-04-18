@@ -7,48 +7,49 @@
         <link rel='stylesheet' href='/stylesheets/style.css'/>
         <script src="/javascripts/main.js"></script>
         <script src="/javascripts/create_plant.js"></script>
+        <script src="/javascripts/plant_entry.js"></script>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
     <body>
         <div class="body_container">
             <%- include('partials/header') %>
+            <% if (plant_entry === null) { %>
+                <p>Cannot load plant_entry</p>
+            <% } else { %>
             <div class="main_section">
-                <h2 class="create_entry_title">New plant sightings</h2>
+                <h2 class="create_entry_title">Edit your plant entry</h2>
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div class="add_plant_entry_container">
                         <h3>Basic details</h3>
-                        <p id="username-paragraph">
-                            <label for="username">Your username</label>
-                            <br>
-                        </p>
-                        <br>
                         <p>
                             <label for="description">Plant description </label>
                             <br>
-                            <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
+                            <textarea class="text_box" name="description" rows="4" cols="50"><%= plant_entry.description%></textarea>
                         </p>
                         <p>
                             <label for="date">Date Seen</label>
                             <br>
-                            <input type="date" id="date" name="date">
+                            <input type="date" id="date" name="date" value="<%= plant_entry.date%>">
                         </p>
 
                         <p>
                             <label for="time">Time Seen</label>
                             <br>
-                            <input type="time" id="time" name="time">
+                            <input type="time" id="time" name="time" value="<%= plant_entry.time%>">
+<!--                            TODO-->
                         </p>
 
                         <p>
                             <label for="location">Location found </label>
                             <br>
-                            <input class="text-input" type="text" id="location" name="location" placeholder="Location...">
+                            <input class="text-input" type="text" id="location" name="location" value="<%= plant_entry.location%>"">
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding(optional)</label>
+                            <label for="coordinates">Coordinates of the finding (optional)</label>
                             <br>
                             <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
                         </p>
+<!--                        TODO-->
 
                     </div>
 
@@ -59,7 +60,7 @@
                         <p>
                             <label for="plant_name">Plant name </label>
                             <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name" placeholder="Name..." required>
+                            <input class="text-input" type="text" id="plant_name" name="plant_name" value="<%= plant_entry.plant_name%>" required>
                         </p>
                         <p>
                             <label for="plant_certainty">Plant unknown or uncertain?</label>
@@ -145,6 +146,7 @@
                 <button class="return-button" onclick="returnHome()">Go Back</button>
 
             </div>
+            <%}%>
         </div>
     </body>
     <footer></footer>
