@@ -24,7 +24,7 @@ function goToReferrer(){
 }
 
 function enterUsernameField() {
-    let html_to_insert = '<input class = "text-input" value = "'+getUsername()+'" type = "text" id = "username" name = "username" >'
+    let html_to_insert = '<input class = "text-input" value = "'+getUsername()+'" type = "text" id = "username" name="username" >'
     document.getElementById("enter_username_field").insertAdjacentHTML('beforeend',html_to_insert)
 }
 

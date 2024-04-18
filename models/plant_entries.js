@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let PlantEntrySchema  = new Schema({
-        // username: {type: String, max: 20, required: true},
+        username: {type: String, max: 20, required: false},
         plant_name: {type: String, max: 50, required: true},
         image: {type: String, required: false},
         image_url : {type: String, required: false},
@@ -20,8 +20,10 @@ let PlantEntrySchema  = new Schema({
         sun_exposure: {type: String, max: 100, required: true},
         identification_status: {type: Boolean, required: true},
         // dbpedia_URI: {type: String, max: 100, required: false},
-        date: { type: Date},
-        time: { type: String, required: true}
+        dateSeen: { type: Date, required: false},
+        datePost: { type: Date, default:Date.now()},
+        timeSeen: { type: String, required: false},
+        timePost: { type: String, default: () => new Date().toTimeString().split(' ')[0] }
     }
 );
 

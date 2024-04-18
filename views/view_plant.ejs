@@ -55,9 +55,13 @@
                     <h3>Description:</h3>
                     <p><%= plant_entry.description %></p>
                     <h3>Characteristics:</h3>
-                    <p>Height: <%= plant_entry.height %></p>
-                    <p>Spread: <%= plant_entry.spread %></p>
-                    <p>Flowers: <%= plant_entry.flowers %></p>
+                    <p>Height: <%= plant_entry.height %> cm</p>
+                    <p>Spread: <%= plant_entry.spread %> cm </p>
+                    <% if( plant_entry.flowers == 'True') {%>
+                        <p>Flowers: yes</p>
+                    <% } else { %>
+                        <p>Flowers: no</p>
+                    <% }%>
                 </div>
                 <div id="chat_interface">
                     <h2>Comments</h2>
