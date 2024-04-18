@@ -24,8 +24,7 @@ router.get('/home', function(req, res, next) {
         let data = JSON.parse(plant_entries);
         res.render('index', { title: 'Plantgram', data: data});
     }).catch(err => {
-        res.render('index', { title: 'Plantgram', data: null });
-    });
+        console.log("Error retrieving plant entries: ", err);
 });
 
 
