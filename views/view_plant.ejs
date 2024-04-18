@@ -10,13 +10,15 @@
     <script src="/javascripts/main.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
-<body onload="init()">
+<body onload="init(); identifyAuthor()">
+    <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
     <div class="body_container">
         <%- include('partials/header') %>
-        <div class="main_section">
-            <div class="view plant-entry-container">
-<!--                <button class="return-button" onclick="returnHome()">Go Back</button>-->
+        <div class="main_section view_plant">
+            <div class="nav-links">
                 <a href="/home"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
+            </div>
+            <div class="view plant-entry-container">
                 <% if (plant_entry === null) { %>
                     <p>Cannot load plant_entry</p>
                 <% } else { %>
@@ -31,37 +33,47 @@
                     <% } %>
                         <div class="txt-container">
                             <h1><%= plant_entry.plant_name %></h1>
-                            <h2>Submitted by <%= plant_entry.username %></h2>
+                            <h2>Submitted by <span id="plant_author"><%= plant_entry.username %></span></h2>
                             <% if(plant_entry.date) { %>
                                 <h4>Date Seen: </h4>
                                 <p><%= plant_entry.date.substring(0, 10) %></p>
                                     <% }%>
-                            <h4>Spotted in:</h4>
                             <% if(plant_entry.location){%>
-                                 <p> <%= plant_entry.location %></p>
+                                <h4>Spotted in:</h4>
+                                <p> <%= plant_entry.location %></p>
                             <% }%>
-                            <h4>Time Seen: </h4>
-                            <p><%= plant_entry.time %></p>
+                            <% if(plant_entry.time){%>
+                                <h4>Time Seen: </h4>
+                                <p><%= plant_entry.time %></p>
+                            <% }%>
                         </div>
             </div>
             <div class="two-columns container">
                 <div class="plant_details">
-                    <h3>Location: </h3>
-                    <p><%= plant_entry.location %></p>
+                    <% if(plant_entry.location){%>
+                        <h3>Location: </h3>
+                        <p><%= plant_entry.location %></p>
+                    <%}%>
                     <% if(plant_entry.latitude && plant_entry.longitude) { %>
                         <div id="map" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
-                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
                     <% }%>
-                    <h3>Description:</h3>
-                    <p><%= plant_entry.description %></p>
+                    <% if(plant_entry.description){%>
+                        <h3>Description:</h3>
+                        <p><%= plant_entry.description %></p>
+                    <%}%>
                     <h3>Characteristics:</h3>
-                    <p>Height: <%= plant_entry.height %> cm</p>
-                    <p>Spread: <%= plant_entry.spread %> cm </p>
-                    <% if( plant_entry.flowers == 'True') {%>
-                        <p>Flowers: yes</p>
-                    <% } else { %>
-                        <p>Flowers: no</p>
-                    <% }%>
+
+                    <% if(plant_entry.height){%>
+                        <p>Height: <%= plant_entry.height %></p>
+                    <%}%>
+                    <% if(plant_entry.height){%>
+                        <p>Spread: <%= plant_entry.spread %></p>
+                    <%}%>
+                    <% if(plant_entry.height){%>
+                        <p>Flowers: <%= plant_entry.flowers %></p>
+                    <%}%>
+
                 </div>
                 <div id="chat_interface">
                     <h2>Comments</h2>
