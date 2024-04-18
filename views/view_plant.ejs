@@ -39,14 +39,18 @@
                             <% } if(plant_entry.location){%>
                                 <%= plant_entry.location %></p>
                             <% }%>
+                            <h3>Time Seen: </h3>
+                            <p><%= plant_entry.time %></p>
                         </div>
             </div>
             <div class="two-columns container">
                 <div class="plant_details">
                     <h3>Location: </h3>
                     <p><%= plant_entry.location %></p>
-                    <div id="map" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
-                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGvGYs8Eyb8PI9GSsgBbooahxiNEfSV5Q&callback=initMap"></script>
+                    <% if(plant_entry.latitude && plant_entry.longitude) { %>
+                        <div id="map" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
+                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
+                    <% }%>
                     <h3>Description:</h3>
                     <p><%= plant_entry.description %></p>
                     <h3>Characteristics:</h3>

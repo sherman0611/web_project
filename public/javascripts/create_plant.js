@@ -11,17 +11,13 @@ function getLocation() {
     }
 }
 
-// function showPosition(position) {
-//     container.innerHTML = "Latitude: " + position.coords.latitude +
-//         "<br>Longitude: " + position.coords.longitude;
-// }
 function showPosition(position) {
     let add_plant_entry_container = document.getElementsByClassName("add_plant_entry_container")[0];
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
-    var latDirection = lat >= 0 ? "N" : "S";
-    var lonDirection = lon >= 0 ? "E" : "W";
-
+    // var latDirection = lat >= 0 ? "N" : "S";
+    // var lonDirection = lon >= 0 ? "E" : "W";
+    //
     // lat = Math.abs(lat);
     // lon = Math.abs(lon);
 
