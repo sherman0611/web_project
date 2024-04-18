@@ -31,7 +31,6 @@ let upload = multer({ storage: storage });
 
 /* GET home page with sorting. */
 router.get('/home', function(req, res, next) {
-
     let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);

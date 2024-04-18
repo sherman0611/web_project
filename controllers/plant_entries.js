@@ -34,24 +34,24 @@ exports.create = function (plantData, filePath) {
 }
 
 // Function to get all plant entries without sorting. Keep for now in case sorting fails.
-// exports.getAll = function () {
-//     return plantEntryModel.find({}).then(plantEntry => {
-//         return JSON.stringify(plantEntry);
-//     }).catch(err => {
-//         console.log(err);
-//         return null;
-//     });
-// };
-
-// Function to get all plant entries with optional sorting
-exports.getAll = function (sortOrder = { date: 1 }) {  // Default sorting by date in ascending order if not provided
-    return plantEntryModel.find({}).sort(sortOrder).then(plantEntries => {
-        return JSON.stringify(plantEntries);
+exports.getAll = function () {
+    return plantEntryModel.find({}).then(plantEntry => {
+        return JSON.stringify(plantEntry);
     }).catch(err => {
         console.log(err);
         return null;
     });
 };
+
+// // Function to get all plant entries with optional sorting
+// exports.getAll = function (sortOrder = { date: 1 }) {  // Default sorting by date in ascending order if not provided
+//     return plantEntryModel.find({}).sort(sortOrder).then(plantEntries => {
+//         return JSON.stringify(plantEntries);
+//     }).catch(err => {
+//         console.log(err);
+//         return null;
+//     });
+// };
 
 // Function to get plant entry by ID
 exports.getById = function (plant_id) {
