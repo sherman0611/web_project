@@ -38,28 +38,40 @@
                                 <h4>Date Seen: </h4>
                                 <p><%= plant_entry.date.substring(0, 10) %></p>
                                     <% }%>
-                            <h4>Spotted in:</h4>
                             <% if(plant_entry.location){%>
-                                 <p> <%= plant_entry.location %></p>
+                                <h4>Spotted in:</h4>
+                                <p> <%= plant_entry.location %></p>
                             <% }%>
-                            <h4>Time Seen: </h4>
-                            <p><%= plant_entry.time %></p>
+                            <% if(plant_entry.time){%>
+                                <h4>Time Seen: </h4>
+                                <p><%= plant_entry.time %></p>
+                            <% }%>
                         </div>
             </div>
             <div class="two-columns container">
                 <div class="plant_details">
-                    <h3>Location: </h3>
-                    <p><%= plant_entry.location %></p>
+                    <% if(plant_entry.location){%>
+                        <h3>Location: </h3>
+                        <p><%= plant_entry.location %></p>
+                    <%}%>
                     <% if(plant_entry.latitude && plant_entry.longitude) { %>
                         <div id="map" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
-                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
                     <% }%>
-                    <h3>Description:</h3>
-                    <p><%= plant_entry.description %></p>
+                    <% if(plant_entry.description){%>
+                        <h3>Description:</h3>
+                        <p><%= plant_entry.description %></p>
+                    <%}%>
                     <h3>Characteristics:</h3>
-                    <p>Height: <%= plant_entry.height %></p>
-                    <p>Spread: <%= plant_entry.spread %></p>
-                    <p>Flowers: <%= plant_entry.flowers %></p>
+                    <% if(plant_entry.height){%>
+                        <p>Height: <%= plant_entry.height %></p>
+                    <%}%>
+                    <% if(plant_entry.height){%>
+                        <p>Spread: <%= plant_entry.spread %></p>
+                    <%}%>
+                    <% if(plant_entry.height){%>
+                        <p>Flowers: <%= plant_entry.flowers %></p>
+                    <%}%>
                 </div>
                 <div id="chat_interface">
                     <h2>Comments</h2>
