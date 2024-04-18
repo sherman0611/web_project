@@ -16,9 +16,9 @@
                         <input id="search-input" type="text" placeholder="Search plants..">
                         <button><img src="images/search_icon.png" alt="search button"/></button>
                     </div>
-                    <select id="sort-select" onchange="sortPlants()">
-                        <option value="date-asc" <%= sortOption === 'date-asc' ? 'selected' : '' %>>Sort by Date Ascending</option>
-                        <option value="date-desc" <%= sortOption === 'date-desc' ? 'selected' : '' %>>Sort by Date Descending</option>
+                    <select id="sort-select" onchange=sortBy(this.value)>
+                        <option value="date-asc">Sort by Date Ascending</option>
+                        <option value="date-desc">Sort by Date Descending</option>
                     </select>
                 </div>
 
