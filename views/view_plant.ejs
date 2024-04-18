@@ -10,13 +10,15 @@
     <script src="/javascripts/main.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
-<body onload="init()">
+<body onload="init(); identifyAuthor()">
+    <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
     <div class="body_container">
         <%- include('partials/header') %>
-        <div class="main_section">
-            <div class="view plant-entry-container">
-<!--                <button class="return-button" onclick="returnHome()">Go Back</button>-->
+        <div class="main_section view_plant">
+            <div class="nav-links">
                 <a href="/home"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
+            </div>
+            <div class="view plant-entry-container">
                 <% if (plant_entry === null) { %>
                     <p>Cannot load plant_entry</p>
                 <% } else { %>
@@ -31,7 +33,7 @@
                     <% } %>
                         <div class="txt-container">
                             <h1><%= plant_entry.plant_name %></h1>
-                            <h2>Submitted by <%= plant_entry.username %></h2>
+                            <h2>Submitted by <span id="plant_author"><%= plant_entry.username %></span></h2>
                             <% if(plant_entry.date) { %>
                                 <h4>Date Seen: </h4>
                                 <p><%= plant_entry.date.substring(0, 10) %></p>
