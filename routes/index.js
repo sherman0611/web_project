@@ -30,22 +30,13 @@ let upload = multer({ storage: storage });
 
 /* GET home page with sorting. */
 router.get('/home', function(req, res, next) {
-    console.log('Query parameter - sort:', req.query.sort);
-    let sortOrder = { date: (sortOption === 'date-desc' ? -1 : 1) };
-
-    if (sortOption === 'date-asc') {
-        sortOrder = { date: 1 }; // Ascending order
-    } else if (sortOption === 'date-desc') {
-        sortOrder = { date: -1 }; // Descending order
-    }
-
-    let result = plant_entries.getAll(sortOrder);
+    let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data, sortOption: sortOption });
+        res.render('index', { title: 'Plantgram', data: data });
     }).catch(err => {
         console.log("Error retrieving plant entries: ", err);
-        res.render('index', { title: 'Plantgram', data: null, sortOption: sortOption });
+        res.render('index', { title: 'Plantgram', data: null });
     });
 });
 
@@ -56,7 +47,14 @@ router.get('/enter_username', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    res.render('enter_username', { title: 'Enter your username' });
+    let result = plant_entries.getAll();
+    result.then(plant_entries => {
+        let data = JSON.parse(plant_entries);
+        res.render('index', { title: 'Plantgram', data: data });
+    }).catch(err => {
+        console.log("Error retrieving plant entries: ", err);
+        res.render('index', { title: 'Plantgram', data: null });
+    });
 });
 
 router.post('/enter_username', function(req, res, next) {
