@@ -36,7 +36,7 @@ function getUsername() {
     return username
 }
 
-function sortPlants() {
-    var sortValue = document.getElementById('sort-select').value;
-    window.location.href = '/home?sort=' + sortValue;
-}
+// function sortPlants() {
+//     var sortValue = document.getElementById('sort-select').value;
+//     window.location.href = '/home?sort=' + sortValue;
+// }

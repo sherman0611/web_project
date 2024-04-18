@@ -219,8 +219,10 @@ select {
 
 /*END OF HOME PAGE*/
 
-button:hover {
-  background-color: #758874;
+
+button:hover{
+  /*background-color: #758874;*/
+  background-color: #AA7A54;
   cursor: pointer;
 }
 
@@ -233,6 +235,28 @@ button:hover {
   padding: 5px;
   margin: auto;
   color:#AA7A54;
+}
+
+.submitLocation{
+  display: flex;
+  background-color: #758874;
+  margin: auto;
+  color: #E4C9AC;
+  transition-duration: 0.4s;
+  border-radius: 10px;
+  border: 0 hidden;
+  padding: 7px;
+}
+
+input::file-selector-button {
+  display: flex;
+  background-color: #758874;
+  margin: auto;
+  color: #E4C9AC;
+  transition-duration: 0.4s;
+  border-radius: 10px;
+  border: 0 hidden;
+  padding: 7px;
 }
 
 .text_box {
