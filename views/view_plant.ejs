@@ -10,7 +10,7 @@
     <script src="/javascripts/main.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
-<body onload="init(); identifyAuthor()">
+<body onload="init(); identifyAuthor(); usernameDefining()">
     <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
     <div class="body_container">
         <%- include('partials/header') %>
@@ -93,9 +93,11 @@
                     <% } %>
                     <form id="comment-form" onsubmit="sendComment(event)">
                         <input type="hidden" id="plant-id" name="plant_id" value="<%= plant_id %>">
-                        <p>
-                            <label for="name">Your name: </label>
-                            <input type="text" id="username" name="username">
+                        <p id="username-paragraph">
+                            <label for="username">Your username</label>
+                            <br>
+<!--                            <label for="name">Your name: </label>-->
+<!--                            <input type="text" id="username" name="username">-->
                         </p>
                         <p>
                             <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">

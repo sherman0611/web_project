@@ -1,4 +1,3 @@
-let username = null;
 let plant_id = null;
 let socket = io();
 
@@ -26,11 +25,10 @@ function identifyAuthor(){
 function sendComment(event) {
     event.preventDefault();
 
-    username = document.getElementById('username').value;
-    if (!username) {
-        username = 'Anon' + Math.floor(Math.random() * 1000);
-        document.getElementById('username').value = username;
-    }
+    // let username = getUsername();
+    // if (username==="") {
+    //
+    // }
 
     // Send AJAX request to the server to create comment
     $.ajax({

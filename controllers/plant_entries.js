@@ -3,7 +3,7 @@ const plantEntryModel = require('../models/plant_entries');
 // Function to create new plant entries
 exports.create = function (plantData, filePath) {
     let plant_entry = new plantEntryModel({
-        // username: plantData.username,
+        username: plantData.username,
         plant_name: plantData.plant_name,
         image: filePath,
         image_url: plantData.image_url,
