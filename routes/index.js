@@ -18,13 +18,35 @@ var storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 /* GET home page without sorting. Keep for now just in case the sorting fails somehow. */
+// router.get('/home', function(req, res, next) {
+//     let result = plant_entries.getAll();
+//     result.then(plant_entries => {
+//         let data = JSON.parse(plant_entries);
+//         res.render('index', { title: 'Plantgram', data: data});
+//     }).catch(err => {
+//         res.render('index', { title: 'Plantgram', data: null });
+//     });
+// });
+
+/* GET home page with sorting. */
 router.get('/home', function(req, res, next) {
-    let result = plant_entries.getAll();
+    console.log('Query parameter - sort:', req.query.sort);
+    let sortOrder = { date: (sortOption === 'date-desc' ? -1 : 1) };
+
+    if (sortOption === 'date-asc') {
+        sortOrder = { date: 1 }; // Ascending order
+    } else if (sortOption === 'date-desc') {
+        sortOrder = { date: -1 }; // Descending order
+    }
+
+    let result = plant_entries.getAll(sortOrder);
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data});
+        res.render('index', { title: 'Plantgram', data: data, sortOption: sortOption });
     }).catch(err => {
         console.log("Error retrieving plant entries: ", err);
+        res.render('index', { title: 'Plantgram', data: null, sortOption: sortOption });
+    });
 });
 
 
