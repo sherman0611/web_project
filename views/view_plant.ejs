@@ -33,13 +33,14 @@
                             <h1><%= plant_entry.plant_name %></h1>
                             <h2>Submitted by <%= plant_entry.username %></h2>
                             <% if(plant_entry.date) { %>
-                                <p><%= plant_entry.date.substring(0, 10) %>,
-                            <% } else if(plant_entry.location) {%>
-                                <p>
-                            <% } if(plant_entry.location){%>
-                                <%= plant_entry.location %></p>
+                                <h4>Date Seen: </h4>
+                                <p><%= plant_entry.date.substring(0, 10) %></p>
+                                    <% }%>
+                            <h4>Spotted in:</h4>
+                            <% if(plant_entry.location){%>
+                                 <p> <%= plant_entry.location %></p>
                             <% }%>
-                            <h3>Time Seen: </h3>
+                            <h4>Time Seen: </h4>
                             <p><%= plant_entry.time %></p>
                         </div>
             </div>
