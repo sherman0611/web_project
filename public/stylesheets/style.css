@@ -315,3 +315,8 @@ button:hover{
   margin-top: 1%;
 }
 /*END USERNAME SECTION*/
+
+#map {
+  height: 500px;
+  width: 500px;
+}
