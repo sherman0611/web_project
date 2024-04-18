@@ -219,7 +219,7 @@ select {
 
 /*END OF HOME PAGE*/
 
-button:hover{
+button:hover {
   background-color: #758874;
   cursor: pointer;
 }
@@ -266,8 +266,10 @@ button:hover{
 /*  object-position: 25% 25%;*/
 /*}*/
 
-.form-button, .return-button{
+.form-button, .return-button {
   display: flex;
+  text-decoration: none;
+  width: fit-content;
   background-color: #AA7A54;
   margin: auto;
   color: #E4C9AC;
@@ -275,6 +277,11 @@ button:hover{
   border-radius: 20px;
   border: 0 hidden;
   padding: 7px;
+  margin-top: 1%;
+}
+
+a .form-button {
+  text-decoration: none;
 }
 
 .return-button {

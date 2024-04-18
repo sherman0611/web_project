@@ -15,8 +15,25 @@ function saveUsername(){
     localStorage.setItem('username', username);
 }
 
-function getUsername(){
-    return localStorage.getItem("username")
+function goToReferrer(){
+    if(document.referrer.includes("enter_username")){
+        document.location = "/home"
+    } else {
+        document.location = document.referrer
+    }
+}
+
+function enterUsernameField() {
+    let html_to_insert = '<input class = "text-input" value = "'+getUsername()+'" type = "text" id = "username" name = "username" >'
+    document.getElementById("enter_username_field").insertAdjacentHTML('beforeend',html_to_insert)
+}
+
+function getUsername() {
+    let username = localStorage.getItem("username")
+    if(username===undefined){
+        username=""
+    }
+    return username
 }
 
 function sortPlants() {

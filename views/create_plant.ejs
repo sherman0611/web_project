@@ -9,7 +9,7 @@
         <script src="/javascripts/create_plant.js"></script>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
-    <body>
+    <body onload="usernameDefining()">
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
@@ -17,11 +17,10 @@
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div class="add_plant_entry_container">
                         <h3>Basic details</h3>
-                        <!--                <p>-->
-                        <!--                    <label for="username">Your username</label>-->
-                        <!--                    <br>-->
-                        <!--                    <input class="text_input" type="text" id="username" name="username">-->
-                        <!--                </p>-->
+                        <p id="username-paragraph">
+                            <label for="username">Your username</label>
+                            <br>
+                        </p>
                         <br>
                         <p>
                             <label for="description">Plant description </label>
@@ -36,7 +35,7 @@
                         <p>
                             <label for="coordinates">Coordinates of the finding</label>
                             <br>
-                            <button type="button" onclick="getLocation()">Try It</button>
+                            <button class="form-button" type="button" onclick="getLocation()">Try It</button>
                             <div id="location_container" ></div>
                             <div id="map"></div>
 <!--                            <button onclick="getLocation()">Get Location</button>-->
