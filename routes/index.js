@@ -18,13 +18,26 @@ var storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 /* GET home page without sorting. Keep for now just in case the sorting fails somehow. */
+// router.get('/home', function(req, res, next) {
+//     let result = plant_entries.getAll();
+//     result.then(plant_entries => {
+//         let data = JSON.parse(plant_entries);
+//         res.render('index', { title: 'Plantgram', data: data});
+//     }).catch(err => {
+//         res.render('index', { title: 'Plantgram', data: null });
+//     });
+// });
+
+/* GET home page with sorting. */
 router.get('/home', function(req, res, next) {
     let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data});
+        res.render('index', { title: 'Plantgram', data: data });
     }).catch(err => {
         console.log("Error retrieving plant entries: ", err);
+        res.render('index', { title: 'Plantgram', data: null });
+    });
 });
 
 
@@ -37,7 +50,7 @@ router.get('/', function(req, res, next) {
     let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data});
+        res.render('index', { title: 'Plantgram', data: data });
     }).catch(err => {
         console.log("Error retrieving plant entries: ", err);
         res.render('index', { title: 'Plantgram', data: null });
@@ -51,24 +64,24 @@ router.post('/enter_username', function(req, res, next) {
 
 /* GET create plant entry page. */
 router.get('/create_plant', function(req, res, next) {
-  res.render('create_plant', { title: 'Create plant entry' });
+    res.render('create_plant', { title: 'Create plant entry' });
 });
 
 /* POST create plant entry form. */
 router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
-  let plantData = req.body;
-  let filePath = null;
-  if (req.file && req.file.path) {
+    let plantData = req.body;
+    let filePath = null;
+    if (req.file && req.file.path) {
         filePath = req.file.path;
         console.log(req.file);
     }
-  console.log(req.file);
-  let result = plant_entries.create(plantData, filePath);
-  result.then(plant_entry => {
-    res.redirect('/home');
-  }).catch(err => {
-    console.log("cannot create post");
-  });
+    console.log(req.file);
+    let result = plant_entries.create(plantData, filePath);
+    result.then(plant_entry => {
+        res.redirect('/home');
+    }).catch(err => {
+        console.log("cannot create post");
+    });
 });
 
 /* GET plant entry page. */
@@ -108,6 +121,24 @@ router.post('/create_comment', function(req, res, next) {
         console.log("cannot create comment");
         res.status(500).send("Cannot create comment");
     });
+});
+
+router.get('/edit_plant/:id', function(req, res, next) {
+    const plant_id = req.params.id;
+
+    let plantResult = plant_entries.getById(plant_id);
+    Promise.all([plantResult])
+        .then(results => {
+            let plantData = JSON.parse(results[0]);
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+        })
+        .catch(errors => {
+            let plantData = null;
+            if (!errors[0]) {
+                plantData = JSON.parse(errors[0]);
+            }
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+        });
 });
 
 module.exports = router;
