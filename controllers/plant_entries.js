@@ -3,7 +3,7 @@ const plantEntryModel = require('../models/plant_entries');
 // Function to create new plant entries
 exports.create = function (plantData, filePath) {
     let plant_entry = new plantEntryModel({
-        // username: plantData.username,
+        username: plantData.username,
         plant_name: plantData.plant_name,
         image: filePath,
         image_url: plantData.image_url,
@@ -25,7 +25,6 @@ exports.create = function (plantData, filePath) {
     });
 
     return plant_entry.save().then(plantEntry => {
-        console.log(plantEntry)
         return JSON.stringify(plantEntry);
     }).catch(err => {
         console.log(err);
@@ -33,7 +32,6 @@ exports.create = function (plantData, filePath) {
     })
 }
 
-// Function to get all plant entries without sorting. Keep for now in case sorting fails.
 exports.getAll = function () {
     return plantEntryModel.find({}).then(plantEntry => {
         return JSON.stringify(plantEntry);

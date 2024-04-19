@@ -1,4 +1,3 @@
-let username = null;
 let plant_id = null;
 let socket = io();
 
@@ -14,14 +13,22 @@ function init() {
     });
 }
 
+function identifyAuthor(){
+    console.log(document.getElementById("plant_author").innerText)
+    if(getUsername() === document.getElementById("plant_author").innerText){
+        let plant_id = document.getElementById("plant_id").value
+        let html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>'
+        document.getElementsByClassName("nav-links")[0].insertAdjacentHTML("beforeend", html_to_insert)
+    }
+}
+
 function sendComment(event) {
     event.preventDefault();
 
-    username = document.getElementById('username').value;
-    if (!username) {
-        username = 'Anon' + Math.floor(Math.random() * 1000);
-        document.getElementById('username').value = username;
-    }
+    // let username = getUsername();
+    // if (username==="") {
+    //
+    // }
 
     // Send AJAX request to the server to create comment
     $.ajax({

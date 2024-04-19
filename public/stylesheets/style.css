@@ -91,9 +91,6 @@ select {
 
 .arrow-left-icon {
   height:20px;
-  position: absolute;
-  top: 5%;
-  left: calc(230px + 3%);
 }
 
 .nav-button.active {
@@ -192,8 +189,9 @@ select {
 .view.plant-entry-container {
   width: 100%;
   max-width: unset;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .view.plant-entry-container:hover{
@@ -202,6 +200,18 @@ select {
 
 .view.plant-entry-container .txt-container {
   flex-direction: column;
+}
+
+.view_plant .nav-links{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom:1.5%;
+}
+
+.view_plant .nav-links .form-button {
+  margin: unset;
 }
 
 .plant-image {
@@ -219,8 +229,10 @@ select {
 
 /*END OF HOME PAGE*/
 
+
 button:hover{
-  background-color: #758874;
+  /*background-color: #758874;*/
+  background-color: #AA7A54;
   cursor: pointer;
 }
 
@@ -233,6 +245,28 @@ button:hover{
   padding: 5px;
   margin: auto;
   color:#AA7A54;
+}
+
+.submitLocation{
+  display: flex;
+  background-color: #758874;
+  margin: auto;
+  color: #E4C9AC;
+  transition-duration: 0.4s;
+  border-radius: 10px;
+  border: 0 hidden;
+  padding: 7px;
+}
+
+input::file-selector-button {
+  display: flex;
+  background-color: #758874;
+  margin: auto;
+  color: #E4C9AC;
+  transition-duration: 0.4s;
+  border-radius: 10px;
+  border: 0 hidden;
+  padding: 7px;
 }
 
 .text_box {
@@ -266,8 +300,10 @@ button:hover{
 /*  object-position: 25% 25%;*/
 /*}*/
 
-.form-button, .return-button{
+.form-button, .return-button {
   display: flex;
+  text-decoration: none;
+  width: fit-content;
   background-color: #AA7A54;
   margin: auto;
   color: #E4C9AC;
@@ -275,6 +311,11 @@ button:hover{
   border-radius: 20px;
   border: 0 hidden;
   padding: 7px;
+  margin-top: 1%;
+}
+
+a .form-button {
+  text-decoration: none;
 }
 
 .return-button {
