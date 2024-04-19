@@ -14,7 +14,6 @@ function init() {
 }
 
 function identifyAuthor(){
-    console.log(document.getElementById("plant_author").innerText)
     if(getUsername() === document.getElementById("plant_author").innerText){
         let plant_id = document.getElementById("plant_id").value
         let html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>'
@@ -49,6 +48,8 @@ function writeNewComment(data) {
 
     let commentContainer = document.createElement('div');
     commentContainer.classList.add('comment-container');
+    commentContainer.classList.add('bubble');
+    commentContainer.classList.add('right');
 
     let usernameParagraph = document.createElement('p');
     let usernameStrong = document.createElement('strong');
@@ -61,17 +62,30 @@ function writeNewComment(data) {
     let dateParagraph = document.createElement('p');
     dateParagraph.textContent = 'Sent on ' + data.date.substring(0, 10);
 
-    let hr = document.createElement('hr');
-
     commentContainer.appendChild(usernameParagraph);
     commentContainer.appendChild(commentParagraph);
     commentContainer.appendChild(dateParagraph);
-    commentContainer.appendChild(hr);
 
     commentsContainer.appendChild(commentContainer);
 
     document.getElementById('comment-text').value = '';
 }
+
+function assignCommentAuthor(){
+    let curUser = getUsername()
+    let comments = document.getElementsByClassName("comment-container")
+    for(let comment in comments){
+        if(typeof comments[comment] !== "object"){
+            break;
+        }
+        if(comments[comment].getElementsByClassName("comment-author")[0].value === curUser ){
+            comments[comment].classList.add("right")
+        } else {
+            comments[comment].classList.add("left")
+        }
+    }
+}
+
 // function initMap() {
 //     // Coordinates will be set dynamically via HTML data attributes
 //     const mapElement = document.getElementById('map');
@@ -106,26 +120,29 @@ async function initMap() {
     // The location of Uluru
 
     const mapElement = document.getElementById('map');
-    const lat = parseFloat(mapElement.dataset.lat);
-    const lng = parseFloat(mapElement.dataset.lng);
+    if(mapElement !== null && mapElement.dataset !== null){
+        const lat = parseFloat(mapElement.dataset.lat);
+        const lng = parseFloat(mapElement.dataset.lng);
 
-    const location = {lat: lat, lng: lng};
+        const location = {lat: lat, lng: lng};
 
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        const { Map } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-    map = new Map(mapElement, {
-        zoom: 4,
-        center: location,
-        mapId: "DEMO_MAP_ID",
-    });
+        map = new Map(mapElement, {
+            zoom: 4,
+            center: location,
+            mapId: "DEMO_MAP_ID",
+        });
 
-    const marker = new AdvancedMarkerElement({
-        map: map,
-        position: location,
-        title: "Uluru",
-    });
+        const marker = new AdvancedMarkerElement({
+            map: map,
+            position: location,
+            title: "Uluru",
+        });
+    }
 }
-initMap();
+
+document.onload = initMap()
 
 

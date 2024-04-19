@@ -10,7 +10,7 @@
     <script src="/javascripts/main.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
-<body onload="init(); identifyAuthor(); usernameDefining()">
+<body onload="init(); identifyAuthor(); usernameDefining(); assignCommentAuthor()">
     <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
     <div class="body_container">
         <%- include('partials/header') %>
@@ -82,22 +82,19 @@
                     <% } else { %>
                         <div id="comments-container">
                             <% comments.forEach(comment => { %>
-                                <div class="comment-container">
+                                <div class="comment-container bubble">
+                                    <input type="hidden" class="comment-author" name="comment-author" value="<%= comment.username %>">
                                     <p><strong><%= comment.username %></strong></p>
                                     <p><%= comment.comment_text %></p>
-                                    <p>Sent on <%= comment.date.substring(0, 10) %></p>
+                                    <p style="font-size: 0.6rem">Sent on <%= comment.date.substring(0, 10) %></p>
                                 </div>
-                                <hr>
                             <% }); %>
                         </div>
                     <% } %>
                     <form id="comment-form" onsubmit="sendComment(event)">
                         <input type="hidden" id="plant-id" name="plant_id" value="<%= plant_id %>">
                         <p id="username-paragraph">
-                            <label for="username">Your username</label>
-                            <br>
-<!--                            <label for="name">Your name: </label>-->
-<!--                            <input type="text" id="username" name="username">-->
+                            <label for="username">Your username:</label>
                         </p>
                         <p>
                             <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
