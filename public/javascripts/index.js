@@ -51,15 +51,3 @@ function updateDisplay(data) {
         container.appendChild(plantEntryDiv);
     });
 }
-
-function sortBySavedValue() {
-    let sortValue = getSortOrder()
-    if(sortValue === undefined){
-        sortValue = 'date-desc'
-        localStorage.setItem('sortValue', sortValue)
-    }
-}
-
-function  getSortOrder(){
-    return localStorage.getItem('sortValue')
-}

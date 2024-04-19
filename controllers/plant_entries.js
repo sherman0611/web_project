@@ -43,46 +43,6 @@ exports.getAll = function () {
     });
 };
 
-// Function to get all plant entries with optional sorting
-// exports.getAll = function (sortOrder = { date: 1 }) {  // Default sorting by date in ascending order if not provided
-//     return plantEntryModel.find({}).sort(sortOrder).then(plantEntries => {
-//         return JSON.stringify(plantEntries);
-//     }).catch(err => {
-//         console.log(err);
-//         return null;
-//     });
-// };
-
-// exports.getAll = function(sortOption) {
-//     return new Promise((resolve, reject) => {
-//         let sort = {};
-//         if (sortOption === 'date-asc') { sort.date = 1; }
-//         else if (sortOption === 'date-desc') { sort.date = -1; }
-//
-//         plantEntryModel.find({}).sort(sort).exec((err, entries) => {
-//             if (err) {
-//                 console.log(err);
-//                 reject(err);
-//             } else {
-//                 resolve(entries);
-//             }
-//         });
-//     });
-// };
-
-// exports.getAll = function() {
-//     let sort = {};
-//
-//     return plantEntryModel.find({}).sort(sort).exec()
-//         .then(entries => {
-//             return entries;
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             throw err;
-//         });
-// };
-
 // Function to get plant entry by ID
 exports.getById = function (plant_id) {
     return plantEntryModel.findById(plant_id).then(plant => {
