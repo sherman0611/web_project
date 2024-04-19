@@ -19,26 +19,13 @@ var storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 /* GET home page without sorting. Keep for now just in case the sorting fails somehow. */
-// router.get('/home', function(req, res, next) {
-//     let result = plant_entries.getAll();
-//     result.then(plant_entries => {
-//         let data = JSON.parse(plant_entries);
-//         res.render('index', { title: 'Plantgram', data: data});
-//     }).catch(err => {
-//         res.render('index', { title: 'Plantgram', data: null });
-//     });
-// });
-
-/* GET home page with sorting. */
 router.get('/home', function(req, res, next) {
-
     let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data, sortOption: sortOption });
+        res.render('index', { title: 'Plantgram', data: data});
     }).catch(err => {
-        console.log("Error retrieving plant entries: ", err);
-        res.render('index', { title: 'Plantgram', data: null, sortOption: sortOption });
+        res.render('index', { title: 'Plantgram', data: null });
     });
 });
 
@@ -117,5 +104,33 @@ router.post('/create_comment', function(req, res, next) {
         res.status(500).send("Cannot create comment");
     });
 });
+
+router.get('/sort-data', (req, res) => {
+    try {
+        let result = plant_entries.getAll();
+        result.then(plant_entries => {
+            let data = JSON.parse(plant_entries);
+            const { order } = req.query;
+            if (!order) {
+                return res.status(400).json({ error: "Order parameter is required" });
+            }
+            const sortedData = sortData(data, order); // Ensure sortData is correctly implemented
+            res.json(sortedData);
+        }).catch(err => {
+            console.log('Error:', err);
+        });
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+function sortData(data, order) {
+    return data.sort((a, b) => {
+        return (order === 'date-asc') ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+    });
+}
+
 
 module.exports = router;

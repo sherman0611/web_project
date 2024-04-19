@@ -18,13 +18,13 @@
                         <button><img src="images/search_icon.png" alt="search button"/></button>
                     </div>
                     <label for="sort-select">Sort by:</label>
-                    <select id="sort-select" onchange="sortPlants(<%data%>)">
+                    <select id="sort-select" onchange=fetchSortedData()>
                         <option value="date-asc">Date Ascending</option>
-                        <option value="date-desc" selected="selected">Date Descending</option>
+                        <option value="date-desc">Date Descending</option>
                     </select>
                 </div>
 
-                <div class="plant-entries-container">
+                <div class="plant-entries-container" id="plant-entries-container">
                     <% if (data === null) { %>
                         <p>Cannot connect to server</p>
                     <% } else if (data.length === 0) { %>
@@ -43,9 +43,9 @@
                                         <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
                                     <% } %>
                                     <div class="plant-info">
-                                        <p>Plant by <%= plant_entry.username %></p>
+                                        <p>Plant by <%= plant_entry.username || 'Anonymous' %></p>
                                         <% if (plant_entry.date) { %>
-                                            <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
+                                            <p><%= plant_entry.date %>, <%= plant_entry.location %></p>
                                         <% } else { %>
                                             <p><%= plant_entry.location %></p>
                                         <% } %>
