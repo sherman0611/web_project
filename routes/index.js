@@ -3,7 +3,7 @@ var router = express.Router();
 const plant_entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
 var multer = require("multer");
-var sortOption = ''
+
 
 var storage = multer.diskStorage({
     destination :function(req, file, cb){

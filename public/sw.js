@@ -16,8 +16,17 @@ self.addEventListener('install', event => {
                 '/images/install_icon.png',
                 '/images/search_icon.png',
                 '/images/white-arrow.png',
-                '/stylesheets/style.css'
+                '/manifest.json',
+                '/javascripts/create_plant.js',
+                '/javascripts/enter_username.js',
+                '/javascripts/idb-utility.js',
+                '/javascripts/index.js',
+                '/javascripts/main.js',
+                '/javascripts/plant_entry.js',
+                '/javascripts/username-util.js',
+                '/stylesheets/style.css',
             ]);
+            console.log('Service Worker: App Shell Cached');
         }
         catch{
             console.log("error occured while caching...");
@@ -42,52 +51,54 @@ self.addEventListener('activate', event => {
     )
 })
 
-// self.addEventListener('fetch', function(event) {
-//
-//     console.log('Service Worker: Fetch', event.request.url);
-//
-//     console.log("Url", event.request.url);
-//
-//     event.respondWith(
-//         caches.match(event.request).then(function(response) {
-//             return response || fetch(event.request);
-//         })
-//     );
-// });
-
+// Fetch event to fetch from cache first
 self.addEventListener('fetch', event => {
-    console.log('Service Worker: Fetching....');
-
-    event.respondWith(
-        // Try fetching from the cache
-        caches.match(event.request).then(response => {
-            // Cache hit - return response
-            if (response) {
-                return response;
-            }
-
-            // Clone the request since it's a one-time use
-            let fetchRequest = event.request.clone();
-
-            return fetch(fetchRequest).then(response => {
-                // Check if we received a valid response
-                if (!response || response.status !== 200 || response.type !== 'basic') {
-                    return response;
-                }
-
-                // Clone the response since it's a one-time use
-                let responseToCache = response.clone();
-
-                // Cache the fetched response
-                caches.open(CACHE_NAME).then(cache => {
-                    cache.put(event.request, responseToCache);
-                });
-
-                return response;
-            }).catch(() => {
-                // Offline fallback
-                return caches.match('/offline.html');
-            });
-        })
-    );
+    event.respondWith((async () => {
+        const cache = await caches.open("static");
+        const cachedResponse = await cache.match(event.request);
+        if (cachedResponse) {
+            console.log('Service Worker: Fetching from Cache: ', event.request.url);
+            return cachedResponse;
+        }
+        console.log('Service Worker: Fetching from URL: ', event.request.url);
+        return fetch(event.request);
+    })());
 });
+
+//Sync event to sync the todos
+// self.addEventListener('sync', event => {
+//     if (event.tag === 'sync-todo') {
+//         console.log('Service Worker: Syncing new Todos');
+//         openSyncTodosIDB().then((syncPostDB) => {
+//             getAllSyncTodos(syncPostDB).then((syncTodos) => {
+//                 for (const syncTodo of syncTodos) {
+//                     console.log('Service Worker: Syncing new Todo: ', syncTodo);
+//                     console.log(syncTodo.text)
+//                     // Create a FormData object
+//                     const formData = new URLSearchParams();
+//
+//                     // Iterate over the properties of the JSON object and append them to FormData
+//                     formData.append("text", syncTodo.text);
+//
+//                     // Fetch with FormData instead of JSON
+//                     fetch('http://localhost:3000/add-todo', {
+//                         method: 'POST',
+//                         body: formData,
+//                         headers: {
+//                             'Content-Type': 'application/x-www-form-urlencoded',
+//                         },
+//                     }).then(() => {
+//                         console.log('Service Worker: Syncing new Todo: ', syncTodo, ' done');
+//                         deleteSyncTodoFromIDB(syncPostDB,syncTodo.id);
+//                         // Send a notification
+//                         self.registration.showNotification('Todo Synced', {
+//                             body: 'Todo synced successfully!',
+//                         });
+//                     }).catch((err) => {
+//                         console.error('Service Worker: Syncing new Todo: ', syncTodo, ' failed');
+//                     });
+//                 }
+//             });
+//         });
+//     }
+// });

@@ -5,11 +5,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/style.css'/>
-        <script src="/javascripts/main.js"></script>
-        <script src="/javascripts/create_plant.js"></script>
+        <link rel="manifest" href="/manifest.json">
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
-    <body onload="usernameDefining()">
+    <body>
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
@@ -17,20 +16,16 @@
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div class="add_plant_entry_container">
                         <h3>Basic details</h3>
-                        <p id="username-paragraph">
+                        <p>
                             <label for="username">Your username</label>
                             <br>
+                            <input class="text-input" type="text" id="username" placeholder="Enter your username">
                         </p>
-                        <br>
                         <p>
                             <label for="description">Plant description </label>
                             <br>
                             <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
                         </p>
-<!--                        <p>-->
-<!--                            <input type="checkbox" id="timedate " name="timedate" value="timedate">-->
-<!--                            <label for="timedate ">Does the date and time seen match with the ones when this post is made?</label>-->
-<!--                        </p>-->
                         <p>
                             <label for="date">Date Seen</label>
                             <br>
@@ -144,11 +139,13 @@
                         </p>
                     </div>
                     <br>
-                    <button class="form-button" onclick="saveUsername()" type="submit">Create plant entry</button>
+                    <button class="form-button" type="button">Create plant entry</button>
                 </form>
                 <button class="return-button" onclick="returnHome()">Go Back</button>
             </div>
             <%- include('partials/footer.ejs')%>>
+            <script src="/javascripts/create_plant.js"></script>
+            <script src="/javascripts/username-util.js"></script>
         </div>
     </body>
 </html>
