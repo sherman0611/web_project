@@ -27,4 +27,12 @@ function showPosition(position) {
 window.onload = function () {
     const usernameInput = document.getElementById("username");
     usernameInput.value = getUsername();
+
+    const create_btn = document.getElementById("create");
+    create_btn.addEventListener("click", function() {
+        const form = document.getElementById("create_plant_form");
+        if (form.checkValidity()) {
+            form.submit();
+        }
+    });
 };
