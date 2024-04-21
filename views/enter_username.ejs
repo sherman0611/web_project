@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="/javascripts/main.js"></script>
-</head>
-<body onload="enterUsernameField()">
-    <div class="body_container">
-        <%- include('partials/header') %>
-        <div class="main_section">
-            <h2>Enter your username: </h2>
-<!--            <form id="create_username_form" action="enter_username" method="post">-->
-                <div id="enter_username_field">
-                    <label for="username">Your username</label>
-                    <br>
-                </div>
-                <button id="create" class="form-button" onclick="saveUsername(); goToReferrer()">Save username</button>
-                <button id="close_btn" class="form-button" onclick="returnHome()">Go To Homepage</button>
-<!--            </form>-->
+<html lang="en">
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css'/>
+        <script src="/javascripts/main.js"></script>
+    </head>
+    <body onload="enterUsernameField()">
+        <div class="body_container">
+            <%- include('partials/header') %>
+            <div class="main_section">
+                <h2>Enter your username: </h2>
+    <!--            <form id="create_username_form" action="enter_username" method="post">-->
+                    <div id="enter_username_field">
+                        <label for="username">Your username</label>
+                        <br>
+                    </div>
+                    <button id="create" class="form-button" onclick="saveUsername(); goToReferrer()">Save username</button>
+                    <button id="close_btn" class="form-button" onclick="returnHome()">Go To Homepage</button>
+    <!--            </form>-->
+            </div>
+            <%- include('partials/footer.ejs')%>>
         </div>
-    </div>
-    <footer></footer>
-</body>
+    </body>
 </html>

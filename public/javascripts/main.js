@@ -1,5 +1,5 @@
 function returnHome() {
-    window.location.href = '/home';
+    window.location.href = '/';
 }
 
 function saveUsername(){
@@ -9,7 +9,7 @@ function saveUsername(){
 
 function goToReferrer(){
     if(document.referrer.includes("enter_username")){
-        document.location = "/home"
+        document.location = "/"
     } else {
         document.location = document.referrer
     }

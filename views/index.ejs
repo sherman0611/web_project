@@ -7,11 +7,10 @@
         <link rel='stylesheet' href='/stylesheets/style.css'/>
         <link rel="manifest" href="/manifest.json">
         <script src="javascripts/main.js"></script>
-        <script type="module" src="index.js"></script>
     </head>
     <body>
         <div class="body_container">
-        <%- include('partials/header') %>
+            <%- include('partials/header') %>
             <div class="main_section">
                 <div class="search-and-sort">
                     <div class="search">
@@ -56,12 +55,7 @@
                     <% } %>
                 </div>
             </div>
+            <%- include('partials/footer.ejs')%>>
         </div>
-        <footer></footer>
     </body>
-    <script>
-        if('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js', { scope: '/' });
-        }
-    </script>
 </html>
