@@ -1,7 +1,6 @@
 function setUsername(){
     let username = document.getElementById('username').value;
     localStorage.setItem('username', username);
-    goToReferrer()
 }
 
 function getUsername() {

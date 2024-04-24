@@ -5,5 +5,6 @@ window.onload = function () {
     const add_btn = document.getElementById("save");
     add_btn.addEventListener("click", function () {
         setUsername();
+        goToReferrer()
     });
 };

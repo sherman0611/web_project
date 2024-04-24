@@ -44,9 +44,14 @@
                             <input class="text-input" type="text" id="location" name="location" placeholder="Location...">
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding(optional)</label>
+                            <label for="coordinates">Coordinates of the finding (optional)</label>
                             <br>
                             <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
+                            <p><label for="latitude">Latitude:</label>
+                            <input class="text_input_disabled" type="text" id="latitude" name="latitude" readonly></p><br>
+                            <p><label for="longitude">Longitude:</label>
+                            <input class="text_input_disabled" type="text" id="longitude" name="longitude" readonly></p>
+
                         </p>
 
                     </div>
