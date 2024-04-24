@@ -1,8 +1,9 @@
 let plant_id = null;
-let socket = io();
+const socket = io();
 
 let map, infoWindow
-function init() {
+
+window.onload = function () {
     plant_id = document.getElementById('plant-id').value;
 
     socket.emit('join', plant_id);
@@ -100,8 +101,6 @@ function writeNewComment(data) {
 //     });
 // }
 
-
-
 async function initMap() {
     // The location of Uluru
 
@@ -126,6 +125,3 @@ async function initMap() {
         title: "Uluru",
     });
 }
-initMap();
-
-

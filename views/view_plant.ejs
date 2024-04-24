@@ -10,7 +10,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="/javascripts/plant_entry.js"></script>
     </head>
-    <body onload="init()">
+    <body>
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
@@ -77,7 +77,7 @@
                                 <input type="text" id="username" name="username">
                             </p>
                             <p>
-                                <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
+                                <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply..." required>
                                 <button class="form-button">Send</button>
                             </p>
                         </form>

@@ -4,38 +4,36 @@ const CACHE_NAME = 'Plantgram v1';
 self.addEventListener('install', event => {
     console.log('Service Worker: Installing....');
     event.waitUntil((async () => {
-
         console.log('Service Worker: Caching App Shell at the moment......');
         try {
             const cache = await caches.open(CACHE_NAME);
             cache.addAll([
                 '/',
-                // '/create_plant',
-                // '/enter_username',
-                // '/images/arrow_left_icon.png',
-                // '/images/install_icon.png',
-                // '/images/search_icon.png',
-                // '/images/white-arrow.png',
-                // '/manifest.json',
-                // '/javascripts/create_plant.js',
-                // '/javascripts/enter_username.js',
-                // '/javascripts/idb-utility.js',
-                // '/javascripts/index.js',
-                // '/javascripts/main.js',
-                // '/javascripts/plant_entry.js',
-                // '/javascripts/username-util.js',
+                '/create_plant',
+                '/enter_username',
+                '/images/arrow_left_icon.png',
+                '/images/install_icon.png',
+                '/images/search_icon.png',
+                '/images/white-arrow.png',
+                '/manifest.json',
+                '/javascripts/create_plant.js',
+                '/javascripts/enter_username.js',
+                '/javascripts/idb-utility.js',
+                '/javascripts/index.js',
+                '/javascripts/main.js',
+                '/javascripts/plant_entry.js',
+                '/javascripts/username-util.js',
                 '/stylesheets/style.css',
             ]);
             console.log('Service Worker: App Shell Cached');
         }
         catch{
-            console.log("error occured while caching...");
+            console.log("error occured while caching...")
         }
-
     })());
 });
 
-// clear cache on reload
+//clear cache on reload
 self.addEventListener('activate', event => {
 // Remove old caches
     event.waitUntil(
@@ -51,18 +49,14 @@ self.addEventListener('activate', event => {
     )
 })
 
-// Fetch event to fetch from cache first
-self.addEventListener('fetch', event => {
-    event.respondWith((async () => {
-        const cache = await caches.open("static");
-        const cachedResponse = await cache.match(event.request);
-        if (cachedResponse) {
-            console.log('Service Worker: Fetching from Cache: ', event.request.url);
-            return cachedResponse;
-        }
-        console.log('Service Worker: Fetching from URL: ', event.request.url);
-        return fetch(event.request);
-    })());
+self.addEventListener('fetch', function(event) {
+    console.log('Service Worker: Fetch', event.request.url);
+
+    event.respondWith(
+        caches.match(event.request).then(function(response) {
+            return response || fetch(event.request);
+        })
+    );
 });
 
 //Sync event to sync the todos
