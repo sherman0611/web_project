@@ -31,8 +31,6 @@ window.onload = function () {
         const form = document.getElementById("create_plant_form");
         if (form.checkValidity()) {
             setUsername()
-            const usernameInput = document.getElementById("username");
-            usernameInput.value = getUsername();
             form.submit();
         }
     });
