@@ -20,8 +20,10 @@ exports.create = function (plantData, filePath) {
         sun_exposure: plantData.sun_exposure,
         identification_status: false,
         // dbpedia_URI: null,
-        date: plantData.date,
-        time: plantData.time
+        date_seen: plantData.date_seen,
+        time_seen: plantData.time_seen,
+        date_post: plantData.date_post,
+        time_post: plantData.time_post
     });
 
     return plant_entry.save().then(plantEntry => {
