@@ -1,0 +1,17 @@
+{
+  "lang": "en-uk",
+  "name": "Plantgram",
+  "short_name": "Plantgram",
+  "description": "Plant submitting platform",
+  "start_url": "/",
+  "background_color": "#2f3d58",
+  "theme_color": "#2f3d58",
+  "orientation": "any",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/images/install_icon.png",
+      "sizes": "512x512"
+    }
+  ]
+}

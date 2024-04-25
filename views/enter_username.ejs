@@ -4,6 +4,7 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script src="/javascripts/main.js"></script>
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body onload="enterUsernameField()">
     <div class="body_container">
@@ -16,9 +17,10 @@
                 </div>
                 <button id="create" class="form-button" onclick="saveUsername(); goToReferrer()">Save username</button>
                 <button id="close_btn" class="form-button" onclick="returnHome()">Go To Homepage</button>
-<!--            </form>-->
+            </div>
+            <%- include('partials/footer.ejs')%>>
         </div>
-    </div>
-    <footer></footer>
-</body>
+    </body>
+    <script src="/javascripts/enter_username.js"></script>
+    <script src="/javascripts/username-util.js"></script>
 </html>

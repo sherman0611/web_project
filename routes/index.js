@@ -3,7 +3,7 @@ var router = express.Router();
 const plant_entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
 var multer = require("multer");
-var sortOption = ''
+
 
 var storage = multer.diskStorage({
     destination :function(req, file, cb){
@@ -18,24 +18,7 @@ var storage = multer.diskStorage({
 });
 let upload = multer({ storage: storage });
 
-/* GET home page without sorting. Keep for now just in case the sorting fails somehow. */
-router.get('/home', function(req, res, next) {
-    let result = plant_entries.getAll();
-    result.then(plant_entries => {
-        let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data });
-    }).catch(err => {
-        console.log("Error retrieving plant entries: ", err);
-        res.render('index', { title: 'Plantgram', data: null });
-    });
-});
-
-
-/* GET index page. */
-router.get('/enter_username', function(req, res, next) {
-    res.render('enter_username', { title: 'Enter your username' });
-});
-
+/* GET home page. */
 router.get('/', function(req, res, next) {
     let result = plant_entries.getAll();
     result.then(plant_entries => {
@@ -47,8 +30,13 @@ router.get('/', function(req, res, next) {
     });
 });
 
+/* GET index page. */
+router.get('/enter_username', function(req, res, next) {
+    res.render('enter_username', { title: 'Enter your username' });
+});
+
 router.post('/enter_username', function(req, res, next) {
-    res.redirect('/home');
+    res.redirect('/');
 });
 
 
@@ -65,9 +53,10 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
         filePath = req.file.path;
         console.log(req.file);
     }
+    console.log(plantData)
     let result = plant_entries.create(plantData, filePath);
     result.then(plant_entry => {
-        res.redirect('/home');
+        res.redirect('/');
     }).catch(err => {
         console.log("cannot create post");
     });

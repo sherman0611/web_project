@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title><%= title %></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/style.css'/>
-        <script src="/javascripts/main.js"></script>
-        <script src="/javascripts/create_plant.js"></script>
+        <link rel="manifest" href="/manifest.json">
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
-    <body onload="usernameDefining()">
+    <body>
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
@@ -20,7 +19,6 @@
                         <p id="username-paragraph">
                             <label for="username">Your username:</label>
                         </p>
-                        <br>
                         <p>
                             <label for="description">Plant description </label>
                             <br>
@@ -48,13 +46,16 @@
                             <input class="text-input" type="text" id="location" name="location" placeholder="Location...">
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding(optional)</label>
+                            <label for="coordinates">Coordinates of the finding (optional)</label>
                             <br>
                             <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
+                            <p><label for="latitude">Latitude:</label>
+                            <input class="text-input" type="text" id="latitude" name="latitude"></p><br>
+                            <p><label for="longitude">Longitude:</label>
+                            <input class="text-input" type="text" id="longitude" name="longitude"></p>
                         </p>
 
                     </div>
-
 
                     <br>
                     <div class="add_plant_entry_container">
@@ -143,12 +144,14 @@
                         </p>
                     </div>
                     <br>
-                    <button class="form-button" onclick="saveUsername()" type="submit">Create plant entry</button>
+<!--                    <button class="form-button" id="create">Create plant entry</button>-->
+                    <button class="form-button" id="create" type="submit">Create plant entry</button>
                 </form>
                 <button class="return-button" onclick="returnHome()">Go Back</button>
-
             </div>
+            <%- include('partials/footer.ejs')%>>
+            <script src="/javascripts/create_plant.js"></script>
+            <script src="/javascripts/username-util.js"></script>
         </div>
     </body>
-    <footer></footer>
 </html>
