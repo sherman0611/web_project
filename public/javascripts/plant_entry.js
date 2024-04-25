@@ -12,14 +12,10 @@ window.onload = function () {
     socket.on('comment', function (room, data) {
         writeNewComment(data);
     });
-}
-
-function identifyAuthor(){
-    if(getUsername() === document.getElementById("plant_author").innerText){
-        let plant_id = document.getElementById("plant_id").value
-        let html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>'
-        document.getElementsByClassName("nav-links")[0].insertAdjacentHTML("beforeend", html_to_insert)
-    }
+    identifyAuthor();
+    usernameDefining();
+    assignCommentAuthor();
+    scrollToBottomChat()
 }
 
 function sendComment(event) {
@@ -32,16 +28,16 @@ function sendComment(event) {
 
     // Send AJAX request to the server to create comment
     $.ajax({
-        type: 'POST',
-        url: '/create_comment',
-        data: $('#comment-form').serialize(),
-        success: function(data) {
-            socket.emit('comment', plant_id, data);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error creating comment:", error);
-        }
-    });
+    type: 'POST',
+    url: '/create_comment',
+    data: $('#comment-form').serialize(),
+    success: function(data) {
+    socket.emit('comment', plant_id, data);
+},
+    error: function(xhr, status, error) {
+    console.error("Error creating comment:", error);
+}
+});
 }
 
 function writeNewComment(data) {
@@ -78,76 +74,48 @@ function assignCommentAuthor(){
     let curUser = getUsername()
     let comments = document.getElementsByClassName("comment-container")
     for(let comment in comments){
-        if(typeof comments[comment] !== "object"){
-            break;
-        }
-        if(comments[comment].getElementsByClassName("comment-author")[0].value === curUser ){
-            comments[comment].classList.add("right")
-        } else {
-            comments[comment].classList.add("left")
-        }
-    }
+    if(typeof comments[comment] !== "object"){
+    break;
 }
-
-// function initMap() {
-//     // Coordinates will be set dynamically via HTML data attributes
-//     const mapElement = document.getElementById('map');
-//     const lat = parseFloat(mapElement.dataset.lat);
-//     const lng = parseFloat(mapElement.dataset.lng);
-//
-//     const location = {lat: lat, lng: lng};
-//     const map = new google.maps.Map(mapElement, {
-//         zoom: 8,
-//         center: location
-//     });
-//     const marker = new google.maps.Marker({
-//         position: location,
-//         map: map
-//     });
-// }
-// function initMap() {
-//     var location = {lat: <%= plant_entry.latitude %>, lng: <%= plant_entry.longitude %>};
-//     var map = new google.maps.Map(document.getElementById('map'), {
-//         zoom: 8,
-//         center: location
-//     });
-//     var marker = new google.maps.Marker({
-//         position: location,
-//         map: map
-//     });
-// }
+    if(comments[comment].getElementsByClassName("comment-author")[0].value === curUser ){
+    comments[comment].classList.add("right")
+} else {
+    comments[comment].classList.add("left")
+}
+}
+}
 
 async function initMap() {
     // The location of Uluru
 
     const mapElement = document.getElementById('map');
     if(mapElement !== null && mapElement.dataset !== null){
-        const lat = parseFloat(mapElement.dataset.lat);
-        const lng = parseFloat(mapElement.dataset.lng);
+    const lat = parseFloat(mapElement.dataset.lat);
+    const lng = parseFloat(mapElement.dataset.lng);
 
-        const location = {lat: lat, lng: lng};
+    const location = {lat: lat, lng: lng};
 
-        const { Map } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const {Map} = await google.maps.importLibrary("maps");
+    const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
 
-        map = new Map(mapElement, {
-            zoom: 4,
-            center: location,
-            mapId: "DEMO_MAP_ID",
-        });
+    map = new Map(mapElement, {
+    zoom: 4,
+    center: location,
+    mapId: "DEMO_MAP_ID",
+});
 
-        const marker = new AdvancedMarkerElement({
-            map: map,
-            position: location,
-            title: "Uluru",
-        });
-    }
+    const marker = new AdvancedMarkerElement({
+    map: map,
+    position: location,
+    title: "Uluru",
+});
+}
 }
 
 function scrollToBottomChat(){
     if(document.getElementById("comments-container")){
-        document.getElementById("comments-container").scrollTo(0, (document.getElementById("comments-container").scrollHeight))
-    }
+    document.getElementById("comments-container").scrollTo(0, (document.getElementById("comments-container").scrollHeight))
 }
-//
+}
+
 document.onload = initMap()
