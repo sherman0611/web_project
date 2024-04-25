@@ -2,7 +2,8 @@ let plant_id = null;
 let socket = io();
 
 let map, infoWindow
-function init() {
+
+window.onload = function () {
     plant_id = document.getElementById('plant-id').value;
 
     socket.emit('join', plant_id);
@@ -14,6 +15,7 @@ function init() {
 }
 
 function identifyAuthor(){
+    console.log(document.getElementById("plant_author").innerText)
     if(getUsername() === document.getElementById("plant_author").innerText){
         let plant_id = document.getElementById("plant_id").value
         let html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>'
@@ -116,8 +118,6 @@ function assignCommentAuthor(){
 //     });
 // }
 
-
-
 async function initMap() {
     // The location of Uluru
 
@@ -152,14 +152,3 @@ function scrollToBottomChat(){
 }
 //
 document.onload = initMap()
-// window.onload = scrollToBottomChat()
-
-// document.addEventListener("load", init(), true); function init(){
-//     initMap();
-// };
-//
-// window.addEventListener("load", init(), true); function init(){
-//     scrollToBottomChat();
-// };
-
-

@@ -1,9 +1,5 @@
-
-const container = document.getElementById("display_coordinates");
-
-var form;
-
 function getLocation() {
+    const container = document.getElementById("display_coordinates");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -29,4 +25,16 @@ function showPosition(position) {
     add_plant_entry_container.insertAdjacentHTML('beforeend', html_to_insert);
 }
 
+window.onload = function () {
+    const usernameInput = document.getElementById("username");
+    usernameInput.value = getUsername();
 
+    const create_btn = document.getElementById("create");
+    create_btn.addEventListener("click", function() {
+        const form = document.getElementById("create_plant_form");
+        if (form.checkValidity()) {
+            setUsername()
+            form.submit();
+        }
+    });
+};

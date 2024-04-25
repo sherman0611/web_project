@@ -30,7 +30,6 @@ router.get('/home', function(req, res, next) {
     });
 });
 
-
 /* GET index page. */
 router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
