@@ -10,7 +10,7 @@
     <script src="/javascripts/main.js"></script>
     <script src="/javascripts/plant_entry.js"></script>
 </head>
-<body onload="init(); identifyAuthor(); usernameDefining(); assignCommentAuthor()">
+<body onload="init(); identifyAuthor(); usernameDefining(); assignCommentAuthor(); scrollToBottomChat()">
     <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
     <div class="body_container">
         <%- include('partials/header') %>
@@ -51,7 +51,7 @@
             <div class="two-columns container">
                 <div class="plant_details">
                     <% if(plant_entry.location){%>
-                        <h3>Location: </h3>
+                        <h3>&#128506;&#65039;Location: </h3>
                         <p><%= plant_entry.location %></p>
                     <%}%>
                     <% if(plant_entry.latitude && plant_entry.longitude) { %>
@@ -59,19 +59,22 @@
                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
                     <% }%>
                     <% if(plant_entry.description){%>
-                        <h3>Description:</h3>
+                        <h3>&#129534;Description:</h3>
                         <p><%= plant_entry.description %></p>
                     <%}%>
-                    <h3>Characteristics:</h3>
+                    <h3>&#127793;Characteristics:</h3>
 
                     <% if(plant_entry.height){%>
-                        <p>Height: <%= plant_entry.height %></p>
+                        <p>&#8597;&#65039;Height: <%= plant_entry.height %></p>
                     <%}%>
-                    <% if(plant_entry.height){%>
-                        <p>Spread: <%= plant_entry.spread %></p>
+                    <% if(plant_entry.spread){%>
+                        <p>&#8596;&#65039;Spread: <%= plant_entry.spread %></p>
                     <%}%>
-                    <% if(plant_entry.height){%>
-                        <p>Flowers: <%= plant_entry.flowers %></p>
+                    <% if(plant_entry.flowers){%>
+                        <p>&#127804;Flowers: <%= plant_entry.flowers %></p>
+                    <%}%>
+                    <% if(plant_entry.sun_exposure){%>
+                        <p>&#9728;&#65039;Sun exposure: <%= plant_entry.sun_exposure %></p>
                     <%}%>
 
                 </div>
@@ -86,20 +89,20 @@
                                     <input type="hidden" class="comment-author" name="comment-author" value="<%= comment.username %>">
                                     <p><strong><%= comment.username %></strong></p>
                                     <p><%= comment.comment_text %></p>
-                                    <p style="font-size: 0.6rem">Sent on <%= comment.date.substring(0, 10) %></p>
+                                    <p style="font-size: 0.7rem; color: darkslategrey">Sent on <%= comment.date.substring(0, 10) %></p>
                                 </div>
                             <% }); %>
                         </div>
                     <% } %>
                     <form id="comment-form" onsubmit="sendComment(event)">
                         <input type="hidden" id="plant-id" name="plant_id" value="<%= plant_id %>">
-                        <p id="username-paragraph">
+                        <div id="username-paragraph">
                             <label for="username">Your username:</label>
-                        </p>
-                        <p>
-                            <input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
-                            <button class="form-button">Send</button>
-                        </p>
+                        </div>
+                        <div class="send-message-box">
+                            <label for="comment-text"></label><input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
+                            <button class="form-button" onclick="scrollToBottomChat()">Send</button>
+                        </div>
                     </form>
                 </div>
             </div>

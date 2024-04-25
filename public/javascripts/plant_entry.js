@@ -70,6 +70,7 @@ function writeNewComment(data) {
     commentsContainer.appendChild(commentContainer);
 
     document.getElementById('comment-text').value = '';
+    scrollToBottomChat()
 }
 
 function assignCommentAuthor(){
@@ -144,6 +145,21 @@ async function initMap() {
     }
 }
 
+function scrollToBottomChat(){
+    if(document.getElementById("comments-container")){
+        document.getElementById("comments-container").scrollTo(0, (document.getElementById("comments-container").scrollHeight))
+    }
+}
+//
 document.onload = initMap()
+// window.onload = scrollToBottomChat()
+
+// document.addEventListener("load", init(), true); function init(){
+//     initMap();
+// };
+//
+// window.addEventListener("load", init(), true); function init(){
+//     scrollToBottomChat();
+// };
 
 

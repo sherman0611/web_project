@@ -375,6 +375,43 @@ a .form-button {
 
 #username-paragraph {
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#username-paragraph label {
+  width: fit-content;
+  min-width: fit-content;
+}
+
+#username-paragraph input {
+  max-width: 90px;
+}
+
+#username-paragraph .form-button {
+  width: fit-content;
+  min-width: fit-content;
+  margin: 3px;
+}
+
+#chat_interface .send-message-box, #username-paragraph {
+  margin:5px;
+  display: flex;
+  align-items: center;
+  background-color: antiquewhite;
+  border-radius: 3px;
+  padding:3px;
+}
+
+#chat_interface .send-message-box input[type="text" i]{
+  height: 22px;
+  width: 100%;
+}
+
+#chat_interface .send-message-box .form-button {
+  margin: 0 5px;
 }
 
 .bubble {
