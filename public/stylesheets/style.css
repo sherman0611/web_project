@@ -48,6 +48,12 @@ button {
   transition-duration: 0.3s;
 }
 
+button:hover{
+  /*background-color: #758874;*/
+  background-color: #AA7A54;
+  cursor: pointer;
+}
+
 select {
   border-radius: 20px;
   border: antiquewhite 2px solid;
@@ -103,49 +109,7 @@ select {
 
 /*END OF HEADER*/
 
-/*HOME PAGE*/
-
-#search-input {
-  height: 35px;
-  border-radius: 20px;
-  border: antiquewhite 2px solid;
-  width: 100%;
-}
-
-.search button {
-  height: auto;
-  border-radius: 20px;
-  border: antiquewhite 2px solid;
-  padding: 5px;
-  width: auto;
-}
-
-.search img {
-  height: 25px;
-}
-
-.search {
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.search-and-sort {
-  padding: 15px;
-  background: antiquewhite;
-  margin: 10px 0 20px 0;
-  border-radius: 25px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: space-between;
-}
-
+/* PLANT ENTRIES */
 .plant-entries-container {
   display: flex;
   flex-wrap: wrap;
@@ -181,39 +145,6 @@ select {
   color: #21251E;
 }
 
-.view.plant-entry-container > a {
-  height: fit-content;
-  width: fit-content;
-}
-
-.view.plant-entry-container {
-  width: 100%;
-  max-width: unset;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.view.plant-entry-container:hover{
-  background-color: antiquewhite;
-}
-
-.view.plant-entry-container .txt-container {
-  flex-direction: column;
-}
-
-.view_plant .nav-links{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom:1.5%;
-}
-
-.view_plant .nav-links .form-button {
-  margin: unset;
-}
-
 .plant-image {
   width: 150px;
   height: 150px;
@@ -226,49 +157,9 @@ select {
 .plant-entry-container .plant-info {
   margin: auto;
 }
+/* END OF PLANT ENTRIES */
 
-/*END OF HOME PAGE*/
-
-
-button:hover{
-  /*background-color: #758874;*/
-  background-color: #AA7A54;
-  cursor: pointer;
-}
-
-.add_plant_entry_container{
-  text-align: center;
-  width: 50%;
-  height: fit-content;
-  background-color: antiquewhite;
-  border-radius: 20px;
-  padding: 5px;
-  margin: auto;
-  color:#AA7A54;
-}
-
-.submitLocation{
-  display: flex;
-  background-color: #758874;
-  margin: auto;
-  color: #E4C9AC;
-  transition-duration: 0.4s;
-  border-radius: 10px;
-  border: 0 hidden;
-  padding: 7px;
-}
-
-input::file-selector-button {
-  display: flex;
-  background-color: #758874;
-  margin: auto;
-  color: #E4C9AC;
-  transition-duration: 0.4s;
-  border-radius: 10px;
-  border: 0 hidden;
-  padding: 7px;
-}
-
+/* OTHER UTILS */
 input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, input[type="text"]:focus:hover.input-disabled {
   border: 0;
   background-color: transparent;
@@ -284,41 +175,23 @@ input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, inpu
   width: 80%;
 }
 
-.create_entry_title {
-  color:#AA7A54;
-  text-align: center;
-}
-
 .form_div {
   margin-left: 43%;
   display: flex;
   margin-bottom: 10px;
 }
 
-/*VIEW PLANT SECTION*/
-
-/*.plant-image {*/
-/*  width:300px;*/
-/*  height: 300px;*/
-/*  background-color: antiquewhite;*/
-/*  padding: 20px 20px 80px;*/
-/*  box-shadow: #21251E;*/
-/*  object-fit: cover;*/
-/*  object-position: 25% 25%;*/
-/*}*/
-
 .form-button, .return-button {
   display: flex;
   text-decoration: none;
   width: fit-content;
   background-color: #AA7A54;
-  margin: auto;
   color: #E4C9AC;
   transition-duration: 0.4s;
   border-radius: 20px;
   border: 0 hidden;
   padding: 7px;
-  margin-top: 1%;
+  margin: 1% auto auto;
 }
 
 a .form-button {
@@ -337,14 +210,6 @@ a .form-button {
   margin-right: 20px;
 }
 
-#chat_interface {
-  width:40%;
-}
-
-.comment_interface {
-  flex: 1;
-}
-
 .plant_link {
   display: flex;
   align-items: center;
@@ -352,28 +217,13 @@ a .form-button {
   color: inherit;
 }
 
-.comment-container {
-  flex: 1;
-}
-
 .plant_link:hover {
   background-color: #AA7A54;
 }
+/* END OTHER UTILS */
 
-#comments-container{
-  height: 300px;
-  max-height: 300px;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-/*https://css-tricks.com/books/greatest-css-tricks/pin-scrolling-to-bottom/*/
-
-#comments-container hr {
-  border: 1px #373F32 solid;
-}
-
-#username-paragraph {
+/* USERNAME DISPLAYING */
+#username-container {
   text-align: center;
   display: flex;
   align-items: center;
@@ -381,22 +231,22 @@ a .form-button {
   flex-wrap: wrap;
 }
 
-#username-paragraph label {
+#username-container label {
   width: fit-content;
   min-width: fit-content;
 }
 
-#username-paragraph input {
+#username-container input {
   max-width: 90px;
 }
 
-#username-paragraph .form-button {
+#username-container .form-button {
   width: fit-content;
   min-width: fit-content;
   margin: 3px;
 }
 
-#chat_interface .send-message-box, #username-paragraph {
+#chat_interface .send-message-box, #username-container {
   margin:5px;
   display: flex;
   align-items: center;
@@ -405,56 +255,9 @@ a .form-button {
   padding:3px;
 }
 
-#chat_interface .send-message-box input[type="text" i]{
-  height: 22px;
-  width: 100%;
-}
-
-#chat_interface .send-message-box .form-button {
-  margin: 0 5px;
-}
-
-.bubble {
-  --r: 25px; /* the radius */
-  --t: 30px; /* the size of the tail */
-
-  max-width: 300px;
-  padding: calc(2*var(--r)/3);
-  -webkit-mask:
-          radial-gradient(var(--t) at var(--_d) 0,#0000 98%,#000 102%)
-          var(--_d) 100%/calc(100% - var(--r)) var(--t) no-repeat,
-          conic-gradient(at var(--r) var(--r),#000 75%,#0000 0)
-          calc(var(--r)/-2) calc(var(--r)/-2) padding-box,
-          radial-gradient(50% 50%,#000 98%,#0000 101%)
-          0 0/var(--r) var(--r) space padding-box;
-  /*background: linear-gradient(135deg,#E4C9AC,#AA7A54) border-box;*/
-  background: #AA7A54;
-  color: #21251E;
-  margin-bottom: 10px;
-}
-.left {
-  --_d: 0%;
-  border-left: var(--t) solid #0000;
-  margin-right: var(--t);
-  place-self: start;
-}
-.right {
-  --_d: 100%;
-  border-right: var(--t) solid #0000;
-  margin-left: var(--t);
-  place-self: end;
-  background: antiquewhite;
-}
-
-/*END VIEW PLANT SECTION*/
 /*ENTER USERNAME SECTION*/
 #create_username_form > *{
   margin-bottom: 1%;
   margin-top: 1%;
 }
 /*END USERNAME SECTION*/
-
-#map {
-  height: 500px;
-  width: 500px;
-}

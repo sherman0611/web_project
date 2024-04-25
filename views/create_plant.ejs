@@ -1,30 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <title><%= title %></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/style.css'/>
-        <link rel="manifest" href="/manifest.json">
+        <link rel='stylesheet' href='/stylesheets/create_plant.css'/>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
-    <body>
+    <body onload="usernameDefining()">
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
                 <h2 class="create_entry_title">New plant sightings</h2>
+                <div id="username-container" class="add_plant_entry_container">
+                    <label for="username">Your username:</label>
+                </div>
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div class="add_plant_entry_container">
                         <h3>Basic details</h3>
-                        <p id="username-paragraph">
-                            <label for="username">Your username:</label>
-                        </p>
-                        <p>
-                            <label for="description">Plant description </label>
-                            <br>
-                            <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
-                        </p>
-                        <br>
                         <p>
                             <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()"> Are you posting a plant you have just seen?</label>
                             <br>
@@ -46,16 +40,13 @@
                             <input class="text-input" type="text" id="location" name="location" placeholder="Location...">
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding (optional)</label>
+                            <label for="coordinates">Coordinates of the finding(optional)</label>
                             <br>
                             <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
-                            <p><label for="latitude">Latitude:</label>
-                            <input class="text-input" type="text" id="latitude" name="latitude"></p><br>
-                            <p><label for="longitude">Longitude:</label>
-                            <input class="text-input" type="text" id="longitude" name="longitude"></p>
                         </p>
-
+                        <div id="display_coordinates"></div>
                     </div>
+
 
                     <br>
                     <div class="add_plant_entry_container">
@@ -144,14 +135,15 @@
                         </p>
                     </div>
                     <br>
-<!--                    <button class="form-button" id="create">Create plant entry</button>-->
-                    <button class="form-button" id="create" type="submit">Create plant entry</button>
+                    <button class="form-button" type="submit">Create plant entry</button>
                 </form>
                 <button class="return-button" onclick="returnHome()">Go Back</button>
+
             </div>
-            <%- include('partials/footer.ejs')%>>
-            <script src="/javascripts/create_plant.js"></script>
-            <script src="/javascripts/username-util.js"></script>
         </div>
+        <%- include('partials/footer.ejs')%>>
+        <script src="/javascripts/create_plant.js"></script>
+        <script src="/javascripts/username-util.js"></script>
     </body>
 </html>
+

@@ -5,7 +5,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/style.css'/>
+        <link rel='stylesheet' href='/stylesheets/index.css'/>
         <link rel="manifest" href="/manifest.json">
+        <link rel="shortcut icon" href="#">
     </head>
     <body>
         <div class="body_container">
@@ -16,13 +18,14 @@
                         <input id="search-input" type="text" placeholder="Search plants..">
                         <button><img src="images/search_icon.png" alt="search button"/></button>
                     </div>
-                    <select id="sort-select" onchange="">
-                        <option value="date-asc" >Sort by Date Ascending</option>
-                        <option value="date-desc" >Sort by Date Descending</option>
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select" onchange=fetchSortedData()>
+                        <option value="date-asc">Date Ascending</option>
+                        <option value="date-desc">Date Descending</option>
                     </select>
                 </div>
 
-                <div class="plant-entries-container">
+                <div class="plant-entries-container" id="plant-entries-container">
                     <% if (data === null) { %>
                         <p>Cannot connect to server</p>
                     <% } else if (data.length === 0) { %>
@@ -54,7 +57,8 @@
                     <% } %>
                 </div>
             </div>
-            <%- include('partials/footer.ejs')%>>
         </div>
+        <%- include('partials/footer.ejs')%>
+        <script src="javascripts/index.js"></script>
     </body>
 </html>
