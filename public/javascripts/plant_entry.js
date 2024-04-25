@@ -60,6 +60,7 @@ function writeNewComment(data) {
     commentParagraph.textContent = data.comment_text;
 
     let dateParagraph = document.createElement('p');
+    dateParagraph.style.fontSize = "0.6rem";
     dateParagraph.textContent = 'Sent on ' + data.date.substring(0, 10);
 
     commentContainer.appendChild(usernameParagraph);

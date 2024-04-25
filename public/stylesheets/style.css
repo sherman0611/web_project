@@ -361,6 +361,7 @@ a .form-button {
 }
 
 #comments-container{
+  height: 300px;
   max-height: 300px;
   overflow-y: scroll;
   display: flex;
