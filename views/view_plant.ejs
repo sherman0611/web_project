@@ -73,6 +73,14 @@
                     <% if(plant_entry.height){%>
                         <p>Flowers: <%= plant_entry.flowers %></p>
                     <%}%>
+                    <div id="plant_infoDbp">
+                        <h3 id="db_page_title"></h3>
+                        <h4 id="title_dbp"></h4>
+                        <br>
+                        <p id="abstract_dbp"></p>
+                        <br>
+                        <a id="link_dbp" href=""></a>
+                    </div>
 
                 </div>
                 <div id="chat_interface">
@@ -106,6 +114,53 @@
             <% } %>
         </div>
     </div>
-    <footer></footer>
+    <script>
+        let plantName = '<%= plant_entry.plant_name %>';
+        const resource = `http://dbpedia.org/resource/${plantName}`;
+
+        const endpointUrl = 'https://dbpedia.org/sparql';
+        const sparqlQuery = `
+         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+         PREFIX dbo: <http://dbpedia.org/ontology/>
+
+         SELECT ?label ?abstract ?link
+         WHERE {
+          <${resource}> dbo:abstract ?abstract .
+          <${resource}> rdfs:label ?label .
+          <${resource}> dbo:wikiPageID ?link .
+         FILTER (langMatches(lang(?abstract), "EN"))
+    }`;
+
+        const encodedQuery = encodeURIComponent(sparqlQuery);
+        const url = `${endpointUrl}?query=${encodedQuery}&format=json`
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+
+                let bindings = data.results.bindings;
+                let result = JSON.stringify(bindings);
+
+                let dbpTitle = document.getElementById('db_page_title');
+                dbpTitle.textContent = 'DBpedia Information';
+
+                let label = bindings[0].label.value;
+                let labelElement = document.getElementById('title_dbp')
+                labelElement.textContent = label;
+
+
+                let abstract = data.results.bindings[0].abstract.value;
+                let plantInfoElement = document.getElementById('abstract_dbp');
+                plantInfoElement.innerHTML = 'DBpedia Description: <br>' + abstract;
+
+
+                let link = bindings[0].link.value;
+                let linkElement = document.getElementById('link_dbp');
+                linkElement.textContent = 'More info';
+                linkElement.href = `http://dbpedia.org/page/${plantName}`;
+
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+        <footer></footer>
 </body>
 </html>
