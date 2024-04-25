@@ -88,36 +88,6 @@ function assignCommentAuthor(){
     }
 }
 
-// function initMap() {
-//     // Coordinates will be set dynamically via HTML data attributes
-//     const mapElement = document.getElementById('map');
-//     const lat = parseFloat(mapElement.dataset.lat);
-//     const lng = parseFloat(mapElement.dataset.lng);
-//
-//     const location = {lat: lat, lng: lng};
-//     const map = new google.maps.Map(mapElement, {
-//         zoom: 8,
-//         center: location
-//     });
-//     const marker = new google.maps.Marker({
-//         position: location,
-//         map: map
-//     });
-// }
-// function initMap() {
-//     var location = {lat: <%= plant_entry.latitude %>, lng: <%= plant_entry.longitude %>};
-//     var map = new google.maps.Map(document.getElementById('map'), {
-//         zoom: 8,
-//         center: location
-//     });
-//     var marker = new google.maps.Marker({
-//         position: location,
-//         map: map
-//     });
-// }
-
-
-
 async function initMap() {
     // The location of Uluru
 
@@ -150,16 +120,45 @@ function scrollToBottomChat(){
         document.getElementById("comments-container").scrollTo(0, (document.getElementById("comments-container").scrollHeight))
     }
 }
-//
+
+function fetchPlantData(plantName) {
+    const endpointUrl = 'https://dbpedia.org/sparql';
+    const sparqlQuery = `
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX dbo: <http://dbpedia.org/ontology/>
+
+        SELECT ?label ?abstract ?link
+        WHERE {
+            <http://dbpedia.org/resource/${plantName}> dbo:abstract ?abstract .
+            <http://dbpedia.org/resource/${plantName}> rdfs:label ?label .
+            <http://dbpedia.org/resource/${plantName}> dbo:wikiPageID ?link .
+            FILTER (langMatches(lang(?abstract), "EN"))
+        }`;
+
+    const encodedQuery = encodeURIComponent(sparqlQuery);
+    const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let bindings = data.results.bindings;
+            let abstract = bindings[0].abstract.value;
+            let label = bindings[0].label.value;
+            let link = bindings[0].link.value;
+
+            let plantInfoElement = document.getElementById('plant_info');
+            plantInfoElement.textContent = abstract;
+
+            let labelElement = document.createElement('h1');
+            labelElement.textContent = label;
+            plantInfoElement.prepend(labelElement);
+
+            let linkElement = document.createElement('a');
+            linkElement.textContent = 'More info';
+            linkElement.href = `http://dbpedia.org/page/${plantName}`;
+            plantInfoElement.appendChild(linkElement);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 document.onload = initMap()
-// window.onload = scrollToBottomChat()
-
-// document.addEventListener("load", init(), true); function init(){
-//     initMap();
-// };
-//
-// window.addEventListener("load", init(), true); function init(){
-//     scrollToBottomChat();
-// };
-
-
