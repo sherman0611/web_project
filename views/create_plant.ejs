@@ -16,28 +16,26 @@
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div class="add_plant_entry_container">
                         <h3>Basic details</h3>
-                        <p id="username-paragraph">
-                            <label for="username">Your username:</label>
+                        <p>
+                            <label for="username">Your username</label>
+                            <br>
+                            <input class="text-input" type="text" id="username" name="username" placeholder="Enter your username" required>
                         </p>
                         <p>
                             <label for="description">Plant description </label>
                             <br>
                             <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
                         </p>
-                        <br>
                         <p>
-                            <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()"> Are you posting a plant you have just seen?</label>
+                            <label for="date">Date Seen</label>
                             <br>
+                            <input type="date" id="date" name="date">
                         </p>
+
                         <p>
-                            <label for="date_seen">Date Spotted at:</label>
+                            <label for="time">Time Seen</label>
                             <br>
-                            <input type="date" id="date_seen" name="date_seen">
-                        </p>
-                        <p>
-                            <label for="time_seen">Time Spotted at:</label>
-                            <br>
-                            <input type="time" id="time_seen" name="time_seen"><br>
+                            <input type="time" id="time" name="time">
                         </p>
 
                         <p>

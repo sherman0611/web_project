@@ -22,30 +22,6 @@ function showPosition(position) {
     longitudeInput.value = lon;
 }
 
-
-function disableDateTime () {
-    var checkBox = document.getElementById("toggleCheckbox");
-    var datePicker = document.getElementById("date_seen");
-    var timePicker = document.getElementById("time_seen");
-
-    datePicker.disabled = checkBox.checked;
-    timePicker.disabled = checkBox.checked;
-    // If the checkbox is checked, set the date and time picker values to the current date and time
-    if (checkBox.checked) {
-        let date = new Date();
-        datePicker.value =date.toISOString().split('T') [0];
-        // timePicker.value = new Date().toTimeString().split(' ') [0];
-
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-
-        hours = hours < 10 ? '0' + hours : hours;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-
-        timePicker.value = hours + ":" + minutes;
-    }
-}
-
 window.onload = function () {
     const usernameInput = document.getElementById("username");
     usernameInput.value = getUsername();

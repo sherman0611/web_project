@@ -269,13 +269,6 @@ input::file-selector-button {
   padding: 7px;
 }
 
-input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, input[type="text"]:focus:hover.input-disabled {
-  border: 0;
-  background-color: transparent;
-  font-weight: bold;
-  text-align: center;
-}
-
 .text_box {
   height: 50px;
   border-radius: 20px;
@@ -337,10 +330,6 @@ a .form-button {
   margin-right: 20px;
 }
 
-#chat_interface {
-  width:40%;
-}
-
 .comment_interface {
   flex: 1;
 }
@@ -358,92 +347,6 @@ a .form-button {
 
 .plant_link:hover {
   background-color: #AA7A54;
-}
-
-#comments-container{
-  height: 300px;
-  max-height: 300px;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-/*https://css-tricks.com/books/greatest-css-tricks/pin-scrolling-to-bottom/*/
-
-#comments-container hr {
-  border: 1px #373F32 solid;
-}
-
-#username-paragraph {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-#username-paragraph label {
-  width: fit-content;
-  min-width: fit-content;
-}
-
-#username-paragraph input {
-  max-width: 90px;
-}
-
-#username-paragraph .form-button {
-  width: fit-content;
-  min-width: fit-content;
-  margin: 3px;
-}
-
-#chat_interface .send-message-box, #username-paragraph {
-  margin:5px;
-  display: flex;
-  align-items: center;
-  background-color: antiquewhite;
-  border-radius: 3px;
-  padding:3px;
-}
-
-#chat_interface .send-message-box input[type="text" i]{
-  height: 22px;
-  width: 100%;
-}
-
-#chat_interface .send-message-box .form-button {
-  margin: 0 5px;
-}
-
-.bubble {
-  --r: 25px; /* the radius */
-  --t: 30px; /* the size of the tail */
-
-  max-width: 300px;
-  padding: calc(2*var(--r)/3);
-  -webkit-mask:
-          radial-gradient(var(--t) at var(--_d) 0,#0000 98%,#000 102%)
-          var(--_d) 100%/calc(100% - var(--r)) var(--t) no-repeat,
-          conic-gradient(at var(--r) var(--r),#000 75%,#0000 0)
-          calc(var(--r)/-2) calc(var(--r)/-2) padding-box,
-          radial-gradient(50% 50%,#000 98%,#0000 101%)
-          0 0/var(--r) var(--r) space padding-box;
-  /*background: linear-gradient(135deg,#E4C9AC,#AA7A54) border-box;*/
-  background: #AA7A54;
-  color: #21251E;
-  margin-bottom: 10px;
-}
-.left {
-  --_d: 0%;
-  border-left: var(--t) solid #0000;
-  margin-right: var(--t);
-  place-self: start;
-}
-.right {
-  --_d: 100%;
-  border-right: var(--t) solid #0000;
-  margin-left: var(--t);
-  place-self: end;
-  background: antiquewhite;
 }
 
 /*END VIEW PLANT SECTION*/
