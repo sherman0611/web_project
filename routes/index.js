@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/home', function(req, res, next) {
     let result = plant_entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
@@ -30,13 +30,17 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/', function(req, res, next) {
+    res.redirect('/home');
+});
+
 /* GET index page. */
 router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
 });
 
 router.post('/enter_username', function(req, res, next) {
-    res.redirect('/');
+    res.redirect('/home');
 });
 
 
