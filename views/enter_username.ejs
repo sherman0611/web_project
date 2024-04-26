@@ -6,20 +6,18 @@
         <link rel="manifest" href="/manifest.json">
         <link rel="shortcut icon" href="#">
     </head>
-    <body onload="enter_username()">
+    <body>
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
+                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 <h2>Enter your username: </h2>
-                <div id="enter_username_field">
-                    <label for="username">Your username: </label>
-                </div>
+                <input class="text-input" type="text" id="username" placeholder="Enter your username...">
                 <button id="save_btn" class="form-button" onclick="setUsername(); goToReferrer()">Save username</button>
-                <button id="home_btn" class="form-button">Go To Homepage</button>
             </div>
         </div>
-        <%- include('partials/footer.ejs')%>>
-        <script src="/javascripts/username-utils.js"></script>
-        <script src="/javascripts/enter_username.js"></script>
     </body>
+    <%- include('partials/footer.ejs')%>>
+    <script src="/javascripts/enter_username.js"></script>
+    <script src="/javascripts/username-utils.js"></script>
 </html>

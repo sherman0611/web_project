@@ -1,41 +1,41 @@
 var form;
+let displayCoords = document.getElementById("display_coordinates");
+
 function getLocation() {
-    const container = document.getElementById("display_coordinates");
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition, locationError);
     } else {
-        document.getElementById("display_coordinates").innerHTML = "Geolocation is not supported by this browser.";
+        displayCoords.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 
-window.onload = function () {
-    // const create_btn = document.getElementById("create_btn");
-    // create_btn.addEventListener("click", function() {
-    //     const form = document.getElementById("create_plant_form");
-    //     if (form.checkValidity()) {
-    //         form.submit();
-    //     }
-    // });
-
-    usernameDefining();
-};
+function locationError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            displayCoords.innerHTML = "Please enable location services to use this feature.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            displayCoords.innerHTML = "Location information is unavailable.";
+            break;
+        case error.TIMEOUT:
+            displayCoords.innerHTML = "The request to get user location timed out.";
+            break;
+        case error.UNKNOWN_ERROR:
+            displayCoords.innerHTML = "An unknown error occurred.";
+            break;
+    }
+}
 
 function showPosition(position) {
-    let add_plant_entry_container = document.getElementById("display_coordinates");
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
-    // var latDirection = lat >= 0 ? "N" : "S";
-    // var lonDirection = lon >= 0 ? "E" : "W";
-    //
-    // lat = Math.abs(lat);
-    // lon = Math.abs(lon);
 
     let html_to_insert = '<p><label for="latitude">Latitude:</label>' +
         '<input class="text_input_disabled" type="text" id="latitude" name="latitude" value='+lat+' readonly></p><br>' +
         '<p><label for="longitude">Longitude:</label>' +
         '<input class="text_input_disabled" type="text" id="longitude" name="longitude" value='+lon+' readonly></p>'
 
-    add_plant_entry_container.insertAdjacentHTML('beforeend', html_to_insert);
+    displayCoords.innerHTML = html_to_insert;
 }
 
 function disableDateTime () {
@@ -59,4 +59,9 @@ function disableDateTime () {
 
         timePicker.value = hours + ":" + minutes;
     }
+}
+
+window.onload = function () {
+    const usernameInput = document.getElementById("username");
+    usernameInput.value = getUsername();
 }

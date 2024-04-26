@@ -1,13 +1,13 @@
 document.getElementById('sort-select').addEventListener('change', function() {
     fetchSortedData();
 });
+
 function fetchSortedData() {
     let sortOrder = document.getElementById('sort-select').value;
     fetch(`/sort-data?order=${sortOrder}`)
         .then(response => response.json())
         .then(data => {
             updateDisplay(data);
-            res.send(data);
         })
         .catch(error => console.error('Error:', error));
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -85,12 +84,12 @@
                     </div>
                 </div>
                 <div class="two-columns container">
-                    <div id="chat_interface" class="equal-column container">
+                    <div id="chat_interface">
                         <h2>Comments</h2>
                         <% if (comments === null) { %>
                             <p>Cannot load comments</p>
                         <% } else { %>
-                            <div id="comments-container">
+                            <div id="comments_container">
                                 <% comments.forEach(comment => { %>
                                     <div class="comment-container bubble">
                                         <input type="hidden" class="comment-author" name="comment-author" value="<%= comment.username %>">
@@ -102,13 +101,15 @@
                             </div>
                         <% } %>
                         <form id="comment-form" onsubmit="sendComment(event)">
-                            <input type="hidden" id="plant-id" name="plant_id" value="<%= plant_id %>">
+                            <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
                             <div id="username-container">
                                 <label for="username">Your username:</label>
+                                <input class="text-input" type="text" id="username" name="username" placeholder="Enter your username..." readonly>
+                                <a class="form-button" href="/enter_username">Change your username</a>
                             </div>
                             <div class="send-message-box">
-                                <label for="comment-text"></label><input type="text" id="comment-text" name="comment_text" placeholder="Enter your reply...">
-                                <button class="form-button" onclick="scrollToBottomChat()">Send</button>
+                                <input type="text" id="comment_text" name="comment_text" placeholder="Enter your reply...">
+                                <button class="form-button">Send</button>
                             </div>
                         </form>
                     </div>

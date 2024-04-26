@@ -29,7 +29,7 @@ footer {
 }
 
 .main_section{
-  padding: 2%;
+  padding: 10px 20px 0 20px;
   width: 100%;
 }
 
@@ -84,6 +84,17 @@ select {
   transition: background-color 0.3s ease;
   text-decoration: none;
   border-radius: 20px;
+}
+
+.arrow-left-icon{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom:1.5%;
+}
+
+.view_plant .nav-links .form-button {
+  margin: unset;
 }
 
 .logo {
@@ -248,7 +259,7 @@ a .form-button {
 }
 
 #username-container input {
-  max-width: 90px;
+  max-width: 120px;
 }
 
 #username-container .form-button {

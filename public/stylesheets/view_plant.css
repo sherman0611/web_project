@@ -64,11 +64,11 @@
   width:40%;
 }
 
-.comment_interface, .comment-container {
+.comment_interface, .comments_container {
   flex: 1;
 }
 
-#comments-container{
+#comments_container{
   height: 300px;
   max-height: 300px;
   width: 100%;
@@ -81,7 +81,7 @@
   padding:3px;
 }
 
-#comments-container hr {
+#comments_container hr {
   border: 1px #373F32 solid;
 }
 
