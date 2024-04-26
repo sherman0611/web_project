@@ -22,7 +22,7 @@ footer {
   min-height: 100vh;
 }
 
-.two-columns.container {
+.two-columns.container, .two-columns.container:hover{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -118,11 +118,8 @@ select {
 
 .container {
   background: antiquewhite;
-  border-radius: 25px;
+  border-radius: 5px;
   display: flex;
-  width: calc(50% - 10px);
-  min-width: 285px;
-  max-width: 500px;
   margin-bottom: 20px;
   padding: 20px;
   box-sizing: border-box;
@@ -140,22 +137,36 @@ select {
 .container > a {
   text-decoration: none;
   display: flex;
+  flex-direction: column;
   width: 100%;
   font-size: 0.9rem;
   color: #21251E;
 }
 
+.home.link.container {
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  min-width: fit-content;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  width: 20%;
+  max-width: 20%;
+  margin: 10px;
+}
+
 .plant-image {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   object-position: center;
-  margin-right: 20px;
-  border-radius: 15px;
+  margin: auto;
+  border-radius: 5px;
 }
 
 .container .plant-info {
   margin: auto;
+  text-align: center;
 }
 /* END OF PLANT ENTRIES */
 

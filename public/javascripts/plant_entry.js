@@ -97,17 +97,17 @@ function fetchDBPedia(){
         .catch(error => console.error('Error:', error));
 }
 
-function setEqualColumnHeights() {
-    let twoColumnContainers = document.getElementsByClassName('two-columns','container');
-
-    for (let child_container of twoColumnContainers[0]) {
-        let firstColumn = child_container.querySelector(':first-child');
-        let secondColumn = child_container.querySelector(':last-child');
-        let thirdColumn =
-        let tallestHeight = Math.max(firstColumn.offsetHeight, secondColumn.offsetHeight);
-
-        container.style.height = tallestHeight + 'px'; // Set container height
-        firstColumn.style.height = tallestHeight + 'px'; // Set first column height (optional)
-        secondColumn.style.height = tallestHeight + 'px'; // Set second column height (optional)
-    }
-}
+// function setEqualColumnHeights() {
+//     let twoColumnContainers = document.getElementsByClassName('two-columns','container');
+//
+//     for (let child_container of twoColumnContainers[0]) {
+//         let firstColumn = child_container.querySelector(':first-child');
+//         let secondColumn = child_container.querySelector(':last-child');
+//         let thirdColumn =
+//         let tallestHeight = Math.max(firstColumn.offsetHeight, secondColumn.offsetHeight);
+//
+//         container.style.height = tallestHeight + 'px'; // Set container height
+//         firstColumn.style.height = tallestHeight + 'px'; // Set first column height (optional)
+//         secondColumn.style.height = tallestHeight + 'px'; // Set second column height (optional)
+//     }
+// }
