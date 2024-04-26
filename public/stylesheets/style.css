@@ -116,7 +116,7 @@ select {
   justify-content: space-between;
 }
 
-.plant-entry-container {
+.container {
   background: antiquewhite;
   border-radius: 25px;
   display: flex;
@@ -129,15 +129,15 @@ select {
   transition-duration: 0.4s;
 }
 
-.plant-entry-container:hover{
+.container:hover{
   background-color: #AA7A54;
 }
 
-.plant-entry-container:last-child {
+.container:last-child {
   margin-right: 0; /* Remove margin from last container */
 }
 
-.plant-entry-container > a {
+.container > a {
   text-decoration: none;
   display: flex;
   width: 100%;
@@ -154,7 +154,7 @@ select {
   border-radius: 15px;
 }
 
-.plant-entry-container .plant-info {
+.container .plant-info {
   margin: auto;
 }
 /* END OF PLANT ENTRIES */
@@ -246,7 +246,7 @@ a .form-button {
   margin: 3px;
 }
 
-#chat_interface .send-message-box, #username-container {
+.send-message-box, #username-container {
   margin:5px;
   display: flex;
   align-items: center;

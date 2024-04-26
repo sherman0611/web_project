@@ -1,26 +1,27 @@
-
-.view.plant-entry-container > a {
+.container > a {
   height: fit-content;
   width: fit-content;
 }
 
-.view.plant-entry-container {
+.container, .container:hover {
   width: 100%;
   max-width: unset;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
 }
 
-.view.plant-entry-container:hover{
+.container.bigger-column, .container.smaller-column, .container.equal-column,
+.container.bigger-column:hover, .container.smaller-column:hover, .container.equal-column:hover{
   background-color: antiquewhite;
 }
 
-.view.plant-entry-container .txt-container {
+.view.container .txt-container {
   flex-direction: column;
 }
 
-.view_plant .nav-links{
+.nav-links {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -28,10 +29,34 @@
   margin-bottom:1.5%;
 }
 
-.view_plant .nav-links .form-button {
+.nav-links .form-button {
   margin: unset;
 }
 
+.container.two-columns{
+  display: flex;
+  flex-direction: row;
+}
+
+.container.two-columns .container {
+  height:auto;
+  margin: 1%;
+}
+
+.container.two-columns .smaller-column {
+  max-width: 30%;
+  width:30%
+}
+
+.container.two-columns .bigger-column {
+  max-width: 70%;
+  width: 70%
+}
+
+.container.two-columns .equal-column {
+  max-width: 50%;
+  width: 50%
+}
 
 /* COMMENTS */
 
@@ -43,32 +68,37 @@
   flex: 1;
 }
 
-
 #comments-container{
   height: 300px;
   max-height: 300px;
+  width: 100%;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  background-color: #758874;
+  margin:5px;
+  border-radius: 3px;
+  padding:3px;
 }
 
 #comments-container hr {
   border: 1px #373F32 solid;
 }
 
-#chat_interface .send-message-box input[type="text" i]{
+.send-message-box input[type="text" i]{
   height: 22px;
   width: 100%;
 }
 
-#chat_interface .send-message-box .form-button {
+.send-message-box .form-button {
   margin: 0 5px;
 }
 
 .bubble {
   --r: 25px; /* the radius */
   --t: 30px; /* the size of the tail */
-
+  height: fit-content;
+  max-height: fit-content;
   max-width: 300px;
   padding: calc(2*var(--r)/3);
   -webkit-mask:
