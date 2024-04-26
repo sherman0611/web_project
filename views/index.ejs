@@ -32,7 +32,7 @@
                         <p>No plant entries currently.</p>
                     <% } else { %>
                         <% data.forEach(plant_entry => { %>
-                            <div class="plant-entry-container">
+                            <div class="home link container">
                                 <a href="/view_plant/<%= plant_entry._id %>">
                                     <% if(plant_entry.image) { %>
                                         <% if(plant_entry.image.includes('public')) { %>

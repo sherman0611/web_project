@@ -33,6 +33,10 @@ router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
 });
 
+// router.post('/enter_username', function(req, res, next) {
+//     res.redirect('/home');
+// });
+
 /* GET create plant entry page. */
 router.get('/create_plant', function(req, res, next) {
     res.render('create_plant', { title: 'Create plant entry' });

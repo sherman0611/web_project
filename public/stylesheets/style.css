@@ -22,7 +22,7 @@ footer {
   min-height: 100vh;
 }
 
-.two-columns.container {
+.two-columns.container, .two-columns.container:hover{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -127,46 +127,57 @@ select {
   justify-content: space-between;
 }
 
-.plant-entry-container {
+.container {
   background: antiquewhite;
-  border-radius: 25px;
+  border-radius: 5px;
   display: flex;
-  width: calc(50% - 10px);
-  min-width: 285px;
-  max-width: 500px;
   margin-bottom: 20px;
   padding: 20px;
   box-sizing: border-box;
   transition-duration: 0.4s;
 }
 
-.plant-entry-container:hover{
+.container:hover{
   background-color: #AA7A54;
 }
 
-.plant-entry-container:last-child {
+.container:last-child {
   margin-right: 0; /* Remove margin from last container */
 }
 
-.plant-entry-container > a {
+.container > a {
   text-decoration: none;
   display: flex;
+  flex-direction: column;
   width: 100%;
   font-size: 0.9rem;
   color: #21251E;
 }
 
-.plant-image {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  object-position: center;
-  margin-right: 20px;
-  border-radius: 15px;
+.home.link.container {
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  min-width: fit-content;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  width: 20%;
+  max-width: 20%;
+  margin: 10px;
 }
 
-.plant-entry-container .plant-info {
+.plant-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
   margin: auto;
+  border-radius: 5px;
+}
+
+.container .plant-info {
+  margin: auto;
+  text-align: center;
 }
 /* END OF PLANT ENTRIES */
 
@@ -257,7 +268,7 @@ a .form-button {
   margin: 3px;
 }
 
-#chat_interface .send-message-box, #username-container {
+.send-message-box, #username-container {
   margin:5px;
   display: flex;
   align-items: center;

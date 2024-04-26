@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let PlantEntrySchema  = new Schema({
-        username: {type: String, max: 20, required: true},
+        username: {type: String, max: 20, required: false},
         plant_name: {type: String, max: 50, required: true},
         image: {type: String, required: false},
         image_url : {type: String, required: false},

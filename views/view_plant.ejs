@@ -12,77 +12,78 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
+        <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section view_plant">
-                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
-                <div class="view plant-entry-container">
-                    <% if (plant_entry === null) { %>
-                        <p>Cannot load plant_entry</p>
-                    <% } else { %>
-                        <% if(plant_entry.image) { %>
-                            <% if(plant_entry.image.includes('public')) { %>
-                                <img class="plant-image" src="<%= plant_entry.image.replace('public', '') %>" alt="<%= plant_entry.plant_name %>">
-                            <% } else { %>
-                                <img class="plant-image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
-                            <% } %>
-                        <% } else if(plant_entry.image_url) { %>
-                            <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
-                        <% } %>
-                        <div class="txt-container">
-                            <h1><%= plant_entry.plant_name %></h1>
-                            <h2>Submitted by <span id="plant_author"><%= plant_entry.username %></span></h2>
-                            <% if(plant_entry.date) { %>
-                                <h4>Date Seen: </h4>
-                                <p><%= plant_entry.date.substring(0, 10) %></p>
-                            <% }%>
-                            <% if(plant_entry.location){%>
-                                <h4>Spotted in:</h4>
-                                <p> <%= plant_entry.location %></p>
-                            <% }%>
-                            <% if(plant_entry.time){%>
-                                <h4>Time Seen: </h4>
-                                <p><%= plant_entry.time %></p>
-                            <% }%>
-                        </div>
+                <div class="nav-links">
+                    <a href="/home"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 </div>
                 <div class="two-columns container">
-                    <div class="plant_details">
-                        <% if(plant_entry.location){%>
-                            <h3>&#128506;&#65039;Location: </h3>
-                            <p><%= plant_entry.location %></p>
-                        <%}%>
-                        <% if(plant_entry.latitude && plant_entry.longitude) { %>
-                            <div id="map" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
-                            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
-                        <% }%>
-                        <% if(plant_entry.description){%>
-                            <h3>&#129534;Description:</h3>
-                            <p><%= plant_entry.description %></p>
-                        <%}%>
-                        <h3>&#127793;Characteristics:</h3>
+                    <div class="main container smaller-column">
+                        <% if (plant_entry === null) { %>
+                            <p>Cannot load plant_entry</p>
+                        <% } else { %>
+                            <% if(plant_entry.image) { %>
+                                <% if(plant_entry.image.includes('public')) { %>
+                                    <img class="plant-image" src="<%= plant_entry.image.replace('public', '') %>" alt="<%= plant_entry.plant_name %>">
+                                <% } else { %>
+                                    <img class="plant-image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
+                                <% } %>
+                            <% } else if(plant_entry.image_url) { %>
+                                <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
+                            <% } %>
+                            <div class="txt-container">
+                                <h1><%= plant_entry.plant_name %></h1>
+                                <h2>Submitted by <span id="plant_author"><%= plant_entry.username %></span></h2>
+                                <% if(plant_entry.date) { %>
+                                    <h4>Date Seen: </h4>
+                                    <p><%= plant_entry.date.substring(0, 10) %></p>
+                                <% }%>
+                                <% if(plant_entry.location){%>
+                                    <h4>Spotted in:</h4>
+                                    <p> <%= plant_entry.location %></p>
+                                <% }%>
+                                <% if(plant_entry.time){%>
+                                    <h4>Time Seen: </h4>
+                                    <p><%= plant_entry.time %></p>
+                                <% }%>
+                            </div>
+                    </div>
+                    <div class="bigger-column two-columns container">
+                        <div class="plant_details equal-column container">
+                            <% if(plant_entry.location){%>
+                                <h3>&#128506;&#65039;Location: </h3>
+                                <p><%= plant_entry.location %></p>
+                            <%}%>
+                            <% if(plant_entry.description){%>
+                                <h3>&#129534;Description:</h3>
+                                <p><%= plant_entry.description %></p>
+                            <%}%>
+                            <h3>&#127793;Characteristics:</h3>
 
-                        <% if(plant_entry.height){%>
-                            <p>&#8597;&#65039;Height: <%= plant_entry.height %></p>
-                        <%}%>
-                        <% if(plant_entry.spread){%>
-                            <p>&#8596;&#65039;Spread: <%= plant_entry.spread %></p>
-                        <%}%>
-                        <% if(plant_entry.flowers){%>
-                            <p>&#127804;Flowers: <%= plant_entry.flowers %></p>
-                        <%}%>
-                        <% if(plant_entry.sun_exposure){%>
-                            <p>&#9728;&#65039;Sun exposure: <%= plant_entry.sun_exposure %></p>
-                        <%}%>
+                            <% if(plant_entry.height){%>
+                                <p>&#8597;&#65039;Height: <%= plant_entry.height %></p>
+                            <%}%>
+                            <% if(plant_entry.spread){%>
+                                <p>&#8596;&#65039;Spread: <%= plant_entry.spread %></p>
+                            <%}%>
+                            <% if(plant_entry.flowers){%>
+                                <p>&#127804;Flowers: <%= plant_entry.flowers %></p>
+                            <%}%>
+                            <% if(plant_entry.sun_exposure){%>
+                                <p>&#9728;&#65039;Sun exposure: <%= plant_entry.sun_exposure %></p>
+                            <%}%>
+                        </div>
+                        <div id="plant_infoDbp" class="txt-container container equal-column">
+                            <h3 id="db_page_title"></h3>
+                            <h4 id="title_dbp"></h4>
+                            <p id="abstract_dbp"></p>
+                            <a id="link_dbp" href=""></a>
+                        </div>
                     </div>
-                    <div id="plant_infoDbp">
-                        <h3 id="db_page_title"></h3>
-                        <h4 id="title_dbp"></h4>
-                        <br>
-                        <p id="abstract_dbp"></p>
-                        <br>
-                        <a id="link_dbp" href=""></a>
-                    </div>
+                </div>
+                <div class="two-columns container">
                     <div id="chat_interface">
                         <h2>Comments</h2>
                         <% if (comments === null) { %>
@@ -112,59 +113,17 @@
                             </div>
                         </form>
                     </div>
+
+                    <% if(plant_entry.latitude && plant_entry.longitude) { %>
+                        <div id="map" class="equal-column container" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
+                    <% }%>
                 </div>
                 <% } %>
             </div>
         </div>
+        <script src="/javascripts/username-utils.js"></script>
+        <script src="/javascripts/comment-utils.js"></script>
+        <script src="/javascripts/plant_entry.js"></script>
     </body>
-    <script>
-        let plantName = '<%= plant_entry.plant_name %>';
-        const resource = `http://dbpedia.org/resource/${plantName}`;
-
-        const endpointUrl = 'https://dbpedia.org/sparql';
-        const sparqlQuery = `
-                     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                     PREFIX dbo: <http://dbpedia.org/ontology/>
-
-                     SELECT ?label ?abstract ?link
-                     WHERE {
-                      <${resource}> dbo:abstract ?abstract .
-                      <${resource}> rdfs:label ?label .
-                      <${resource}> dbo:wikiPageID ?link .
-                     FILTER (langMatches(lang(?abstract), "EN"))
-                }`;
-
-        const encodedQuery = encodeURIComponent(sparqlQuery);
-        const url = `${endpointUrl}?query=${encodedQuery}&format=json`
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-
-                let bindings = data.results.bindings;
-                let result = JSON.stringify(bindings);
-
-                let dbpTitle = document.getElementById('db_page_title');
-                dbpTitle.textContent = 'DBpedia Information';
-
-                let label = bindings[0].label.value;
-                let labelElement = document.getElementById('title_dbp')
-                labelElement.textContent = label;
-
-
-                let abstract = data.results.bindings[0].abstract.value;
-                let plantInfoElement = document.getElementById('abstract_dbp');
-                plantInfoElement.innerHTML = 'DBpedia Description: <br>' + abstract;
-
-
-                let link = bindings[0].link.value;
-                let linkElement = document.getElementById('link_dbp');
-                linkElement.textContent = 'More info';
-                linkElement.href = `http://dbpedia.org/page/${plantName}`;
-
-            })
-            .catch(error => console.error('Error:', error));
-    </script>
-    <%- include('partials/footer.ejs')%>>
-    <script src="/javascripts/view_plant.js"></script>
-    <script src="/javascripts/username-utils.js"></script>
 </html>
