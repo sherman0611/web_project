@@ -17,8 +17,16 @@
                         <input id="search-input" type="text" placeholder="Search plants..">
                         <button><img src="images/search_icon.png" alt="search button"/></button>
                     </div>
+                    <div id="filter">
+                        <label for="filter-select">Filter by Identification Status:</label>
+                        <select id="filter-select" onchange=fetchFilteredAndSortedData()>
+                            <option value="completed">Completed</option>
+                            <option value="in-progress">In Progress</option>
+                        </select>
+
+                    </div>
                     <label for="sort-select">Sort by:</label>
-                    <select id="sort-select" onchange=fetchSortedData()>
+                    <select id="sort-select" onchange=fetchFilteredAndSortedData()>
                         <option value="date-asc">Date Ascending</option>
                         <option value="date-desc">Date Descending</option>
                     </select>

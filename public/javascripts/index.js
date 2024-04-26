@@ -1,13 +1,25 @@
 document.getElementById('sort-select').addEventListener('change', function() {
     fetchSortedData();
 });
-function fetchSortedData() {
-    let sortOrder = document.getElementById('sort-select').value;
-    fetch(`/sort-data?order=${sortOrder}`)
+document.getElementById('filter-select').addEventListener('change', fetchFilteredAndSortedData);
+// function fetchSortedData() {
+//     let sortOrder = document.getElementById('sort-select').value;
+//     fetch(`/sort-data?order=${sortOrder}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             updateDisplay(data);
+//             res.send(data);
+//         })
+//         .catch(error => console.error('Error:', error));
+// }
+function fetchFilteredAndSortedData() {
+    const sortOrder = document.getElementById('sort-select').value;
+    const filterStatus = document.getElementById('filter-select').value;
+    const statusBoolean = filterStatus === 'completed';  // Converts 'completed' to true, otherwise false
+    fetch(`/fetch-data?order=${sortOrder}&status=${statusBoolean}`)
         .then(response => response.json())
         .then(data => {
             updateDisplay(data);
-            res.send(data);
         })
         .catch(error => console.error('Error:', error));
 }

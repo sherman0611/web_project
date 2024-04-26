@@ -139,6 +139,32 @@ function sortData(data, order) {
     });
 }
 
+router.get('/fetch-data', (req, res) => {
+    try {
+        let result = plant_entries.getAll();
+        result.then(plant_entries => {
+            let data = JSON.parse(plant_entries);
+            const { order, status } = req.query;
+            const statusBool = status === 'true';  // Ensure the status is interpreted as a boolean
+            if (!order) {
+                return res.status(400).json({ error: "Order parameter is required" });
+            }
+            let filteredData = filterDataByStatus(data, statusBool);
+            let sortedFilteredData = sortData(filteredData, order);
+            res.json(sortedFilteredData);
+        }).catch(err => {
+            console.log('Error:', err);
+        });
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+function filterDataByStatus(data, status) {
+    return data.filter(item => item.identification_status === status);
+}
+
 router.get('/edit_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
 
@@ -157,5 +183,7 @@ router.get('/edit_plant/:id', function(req, res, next) {
             res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
         });
 });
+
+// Add filter by identification here
 
 module.exports = router;
