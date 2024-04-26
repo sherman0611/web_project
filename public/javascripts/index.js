@@ -29,7 +29,9 @@ function updateDisplay(data) {
     container.innerHTML = '';
     data.forEach(item => {
         const plantEntryDiv = document.createElement('div');
-        plantEntryDiv.className = 'plant-entry-container';
+        plantEntryDiv.className = 'home';
+        plantEntryDiv.className = 'link';
+        plantEntryDiv.className = 'container';
 
         const plantLink = document.createElement('a');
         plantLink.href = `/view_plant/${item._id}`;
