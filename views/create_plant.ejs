@@ -8,13 +8,16 @@
         <link rel='stylesheet' href='/stylesheets/create_plant.css'/>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
-    <body onload="usernameDefining()">
+    <body>
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
+                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 <h2 class="create_entry_title">New plant sightings</h2>
                 <div id="username-container" class="add_plant_entry_container">
                     <label for="username">Your username:</label>
+                    <input class="text-input" type="text" id="username" placeholder="Enter your username..." readonly>
+                    <a class="form-button" href="/enter_username">Change your username</a>
                 </div>
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div class="add_plant_entry_container">
@@ -40,11 +43,11 @@
                             <input class="text-input" type="text" id="location" name="location" placeholder="Location...">
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding(optional)</label>
+                            <label for="coordinates">Coordinates of the finding (optional)</label>
                             <br>
                             <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
+                            <div id="display_coordinates"></div>
                         </p>
-                        <div id="display_coordinates"></div>
                     </div>
 
 
@@ -137,13 +140,11 @@
                     <br>
                     <button class="form-button" type="submit">Create plant entry</button>
                 </form>
-                <button class="return-button" onclick="returnHome()">Go Back</button>
-
             </div>
         </div>
-        <%- include('partials/footer.ejs')%>>
-        <script src="/javascripts/create_plant.js"></script>
-        <script src="/javascripts/username-util.js"></script>
     </body>
+    <%- include('partials/footer.ejs')%>>
+    <script src="/javascripts/create_plant.js"></script>
+    <script src="/javascripts/username-utils.js"></script>
 </html>
 

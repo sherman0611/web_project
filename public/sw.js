@@ -14,16 +14,19 @@ self.addEventListener('install', event => {
                 '/images/arrow_left_icon.png',
                 '/images/install_icon.png',
                 '/images/search_icon.png',
-                '/images/white-arrow.png',
+                '/images/white_arrow.png',
                 '/manifest.json',
                 '/javascripts/create_plant.js',
                 '/javascripts/enter_username.js',
-                '/javascripts/idb-utility.js',
+                '/javascripts/idb_utils.js',
                 '/javascripts/index.js',
                 '/javascripts/main.js',
-                '/javascripts/plant_entry.js',
-                '/javascripts/username-util.js',
+                '/javascripts/username_utils.js',
+                '/javascripts/view_plant.js',
+                '/stylesheets/create_plant.css',
+                '/stylesheets/index.css',
                 '/stylesheets/style.css',
+                '/stylesheets/view_plant.css',
             ]);
             console.log('Service Worker: App Shell Cached');
         }

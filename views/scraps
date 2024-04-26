@@ -88,8 +88,8 @@
                 <% } %>
             </div>
             <%- include('partials/footer.ejs')%>>
-            <script src="/javascripts/username-util.js"></script>
-            <script src="/javascripts/plant_entry.js"></script>
+            <script src="/javascripts/username_utils.js"></script>
+            <script src="/javascripts/view_plant.js"></script>
         </div>
     </body>
 </html>

@@ -33,7 +33,3 @@ if ("Notification" in window) {
         });
     }
 }
-
-function returnHome() {
-    window.location.href = '/';
-}
