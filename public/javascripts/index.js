@@ -15,8 +15,8 @@ document.getElementById('filter-select').addEventListener('change', fetchFiltere
 function fetchFilteredAndSortedData() {
     const sortOrder = document.getElementById('sort-select').value;
     const filterStatus = document.getElementById('filter-select').value;
-    const statusBoolean = filterStatus === 'completed';  // Converts 'completed' to true, otherwise false
-    fetch(`/fetch-data?order=${sortOrder}&status=${statusBoolean}`)
+    // const statusBoolean = filterStatus === 'completed';  // Converts 'completed' to true, otherwise false
+    fetch(`/fetch-data?order=${sortOrder}&status=${filterStatus}`)
         .then(response => response.json())
         .then(data => {
             updateDisplay(data);

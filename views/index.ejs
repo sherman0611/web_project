@@ -20,8 +20,10 @@
                     <div id="filter">
                         <label for="filter-select">Filter by Identification Status:</label>
                         <select id="filter-select" onchange=fetchFilteredAndSortedData()>
+                            <option value="all">View All</option>
                             <option value="completed">Completed</option>
-                            <option value="in-progress">In Progress</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="unknown">Unknown</option>
                         </select>
 
                     </div>
