@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
                 '/javascripts/index.js',
                 '/javascripts/main.js',
                 '/javascripts/plant_entry.js',
-                '/javascripts/username-util.js',
+                '/javascripts/username-utils.js',
                 '/stylesheets/style.css',
             ]);
             console.log('Service Worker: App Shell Cached');

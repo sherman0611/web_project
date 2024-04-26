@@ -6,8 +6,9 @@ function setUsername(){
 function getUsername() {
     let username = localStorage.getItem("username");
     if (!username) {
-        username = "anon";
+        username = "";
     }
+    console.log(username)
     return username;
 }
 
