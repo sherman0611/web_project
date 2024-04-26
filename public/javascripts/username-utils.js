@@ -8,7 +8,6 @@ function getUsername() {
     if (!username) {
         username = "";
     }
-    console.log(username)
     return username;
 }
 
