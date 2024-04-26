@@ -16,6 +16,7 @@ self.addEventListener('install', event => {
                 '/images/search_icon.png',
                 '/images/white_arrow.png',
                 '/manifest.json',
+                '/javascripts/comment_utils.js',
                 '/javascripts/create_plant.js',
                 '/javascripts/enter_username.js',
                 '/javascripts/idb_utils.js',

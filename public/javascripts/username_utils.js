@@ -6,14 +6,14 @@ function setUsername(){
 function getUsername() {
     let username = localStorage.getItem("username");
     if (!username) {
-        username = "anon";
+        username = "";
     }
     return username;
 }
 
 function goToReferrer(){
     if (document.referrer.includes("enter_username")){
-        document.location = "/home"
+        document.location = "/"
     } else {
         document.location = document.referrer
     }
