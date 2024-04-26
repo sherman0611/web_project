@@ -39,21 +39,9 @@ router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
 });
 
-router.get('/', function(req, res, next) {
-    let result = plant_entries.getAll();
-    result.then(plant_entries => {
-        let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data });
-    }).catch(err => {
-        console.log("Error retrieving plant entries: ", err);
-        res.render('index', { title: 'Plantgram', data: null });
-    });
-});
-
 router.post('/enter_username', function(req, res, next) {
     res.redirect('/home');
 });
-
 
 /* GET create plant entry page. */
 router.get('/create_plant', function(req, res, next) {
