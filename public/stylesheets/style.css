@@ -22,14 +22,14 @@ footer {
   min-height: 100vh;
 }
 
-.two-columns.container {
+.two-columns.container, .two-columns.container:hover{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 .main_section{
-  padding: 2%;
+  padding: 10px 20px 0 20px;
   width: 100%;
 }
 
@@ -46,6 +46,12 @@ footer {
 button {
   background-color: #373F32;
   transition-duration: 0.3s;
+}
+
+button:hover{
+  /*background-color: #758874;*/
+  background-color: #AA7A54;
+  cursor: pointer;
 }
 
 select {
@@ -80,6 +86,17 @@ select {
   border-radius: 20px;
 }
 
+.arrow-left-icon{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom:1.5%;
+}
+
+.view_plant .nav-links .form-button {
+  margin: unset;
+}
+
 .logo {
   background-color: #758874;
   text-align: center;
@@ -103,170 +120,73 @@ select {
 
 /*END OF HEADER*/
 
-/*HOME PAGE*/
-
-#search-input {
-  height: 35px;
-  border-radius: 20px;
-  border: antiquewhite 2px solid;
-  width: 100%;
-}
-
-.search button {
-  height: auto;
-  border-radius: 20px;
-  border: antiquewhite 2px solid;
-  padding: 5px;
-  width: auto;
-}
-
-.search img {
-  height: 25px;
-}
-
-.search {
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.search-and-sort {
-  padding: 15px;
-  background: antiquewhite;
-  margin: 10px 0 20px 0;
-  border-radius: 25px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: space-between;
-}
-
+/* PLANT ENTRIES */
 .plant-entries-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.plant-entry-container {
+.container {
   background: antiquewhite;
-  border-radius: 25px;
+  border-radius: 5px;
   display: flex;
-  width: calc(50% - 10px);
-  min-width: 285px;
-  max-width: 500px;
   margin-bottom: 20px;
   padding: 20px;
   box-sizing: border-box;
   transition-duration: 0.4s;
 }
 
-.plant-entry-container:hover{
+.container:hover{
   background-color: #AA7A54;
 }
 
-.plant-entry-container:last-child {
+.container:last-child {
   margin-right: 0; /* Remove margin from last container */
 }
 
-.plant-entry-container > a {
+.container > a {
   text-decoration: none;
   display: flex;
+  flex-direction: column;
   width: 100%;
   font-size: 0.9rem;
   color: #21251E;
 }
 
-.view.plant-entry-container > a {
-  height: fit-content;
-  width: fit-content;
-}
-
-.view.plant-entry-container {
-  width: 100%;
-  max-width: unset;
+.home.link.container {
   flex-direction: column;
+  align-content: center;
   justify-content: center;
   align-items: center;
-}
-
-.view.plant-entry-container:hover{
-  background-color: antiquewhite;
-}
-
-.view.plant-entry-container .txt-container {
-  flex-direction: column;
-}
-
-.view_plant .nav-links{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom:1.5%;
-}
-
-.view_plant .nav-links .form-button {
-  margin: unset;
+  min-width: fit-content;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  width: 20%;
+  max-width: 20%;
+  margin: 10px;
 }
 
 .plant-image {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   object-position: center;
-  margin-right: 20px;
-  border-radius: 15px;
-}
-
-.plant-entry-container .plant-info {
   margin: auto;
+  border-radius: 5px;
 }
 
-/*END OF HOME PAGE*/
-
-
-button:hover{
-  /*background-color: #758874;*/
-  background-color: #AA7A54;
-  cursor: pointer;
-}
-
-.add_plant_entry_container{
+.container .plant-info {
+  margin: auto;
   text-align: center;
-  width: 50%;
-  height: fit-content;
-  background-color: antiquewhite;
-  border-radius: 20px;
-  padding: 5px;
-  margin: auto;
-  color:#AA7A54;
 }
+/* END OF PLANT ENTRIES */
 
-.submitLocation{
-  display: flex;
-  background-color: #758874;
-  margin: auto;
-  color: #E4C9AC;
-  transition-duration: 0.4s;
-  border-radius: 10px;
-  border: 0 hidden;
-  padding: 7px;
-}
-
-input::file-selector-button {
-  display: flex;
-  background-color: #758874;
-  margin: auto;
-  color: #E4C9AC;
-  transition-duration: 0.4s;
-  border-radius: 10px;
-  border: 0 hidden;
-  padding: 7px;
+/* OTHER UTILS */
+input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, input[type="text"]:focus:hover.input-disabled {
+  border: 0;
+  background-color: transparent;
+  font-weight: bold;
+  text-align: center;
 }
 
 .text_box {
@@ -277,41 +197,23 @@ input::file-selector-button {
   width: 80%;
 }
 
-.create_entry_title {
-  color:#AA7A54;
-  text-align: center;
-}
-
 .form_div {
   margin-left: 43%;
   display: flex;
   margin-bottom: 10px;
 }
 
-/*VIEW PLANT SECTION*/
-
-/*.plant-image {*/
-/*  width:300px;*/
-/*  height: 300px;*/
-/*  background-color: antiquewhite;*/
-/*  padding: 20px 20px 80px;*/
-/*  box-shadow: #21251E;*/
-/*  object-fit: cover;*/
-/*  object-position: 25% 25%;*/
-/*}*/
-
 .form-button, .return-button {
   display: flex;
   text-decoration: none;
   width: fit-content;
   background-color: #AA7A54;
-  margin: auto;
   color: #E4C9AC;
   transition-duration: 0.4s;
   border-radius: 20px;
   border: 0 hidden;
   padding: 7px;
-  margin-top: 1%;
+  margin: 1% auto auto;
 }
 
 a .form-button {
@@ -330,10 +232,6 @@ a .form-button {
   margin-right: 20px;
 }
 
-.comment_interface {
-  flex: 1;
-}
-
 .plant_link {
   display: flex;
   align-items: center;
@@ -341,23 +239,47 @@ a .form-button {
   color: inherit;
 }
 
-.comment-container {
-  flex: 1;
-}
-
 .plant_link:hover {
   background-color: #AA7A54;
 }
+/* END OTHER UTILS */
 
-/*END VIEW PLANT SECTION*/
+/* USERNAME DISPLAYING */
+#username-container {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#username-container label {
+  width: fit-content;
+  min-width: fit-content;
+}
+
+#username-container input {
+  max-width: 120px;
+}
+
+#username-container .form-button {
+  width: fit-content;
+  min-width: fit-content;
+  margin: 3px;
+}
+
+.send-message-box, #username-container {
+  margin:5px;
+  display: flex;
+  align-items: center;
+  background-color: antiquewhite;
+  border-radius: 3px;
+  padding:3px;
+}
+
 /*ENTER USERNAME SECTION*/
 #create_username_form > *{
   margin-bottom: 1%;
   margin-top: 1%;
 }
 /*END USERNAME SECTION*/
-
-#map {
-  height: 500px;
-  width: 500px;
-}

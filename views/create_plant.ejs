@@ -5,42 +5,41 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/style.css'/>
-        <script src="/javascripts/main.js"></script>
-        <script src="/javascripts/create_plant.js"></script>
+        <link rel='stylesheet' href='/stylesheets/create_plant.css'/>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     </head>
-    <body onload="usernameDefining()">
+    <body>
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
+                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 <h2 class="create_entry_title">New plant sightings</h2>
+                <div id="username-container" class="add_plant_entry_container">
+                    <label for="username">Your username:</label>
+                    <input class="text-input" type="text" id="username" placeholder="Enter your username..." readonly>
+                    <a class="form-button" href="/enter_username">Change your username</a>
+                </div>
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div class="add_plant_entry_container">
                         <h3>Basic details</h3>
-                        <p id="username-paragraph">
-                            <label for="username">Your username</label>
-                            <br>
-                        </p>
-                        <br>
                         <p>
                             <label for="description">Plant description </label>
                             <br>
                             <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
                         </p>
-<!--                        <p>-->
-<!--                            <input type="checkbox" id="timedate " name="timedate" value="timedate">-->
-<!--                            <label for="timedate ">Does the date and time seen match with the ones when this post is made?</label>-->
-<!--                        </p>-->
                         <p>
-                            <label for="date">Date Seen</label>
+                            <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()"> Are you posting a plant you have just seen?</label>
                             <br>
-                            <input type="date" id="date" name="date">
                         </p>
-
                         <p>
-                            <label for="time">Time Seen</label>
+                            <label for="date_seen">Date Spotted at:</label>
                             <br>
-                            <input type="time" id="time" name="time">
+                            <input type="date" id="date_seen" name="date_seen">
+                        </p>
+                        <p>
+                            <label for="time_seen">Time Spotted at:</label>
+                            <br>
+                            <input type="time" id="time_seen" name="time_seen"><br>
                         </p>
 
                         <p>
@@ -49,11 +48,11 @@
                             <input class="text-input" type="text" id="location" name="location" placeholder="Location...">
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding(optional)</label>
+                            <label for="coordinates">Coordinates of the finding (optional)</label>
                             <br>
                             <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
+                            <div id="display_coordinates"></div>
                         </p>
-
                     </div>
 
 
@@ -144,12 +143,13 @@
                         </p>
                     </div>
                     <br>
-                    <button class="form-button" onclick="saveUsername()" type="submit">Create plant entry</button>
+                    <button class="form-button" type="submit">Create plant entry</button>
                 </form>
-                <button class="return-button" onclick="returnHome()">Go Back</button>
-
             </div>
         </div>
     </body>
-    <footer></footer>
+    <%- include('partials/footer.ejs')%>>
+    <script src="/javascripts/create_plant.js"></script>
+    <script src="/javascripts/username_utils.js"></script>
 </html>
+

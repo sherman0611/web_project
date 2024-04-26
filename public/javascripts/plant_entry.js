@@ -1,9 +1,12 @@
 let plant_id = null;
-let socket = io();
+let plant_name = null;
 
-let map, infoWindow
-function init() {
+let map;
+
+window.onload = function () {
     plant_id = document.getElementById('plant-id').value;
+    plant_name = document.getElementsByTagName('h1')[0].textContent;
+    console.log(plant_name)
 
     socket.emit('join', plant_id);
 
@@ -11,121 +14,97 @@ function init() {
     socket.on('comment', function (room, data) {
         writeNewComment(data);
     });
+    identifyAuthor();
+    usernameDefining();
+    assignCommentAuthor();
+    scrollToBottomChat();
+    fetchDBPedia();
+    initMap();
 }
 
-function identifyAuthor(){
-    console.log(document.getElementById("plant_author").innerText)
-    if(getUsername() === document.getElementById("plant_author").innerText){
-        let plant_id = document.getElementById("plant_id").value
-        let html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>'
-        document.getElementsByClassName("nav-links")[0].insertAdjacentHTML("beforeend", html_to_insert)
+async function initMap() {
+
+    const mapElement = document.getElementById('map');
+    if(mapElement !== null && mapElement.dataset !== null){
+        const lat = parseFloat(mapElement.dataset.lat);
+        const lng = parseFloat(mapElement.dataset.lng);
+
+        const location = {lat: lat, lng: lng};
+
+        const {Map} = await google.maps.importLibrary("maps");
+        const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
+
+        map = new Map(mapElement, {
+            zoom: 4,
+            center: location,
+            mapId: "DEMO_MAP_ID",
+        });
+
+        const marker = new AdvancedMarkerElement({
+            map: map,
+            position: location,
+            title: "Uluru",
+        });
     }
 }
 
-function sendComment(event) {
-    event.preventDefault();
+function fetchDBPedia() {
 
-    // let username = getUsername();
-    // if (username==="") {
-    //
-    // }
+    const resource = `http://dbpedia.org/resource/${plant_name}`;
+    const endpointUrl = 'https://dbpedia.org/sparql';
+    const sparqlQuery = `
+                 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                 PREFIX dbo: <http://dbpedia.org/ontology/>
 
-    // Send AJAX request to the server to create comment
-    $.ajax({
-        type: 'POST',
-        url: '/create_comment',
-        data: $('#comment-form').serialize(),
-        success: function(data) {
-            socket.emit('comment', plant_id, data);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error creating comment:", error);
-        }
-    });
+                 SELECT ?label ?abstract ?link
+                 WHERE {
+                  <${resource}> dbo:abstract ?abstract .
+                  <${resource}> rdfs:label ?label .
+                  <${resource}> dbo:wikiPageID ?link .
+                 FILTER (langMatches(lang(?abstract), "EN"))
+            }`;
+
+    const encodedQuery = encodeURIComponent(sparqlQuery);
+    const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let bindings = data.results.bindings;
+            let result = JSON.stringify(bindings);
+            let dbpTitle = document.getElementById('db_page_title');
+            dbpTitle.textContent = 'DBpedia Information';
+
+            let label = bindings[0].label.value;
+            let labelElement = document.getElementById('title_dbp')
+            labelElement.textContent = label;
+
+
+            let abstract = data.results.bindings[0].abstract.value;
+            let plantInfoElement = document.getElementById('abstract_dbp');
+            plantInfoElement.innerHTML = abstract;
+
+
+            let link = bindings[0].link.value;
+            let linkElement = document.getElementById('link_dbp');
+            linkElement.textContent = 'More info';
+            linkElement.href = `http://dbpedia.org/page/${plant_name}`;
+        })
+        .catch(error => console.error('Error:', error));
 }
 
-function writeNewComment(data) {
-    let commentsContainer = document.getElementById('comments-container');
 
-    let commentContainer = document.createElement('div');
-    commentContainer.classList.add('comment-container');
-
-    let usernameParagraph = document.createElement('p');
-    let usernameStrong = document.createElement('strong');
-    usernameStrong.textContent = data.username;
-    usernameParagraph.appendChild(usernameStrong);
-
-    let commentParagraph = document.createElement('p');
-    commentParagraph.textContent = data.comment_text;
-
-    let dateParagraph = document.createElement('p');
-    dateParagraph.textContent = 'Sent on ' + data.date.substring(0, 10);
-
-    let hr = document.createElement('hr');
-
-    commentContainer.appendChild(usernameParagraph);
-    commentContainer.appendChild(commentParagraph);
-    commentContainer.appendChild(dateParagraph);
-    commentContainer.appendChild(hr);
-
-    commentsContainer.appendChild(commentContainer);
-
-    document.getElementById('comment-text').value = '';
-}
-// function initMap() {
-//     // Coordinates will be set dynamically via HTML data attributes
-//     const mapElement = document.getElementById('map');
-//     const lat = parseFloat(mapElement.dataset.lat);
-//     const lng = parseFloat(mapElement.dataset.lng);
+// function setEqualColumnHeights() {
+//     let twoColumnContainers = document.getElementsByClassName('two-columns','container');
 //
-//     const location = {lat: lat, lng: lng};
-//     const map = new google.maps.Map(mapElement, {
-//         zoom: 8,
-//         center: location
-//     });
-//     const marker = new google.maps.Marker({
-//         position: location,
-//         map: map
-//     });
+//     for (let child_container of twoColumnContainers[0]) {
+//         let firstColumn = child_container.querySelector(':first-child');
+//         let secondColumn = child_container.querySelector(':last-child');
+//         let thirdColumn =
+//         let tallestHeight = Math.max(firstColumn.offsetHeight, secondColumn.offsetHeight);
+//
+//         container.style.height = tallestHeight + 'px'; // Set container height
+//         firstColumn.style.height = tallestHeight + 'px'; // Set first column height (optional)
+//         secondColumn.style.height = tallestHeight + 'px'; // Set second column height (optional)
+//     }
 // }
-// function initMap() {
-//     var location = {lat: <%= plant_entry.latitude %>, lng: <%= plant_entry.longitude %>};
-//     var map = new google.maps.Map(document.getElementById('map'), {
-//         zoom: 8,
-//         center: location
-//     });
-//     var marker = new google.maps.Marker({
-//         position: location,
-//         map: map
-//     });
-// }
-
-
-
-async function initMap() {
-    // The location of Uluru
-
-    const mapElement = document.getElementById('map');
-    const lat = parseFloat(mapElement.dataset.lat);
-    const lng = parseFloat(mapElement.dataset.lng);
-
-    const location = {lat: lat, lng: lng};
-
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-    map = new Map(mapElement, {
-        zoom: 4,
-        center: location,
-        mapId: "DEMO_MAP_ID",
-    });
-
-    const marker = new AdvancedMarkerElement({
-        map: map,
-        position: location,
-        title: "Uluru",
-    });
-}
-initMap();
-
-

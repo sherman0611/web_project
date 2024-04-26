@@ -5,12 +5,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='/stylesheets/style.css'/>
-        <script src="javascripts/main.js"></script>
-        <script src="javascripts/index.js"></script>
+        <link rel='stylesheet' href='/stylesheets/index.css'/>
+        <link rel="manifest" href="/manifest.json">
+        <link rel="shortcut icon" href="#">
     </head>
     <body>
         <div class="body_container">
-        <%- include('partials/header') %>
+            <%- include('partials/header') %>
             <div class="main_section">
                 <div class="search-and-sort">
                     <div class="search">
@@ -41,7 +42,7 @@
                         <p>No plant entries currently.</p>
                     <% } else { %>
                         <% data.forEach(plant_entry => { %>
-                            <div class="plant-entry-container">
+                            <div class="home link container">
                                 <a href="/view_plant/<%= plant_entry._id %>">
                                     <% if(plant_entry.image) { %>
                                         <% if(plant_entry.image.includes('public')) { %>
@@ -53,9 +54,9 @@
                                         <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
                                     <% } %>
                                     <div class="plant-info">
-                                        <p>Plant by <%= plant_entry.username || 'Anonymous' %></p>
+                                        <p>Plant by <%= plant_entry.username %></p>
                                         <% if (plant_entry.date) { %>
-                                            <p><%= plant_entry.date %>, <%= plant_entry.location %></p>
+                                            <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
                                         <% } else { %>
                                             <p><%= plant_entry.location %></p>
                                         <% } %>
@@ -67,6 +68,7 @@
                 </div>
             </div>
         </div>
+        <%- include('partials/footer.ejs')%>
+        <script src="javascripts/index.js"></script>
     </body>
-    <footer></footer>
 </html>
