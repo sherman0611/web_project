@@ -93,10 +93,6 @@ select {
   margin-bottom:1.5%;
 }
 
-.view_plant .nav-links .form-button {
-  margin: unset;
-}
-
 .logo {
   background-color: #758874;
   text-align: center;
@@ -121,12 +117,6 @@ select {
 /*END OF HEADER*/
 
 /* PLANT ENTRIES */
-.plant-entries-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
 .container {
   background: antiquewhite;
   border-radius: 5px;
@@ -152,18 +142,6 @@ select {
   width: 100%;
   font-size: 0.9rem;
   color: #21251E;
-}
-
-.home.link.container {
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  min-width: fit-content;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
-  width: 20%;
-  max-width: 20%;
-  margin: 10px;
 }
 
 .plant-image {
@@ -222,10 +200,6 @@ a .form-button {
 
 .return-button {
   margin-top: 10px;
-}
-
-.container {
-  display: flex;
 }
 
 .plant_details {
