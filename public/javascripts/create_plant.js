@@ -56,6 +56,7 @@ function disableDateTime () {
         minutes = minutes < 10 ? '0' + minutes : minutes;
 
         timePicker.value = hours + ":" + minutes;
+        console.log(timePicker.value);
     }
 
     datePicker.readOnly = checkBox.checked;

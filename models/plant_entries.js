@@ -21,8 +21,9 @@ let PlantEntrySchema  = new Schema({
         identification_status: {type: String, required: true},
         date_seen: { type: Date, required: true},
         date_post: { type: Date, default:Date.now()},
-        time_post: { type: String, default: () => new Date().toTimeString().split(' ')[0] }
-    }
+        time_post: { type: String, default: () => new Date().toTimeString().split(' ')[0] },
+        time_seen: { type: String, required: true}
+    },
 );
 
 PlantEntrySchema.set('toObject', {getters: true, virtuals: true});

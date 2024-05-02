@@ -36,14 +36,15 @@
                             <div class="txt-container">
                                 <h1><%= plant_entry.plant_name %></h1>
                                 <h2>Submitted by <span id="plant_author"><%= plant_entry.username %></span></h2>
-                                <% if(plant_entry.date) { %>
-                                    <h4>Date Seen: </h4>
-                                    <p><%= plant_entry.date.substring(0, 10) %></p>
-                                <% }%>
-                                <% if(plant_entry.time){%>
-                                    <h4>Time Seen: </h4>
-                                    <p><%= plant_entry.time %></p>
-                                <% }%>
+                                <%if(plant_entry.time_post) { %>
+                                    <h4>Time posted: </h4>
+                                    <p><%= plant_entry.time_post %></p>
+                                <%}%>
+
+                                <%if(plant_entry.date_post) { %>
+                                    <h4>Date posted: </h4>
+                                    <p><%= plant_entry.date_post.substring(0, 10) %></p>
+                                <%}%>
                             </div>
                     </div>
                     <div class="bigger-column two-columns container">
@@ -62,9 +63,16 @@
                                 <p><b>&#128506;&#65039;Location: </b><%= plant_entry.location %></p>
                             <%}%>
                             <% if(plant_entry.description){%>
-                                <h3>&#129534;Description:</h3>
+                                <h3>&#129534; Description:</h3>
                                 <p><%= plant_entry.description %></p>
                             <%}%>
+
+                                <% if(plant_entry.date_seen) { %>
+                                    <p><b> &#128467; Date Seen: </b> <%= plant_entry.date_seen.substring(0, 10) %></p>
+                                <% }%>
+                                <% if(plant_entry.time_seen){%>
+                                    <p><b> &#9200; Time Seen: </b><%= plant_entry.time_seen %></p>
+                                <% }%>
                             <h3>&#127793;Characteristics:</h3>
                                 <div class="characteristics_list" style="padding-left:10%">
                                     <% if(plant_entry.height){%>
