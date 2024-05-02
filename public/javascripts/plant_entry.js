@@ -4,7 +4,7 @@ let plant_name = null;
 let map;
 
 window.onload = function () {
-    plant_id = document.getElementById('plant-id').value;
+    plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
     console.log(plant_name)
 
@@ -14,11 +14,11 @@ window.onload = function () {
     socket.on('comment', function (room, data) {
         writeNewComment(data);
     });
+    fetchDBPedia();
     identifyAuthor();
     usernameDefining();
     assignCommentAuthor();
     scrollToBottomChat();
-    fetchDBPedia();
     initMap();
 }
 

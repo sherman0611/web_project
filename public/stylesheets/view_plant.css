@@ -48,6 +48,14 @@
   width:30%
 }
 
+.container.plant_details {
+  align-items: unset;
+}
+
+.container.plant_details b{
+  font-size: 1.17em;
+}
+
 .container.two-columns .bigger-column {
   max-width: 70%;
   width: 70%

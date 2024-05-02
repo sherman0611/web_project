@@ -16,3 +16,11 @@ AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk
 to be pasted instead of 'HERE' below : 
 "https://maps.googleapis.com/maps/api/js?key=HERE&callback=initMap
 in plant_entry.ejs
+
+
+## Contributors
+
+- aca20aab / anborowc Anielka Borowczyk \
+- sherman0611 Sherman Lam \
+- RalucaCruceriu Raluca Cruceriu \
+- xiaoge26 Xiaoge Liu
