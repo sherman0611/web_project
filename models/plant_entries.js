@@ -18,12 +18,11 @@ let PlantEntrySchema  = new Schema({
         leaves: {type: Boolean, required: true},
         fruits_seeds: {type: Boolean, required: true},
         sun_exposure: {type: String, max: 100, required: true},
-        identification_status: {type: Boolean, required: true},
-        // dbpedia_URI: {type: String, max: 100, required: false},
-        dateSeen: { type: Date, required: false},
-        datePost: { type: Date, default:Date.now()},
-        timeSeen: { type: String, required: false},
-        timePost: { type: String, default: () => new Date().toTimeString().split(' ')[0] }
+        identification_status: {type: String, required: true},
+        date_seen: { type: Date, required: false},
+        date_post: { type: Date, default:Date.now()},
+        time_seen: { type: String, required: false},
+        time_post: { type: String, default: () => new Date().toTimeString().split(' ')[0] }
     }
 );
 

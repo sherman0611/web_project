@@ -18,10 +18,11 @@ exports.create = function (plantData, filePath) {
         leaves: plantData.leaves,
         fruits_seeds: plantData.fruits_seeds,
         sun_exposure: plantData.sun_exposure,
-        identification_status: false,
-        // dbpedia_URI: null,
-        date: plantData.date,
-        time: plantData.time
+        identification_status: plantData.identification_status,
+        date_post: plantData.date_post,
+        date_seen: plantData.date_seen,
+        time_post: plantData.time_post,
+        time_seen: plantData.time_seen
     });
 
     return plant_entry.save().then(plantEntry => {

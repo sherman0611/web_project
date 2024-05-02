@@ -43,8 +43,6 @@ function disableDateTime () {
     var datePicker = document.getElementById("date_seen");
     var timePicker = document.getElementById("time_seen");
 
-    datePicker.disabled = checkBox.checked;
-    timePicker.disabled = checkBox.checked;
     // If the checkbox is checked, set the date and time picker values to the current date and time
     if (checkBox.checked) {
         let date = new Date();
@@ -59,6 +57,9 @@ function disableDateTime () {
 
         timePicker.value = hours + ":" + minutes;
     }
+
+    datePicker.readOnly = checkBox.checked;
+    timePicker.readOnly = checkBox.checked;
 }
 
 window.onload = function () {
