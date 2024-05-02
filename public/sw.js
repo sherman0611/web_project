@@ -95,7 +95,7 @@ self.addEventListener('fetch', function(event) {
 //                 '/javascripts/idb-utility.js',
 //                 '/javascripts/index.js',
 //                 '/javascripts/main.js',
-//                 '/javascripts/plant_entry.js',
+//                 '/javascripts/view_plant.js',
 //                 '/javascripts/username-utils.js',
 //                 '/stylesheets/style.css',
 //             ]);

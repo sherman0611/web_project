@@ -44,7 +44,7 @@
                                         <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
                                     <% } %>
                                     <div class="plant-info">
-                                        <p>Plant by <%= plant_entry.username %></p>
+                                        <p><b><%= plant_entry.plant_name %> by <%= plant_entry.username %></b></p>
                                         <% if (plant_entry.date) { %>
                                             <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
                                         <% } else { %>
