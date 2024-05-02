@@ -33,6 +33,16 @@ exports.create = function (plantData, filePath) {
     })
 }
 
+exports.update = function (plantData) {
+    let plant_entry = this.getById(plantData.plant_id)
+    return plant_entry.save().then(plantEntry => {
+        return JSON.stringify(plantEntry);
+    }).catch(err => {
+        console.log(err);
+        return null;
+    })
+}
+
 exports.getAll = function () {
     return plantEntryModel.find({}).then(plantEntry => {
         return JSON.stringify(plantEntry);

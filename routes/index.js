@@ -59,6 +59,18 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
     });
 });
 
+router.post('/edit_plant', function(req, res, next) {
+    let updateData = req.body;
+    console.log(updateData)
+
+    let result = plant_entries.update(updateData);
+    result.then(plant_entry => {
+        res.redirect('/view_plant/:id');
+    }).catch(err => {
+        console.log("cannot update");
+    });
+});
+
 /* GET plant entry page. */
 router.get('/view_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
