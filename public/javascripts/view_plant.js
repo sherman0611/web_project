@@ -48,15 +48,17 @@ async function initMap() {
 }
 
 function fetchDBPedia() {
-    console.log(plant_name);
-    //lowercase all word and uppercase the first letter of the first word
-    plant_name = plant_name.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-        return letter.toUpperCase();
-    });
-    console.log(plant_name);
+    let plant = plant_name;
+    //lowercase all word
+    plant = plant.toLowerCase();
+    //uppercase the first letter of the first word only
+    plant = plant.charAt(0).toUpperCase() + plant.slice(1);
     //replace all spaces with underscores for the dbpedia query
-    const resource = `http://dbpedia.org/resource/${plant_name.replace(/ /g, '_')}`;
-    console.log(resource);
+    plant = plant.replace(/ /g, '_');
+
+    //replace all spaces with underscores for the dbpedia query
+    const resource = `http://dbpedia.org/resource/${plant}`;
+
     const endpointUrl = 'https://dbpedia.org/sparql';
     const sparqlQuery = `
                  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
