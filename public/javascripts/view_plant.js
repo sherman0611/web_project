@@ -42,25 +42,32 @@ async function initMap() {
 
         const marker = new AdvancedMarkerElement({
             map: map,
-            position: location,
-            title: "Uluru",
+            position: location
         });
     }
 }
 
 function fetchDBPedia() {
+    let plant = plant_name;
+    //lowercase all word
+    plant = plant.toLowerCase();
+    //uppercase the first letter of the first word only
+    plant = plant.charAt(0).toUpperCase() + plant.slice(1);
+    //replace all spaces with underscores for the dbpedia query
+    plant = plant.replace(/ /g, '_');
 
-    const resource = `http://dbpedia.org/resource/${plant_name}`;
+    //replace all spaces with underscores for the dbpedia query
+    const resource = `http://dbpedia.org/resource/${plant}`;
+
     const endpointUrl = 'https://dbpedia.org/sparql';
     const sparqlQuery = `
                  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                  PREFIX dbo: <http://dbpedia.org/ontology/>
 
-                 SELECT ?label ?abstract ?link
+                 SELECT ?label ?abstract
                  WHERE {
                   <${resource}> dbo:abstract ?abstract .
                   <${resource}> rdfs:label ?label .
-                  <${resource}> dbo:wikiPageID ?link .
                  FILTER (langMatches(lang(?abstract), "EN"))
             }`;
 
@@ -71,24 +78,24 @@ function fetchDBPedia() {
         .then(response => response.json())
         .then(data => {
             let bindings = data.results.bindings;
-            let result = JSON.stringify(bindings);
-            let dbpTitle = document.getElementById('db_page_title');
-            dbpTitle.textContent = 'DBpedia Information';
+            if (bindings.length > 0) {
+                let dbpTitle = document.getElementById('db_page_title');
+                dbpTitle.textContent = 'DBpedia Information';
 
-            let label = bindings[0].label.value;
-            let labelElement = document.getElementById('title_dbp')
-            labelElement.textContent = label;
+                let label = bindings[0].label.value;
+                let labelElement = document.getElementById('title_dbp')
+                labelElement.textContent = label;
 
+                let abstract = data.results.bindings[0].abstract.value;
+                let plantInfoElement = document.getElementById('abstract_dbp');
+                plantInfoElement.innerHTML = abstract;
 
-            let abstract = data.results.bindings[0].abstract.value;
-            let plantInfoElement = document.getElementById('abstract_dbp');
-            plantInfoElement.innerHTML = abstract;
-
-
-            let link = bindings[0].link.value;
-            let linkElement = document.getElementById('link_dbp');
-            linkElement.textContent = 'More info';
-            linkElement.href = `http://dbpedia.org/page/${plant_name}`;
+                let linkElement = document.getElementById('link_dbp');
+                linkElement.textContent = 'More info';
+                linkElement.href = resource;
+            } else {
+                console.log('No results found');
+            }
         })
         .catch(error => console.error('Error:', error));
 }

@@ -41,3 +41,12 @@ input::file-selector-button {
     margin: 5px auto;
     border-radius: 15px;
 }
+
+.required {
+    color: red;
+}
+
+.required_text{
+    display: flex;
+    justify-content: flex-end;
+}
