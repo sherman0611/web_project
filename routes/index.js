@@ -45,6 +45,7 @@ router.get('/create_plant', function(req, res, next) {
 /* POST create plant entry form. */
 router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
     let plantData = req.body;
+    console.log(plantData)
     let filePath = null;
     if (req.file && req.file.path) {
         filePath = req.file.path;
