@@ -48,7 +48,16 @@
                     </div>
                     <div class="bigger-column two-columns container">
                         <div class="plant_details equal-column container">
-                            <p><b>&#128506;&#65039;Identification </b><%= plant_entry.location %></p>
+                            <% if(plant_entry.identification_status === 'unknown') { %>
+                                    <p><b>Identification: </b>Unknown</p>
+                            <% } else { %>
+                                    <%if(plant_entry.identification_status === "in_progress") { %>
+                                        <p><b>Identification: </b>In progress</p>
+                                    <%} else {%>
+                                    <p><b>Identification: </b><%= plant_entry.identification_status %></p>
+                                    <% } %>
+                                <% } %>
+
                             <% if(plant_entry.location){%>
                                 <p><b>&#128506;&#65039;Location: </b><%= plant_entry.location %></p>
                             <%}%>
@@ -76,9 +85,15 @@
                                     <% if(plant_entry.fruits_seeds){%>
                                         <p>&#127825;It has fruits and seeds!</p>
                                     <%}%>
-                                    <% if(plant_entry.sun_exposure){%>
-                                        <p>&#9728;&#65039;Sun exposure: <%= plant_entry.sun_exposure %></p>
-                                    <%}%>
+                                        <% if(plant_entry.sun_exposure === 'full_shade') { %>
+                                            <p>&#9728;&#65039;Sun exposure: Full Shade</p>
+                                        <% } else { %>
+                                        <%if(plant_entry.sun_exposure === "partial_shade") { %>
+                                            <p>&#9728;&#65039;Sun exposure: Partial Shade</p>
+                                        <%} else {%>
+                                                <p>&#9728;&#65039;Sun exposure: Full Sun</p>
+                                            <% } %>
+                                        <% } %>
                                 </div>
                         </div>
                         <div id="plant_infoDbp" class="txt-container container equal-column">
