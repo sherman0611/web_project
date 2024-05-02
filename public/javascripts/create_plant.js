@@ -62,6 +62,26 @@ function disableDateTime () {
     timePicker.readOnly = checkBox.checked;
 }
 
+function disableColourFlowers() {
+    var flowers_answer_no = document.getElementById("flowers_no");
+    var colour_flowers = document.getElementById("colour_flowers");
+
+    //if flowers radio button no is selected, disable the colour flowers input
+    if(flowers_answer_no.checked) {
+        colour_flowers.disabled = true;
+    }
+}
+
+function enableColourFlowers() {
+    var flowers_answer_yes = document.getElementById("flowers_yes");
+    var colour_flowers = document.getElementById("colour_flowers");
+
+    //if flowers radio button yes is selected, enable the colour flowers input
+    if(flowers_answer_yes.checked) {
+        colour_flowers.disabled = false;
+    }
+}
+
 window.onload = function () {
     const usernameInput = document.getElementById("username");
     usernameDefining();
