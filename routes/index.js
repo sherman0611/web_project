@@ -45,7 +45,6 @@ router.get('/create_plant', function(req, res, next) {
 /* POST create plant entry form. */
 router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
     let plantData = req.body;
-    console.log(plantData)
     let filePath = null;
     if (req.file && req.file.path) {
         filePath = req.file.path;
@@ -61,7 +60,6 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
 
 router.post('/edit_plant', function(req, res, next) {
     let updateData = req.body;
-    console.log(updateData)
 
     let result = plant_entries.update(updateData);
     result.then(plant_entry => {
@@ -143,7 +141,6 @@ router.get('/edit_plant/:id', function(req, res, next) {
     Promise.all([plantResult])
         .then(results => {
             let plantData = JSON.parse(results[0]);
-            console.log(plantResult)
             res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
         })
         .catch(errors => {

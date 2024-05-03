@@ -6,13 +6,13 @@ let map;
 window.onload = function () {
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
-    console.log(plant_name)
 
     socket.emit('join', plant_id);
 
     // called when a message is received
     socket.on('comment', function (room, data) {
         writeNewComment(data);
+        scrollToBottomChat();
     });
     fetchDBPedia();
     identifyAuthor();
@@ -20,6 +20,29 @@ window.onload = function () {
     assignCommentAuthor();
     scrollToBottomChat();
     initMap();
+}
+
+function sendComment(event) {
+    console.log("in sendComment")
+    event.preventDefault();
+
+    let username = getUsername();
+    if (username==="") {
+        username = document.getElementById("username")
+    }
+
+    // Send AJAX request to the server to create comment
+    $.ajax({
+        type: 'POST',
+        url: '/send_comment',
+        data: $('#comment-form').serialize(),
+        success: function(data) {
+            socket.emit('comment', plant_id, data);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error creating comment:", error);
+        }
+    });
 }
 
 async function initMap() {

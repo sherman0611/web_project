@@ -1,8 +1,8 @@
 const socket = io();
 
 function scrollToBottomChat(){
-    if(document.getElementById("comments-container")){
-        document.getElementById("comments-container").scrollTo(0, (document.getElementById("comments-container").scrollHeight))
+    if(document.getElementById("comments_container")){
+        document.getElementById("comments_container").scrollTo(0, (document.getElementById("comments_container").scrollHeight))
     }
 }
 
@@ -23,7 +23,7 @@ function assignCommentAuthor(){
 
 
 function writeNewComment(data) {
-    let commentsContainer = document.getElementById('comments-container');
+    let commentsContainer = document.getElementById('comments_container');
 
     let commentContainer = document.createElement('div');
     commentContainer.classList.add('comment-container');
@@ -48,28 +48,6 @@ function writeNewComment(data) {
 
     commentsContainer.appendChild(commentContainer);
 
-    document.getElementById('comment-text').value = '';
+    document.getElementById('comment_text').value = '';
     scrollToBottomChat()
-}
-
-function sendComment(event) {
-    event.preventDefault();
-
-    let username = getUsername();
-    if (username==="") {
-        username = document.getElementById("username")
-    }
-
-    // Send AJAX request to the server to create comment
-    $.ajax({
-        type: 'POST',
-        url: '/create_comment',
-        data: $('#comment-form').serialize(),
-        success: function(data) {
-            socket.emit('comment', plant_id, data);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error creating comment:", error);
-        }
-    });
 }
