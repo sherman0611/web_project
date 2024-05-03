@@ -23,7 +23,7 @@ if ("Notification" in window) {
             if (permission === "granted") {
                 navigator.serviceWorker.ready
                     .then(function (serviceWorkerRegistration) {
-                        serviceWorkerRegistration.showNotification("Todo App",
+                        serviceWorkerRegistration.showNotification("Plantgram",
                             {body: "Notifications are enabled!"})
                             .then(r =>
                                 console.log(r)

@@ -14,18 +14,36 @@
             <div class="main_section">
                 <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 <h2 class="create_entry_title">New plant sightings</h2>
-                <div id="username-container" class="add_plant_entry_container">
-                    <label for="username">Your username:</label>
-                    <input class="text-input" type="text" id="username" placeholder="Enter your username..." readonly>
-                    <a class="form-button" href="/enter_username">Change your username</a>
-                </div>
-                <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
-                    <div class="add_plant_entry_container">
-                        <h3>Basic details</h3>
+
+<!--                <form id="entry_form" action="/create_plant" method="post" enctype="multipart/form-data" >-->
+                <form id="entry_form" enctype="multipart/form-data">
+                    <div id="username-container" class="form_container">
+                        <label for="username">Your username:</label>
+                        <input class="text-input" type="text" id="username" placeholder="Enter your username..." readonly>
+                        <a class="form-button" href="/enter_username">Change your username</a>
+                    </div>
+                    <br>
+                    <div class="form_container">
+                        <h3>Upload image</h3>
                         <p>
-                            <label for="description">Plant description </label>
+                            <label for="image_file">Upload image file</label>
                             <br>
-                            <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
+                            <input type="file" id="image_file" name="image_file" accept="image/*">
+                        </p>
+                        <p>Or</p>
+                        <p>
+                            <label for="image_url">Enter image URL</label>
+                            <br>
+                            <input class="text-input" type="url" id="image_url" name="image_url">
+                        </p>
+                    </div>
+                    <br>
+                    <div class="form_container">
+                        <h3>Plant details</h3>
+                        <p>
+                            <label for="plant_name">Plant name</label>
+                            <br>
+                            <input class="text-input" type="text" id="plant_name" name="plant_name" placeholder="Name...">
                         </p>
                         <p>
                             <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()"> Are you posting a plant you have just seen?</label>
@@ -41,7 +59,6 @@
                             <br>
                             <input type="time" id="time_seen" name="time_seen"><br>
                         </p>
-
                         <p>
                             <label for="location">Location found </label>
                             <br>
@@ -53,50 +70,23 @@
                             <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
                             <div id="display_coordinates"></div>
                         </p>
-                    </div>
-
-
-                    <br>
-                    <div class="add_plant_entry_container">
-                        <h3>Identification</h3>
                         <p>
-                            <label for="plant_name">Plant name </label>
+                            <label for="description">Plant description </label>
                             <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name" placeholder="Name..." required>
-                        </p>
-                        <p>
-                            <label for="plant_certainty">Plant unknown or uncertain?</label>
-                            <br>
-                            <label for="plant_certainty_status">
-                                <select name="plant_certainty_status">
-                                    <option value="unknown">Unknown</option>
-                                    <option value="uncertain">Uncertain</option>
-                                </select>
-                            </label>
-                        </p>
-                        <p>
-                            <label for="image_file">Upload image file</label>
-                            <br>
-                            <input type="file" id="image_file" name="image_file" accept="image/*">
-                        </p>
-                        <p>Or</p>
-                        <p>
-                            <label for="image_url">Enter image URL</label>
-                            <br>
-                            <input class="text-input" type="url" id="image_url" name="image_url">
+                            <textarea class="text_box" id="description" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
                         </p>
                     </div>
                     <br>
-                    <div class="add_plant_entry_container">
+                    <div class="form_container">
                         <h3>Plant characteristics</h3>
                         <h4>Plant size</h4>
                         <p>
-                            <label for="height">Plant height(cm) </label>
+                            <label for="height">Height (cm) </label>
                             <br>
                             <input class="text-input" type="text" id="height" name="height" placeholder="0">
                         </p>
                         <p>
-                            <label for="spread">Plant spread(cm)</label>
+                            <label for="spread">Spread (cm)</label>
                             <br>
                             <input class="text-input" type="text" id="spread" name="spread" placeholder="0">
                         </p>
@@ -110,40 +100,52 @@
                         <p>
                             <label for="flowers">Does the plant have flowers?</label>
                             <br>
-                            <input type="radio" id="flowers_yes" name="flowers" value="yes">
+                            <input type="radio" id="flowers" name="flowers" value="yes">
                             <label for="flowers_yes">Yes</label>
-                            <input type="radio" id="flowers_no" name="flowers" value="no">
+                            <input type="radio" id="flowers" name="flowers" value="no">
                             <label for="flowers_no">No</label>
                         </p>
                         <p>
                             <label for="leaves">Does the plant have leaves?</label>
                             <br>
-                            <input type="radio" id="leaves_yes" name="leaves" value="yes">
+                            <input type="radio" id="leaves" name="leaves" value="yes">
                             <label for="leaves_yes">Yes</label>
-                            <input type="radio" id="leaves_no" name="leaves" value="no">
+                            <input type="radio" id="leaves" name="leaves" value="no">
                             <label for="leaves_no">No</label>
                         </p>
                         <p>
                             <label for="fruits_seeds">Does the plant have fruits or seeds?</label>
                             <br>
-                            <input type="radio" id="fruits_seeds_yes" name="fruits_seeds" value="yes">
+                            <input type="radio" id="fruits_seeds" name="fruits_seeds" value="yes">
                             <label for="fruits_seeds_yes">Yes</label>
-                            <input type="radio" id="fruits_seeds_no" name="fruits_seeds" value="no">
+                            <input type="radio" id="fruits_seeds" name="fruits_seeds" value="no">
                             <label for="fruits_seeds_no">No</label>
                         </p>
                         <p>
                             <label for="sun_exposure">What is the sun exposure in that area?</label>
                             <br>
-                            <input type="radio" id="full_sun" name="sun_exposure" value="full_sun">
+                            <input type="radio" id="sun_exposure" name="sun_exposure" value="full_sun">
                             <label for="full_sun">Full sun</label>
-                            <input type="radio" id="partial_shade" name="sun_exposure" value="partial_shade">
+                            <input type="radio" id="sun_exposure" name="sun_exposure" value="partial_shade">
                             <label for="partial_shade">Partial shade</label>
-                            <input type="radio" id="full_shade" name="sun_exposure" value="full_shade">
+                            <input type="radio" id="sun_exposure" name="sun_exposure" value="full_shade">
                             <label for="full_shade">Full shade</label>
+                        </p>
+                        <p>
+                            <label for="plant_certainty">Plant unknown or uncertain?</label>
+                            <br>
+                            <label for="plant_certainty_status">
+                                <select id="certainty" name="plant_certainty_status">
+                                    <option value="">Select an option</option>
+                                    <option value="unknown">Unknown</option>
+                                    <option value="uncertain">Uncertain</option>
+                                </select>
+                            </label>
                         </p>
                     </div>
                     <br>
-                    <button class="form-button" type="submit">Create plant entry</button>
+                    <input id="create_button" class="new_todo" type="button" value="Create plant entry"/>
+
                 </form>
             </div>
         </div>

@@ -6,7 +6,6 @@ let map
 window.onload = function () {
     // inject username to html
     const usernameInput = document.getElementById("username");
-    console.log('dfajdfnjasdbgvkasfld');
     usernameInput.value = getUsername();
 
     socket.emit('join', plant_id);

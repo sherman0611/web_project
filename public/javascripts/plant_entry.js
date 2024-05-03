@@ -15,7 +15,6 @@ window.onload = function () {
         writeNewComment(data);
     });
     identifyAuthor();
-    usernameDefining();
     assignCommentAuthor();
     scrollToBottomChat();
     fetchDBPedia();

@@ -1,3 +1,5 @@
+importScripts('/javascripts/idb_utils.js');
+
 const CACHE_NAME = 'Plantgram v1';
 
 // Use the install event to pre-cache all initial resources.
@@ -63,111 +65,35 @@ self.addEventListener('fetch', function(event) {
     );
 });
 
-//Sync event to sync the todos
-// self.addEventListener('sync', event => {
-//     if (event.tag === 'sync-todo') {
-//         console.log('Service Worker: Syncing new Todos');
-//         openSyncTodosIDB().then((syncPostDB) => {
-//             getAllSyncTodos(syncPostDB).then((syncTodos) => {
-//                 for (const syncTodo of syncTodos) {
-//                     console.log('Service Worker: Syncing new Todo: ', syncTodo);
-//                     console.log(syncTodo.text)
-//                     // Create a FormData object
-//                     const formData = new URLSearchParams();
-//
-// // Use the install event to pre-cache all initial resources.
-// self.addEventListener('install', event => {
-//     console.log('Service Worker: Installing....');
-//     event.waitUntil((async () => {
-//         console.log('Service Worker: Caching App Shell at the moment......');
-//         try {
-//             const cache = await caches.open(CACHE_NAME);
-//             cache.addAll([
-//                 '/',
-//                 '/create_plant',
-//                 '/enter_username',
-//                 '/images/arrow_left_icon.png',
-//                 '/images/install_icon.png',
-//                 '/images/search_icon.png',
-//                 '/images/white-arrow.png',
-//                 '/manifest.json',
-//                 '/javascripts/create_plant.js',
-//                 '/javascripts/enter_username.js',
-//                 '/javascripts/idb-utility.js',
-//                 '/javascripts/index.js',
-//                 '/javascripts/main.js',
-//                 '/javascripts/plant_entry.js',
-//                 '/javascripts/username-utils.js',
-//                 '/stylesheets/style.css',
-//             ]);
-//             console.log('Service Worker: App Shell Cached');
-//         }
-//         catch{
-//             console.log("error occured while caching...")
-//         }
-//     })());
-// });
-//
-// //clear cache on reload
-// self.addEventListener('activate', event => {
-// // Remove old caches
-//     event.waitUntil(
-//         (async () => {
-//             const keys = await caches.keys();
-//             return keys.map(async (cache) => {
-//                 if(cache !== CACHE_NAME) {
-//                     console.log('Service Worker: Removing old cache: '+cache);
-//                     return await caches.delete(cache);
-//                 }
-//             })
-//         })()
-//     )
-// })
-//
-// self.addEventListener('fetch', function(event) {
-//     console.log('Service Worker: Fetch', event.request.url);
-//
-//     event.respondWith(
-//         caches.match(event.request).then(function(response) {
-//             return response || fetch(event.request);
-//         })
-//     );
-// });
-//
-// //Sync event to sync the todos
-// // self.addEventListener('sync', event => {
-// //     if (event.tag === 'sync-todo') {
-// //         console.log('Service Worker: Syncing new Todos');
-// //         openSyncTodosIDB().then((syncPostDB) => {
-// //             getAllSyncTodos(syncPostDB).then((syncTodos) => {
-// //                 for (const syncTodo of syncTodos) {
-// //                     console.log('Service Worker: Syncing new Todo: ', syncTodo);
-// //                     console.log(syncTodo.text)
-// //                     // Create a FormData object
-// //                     const formData = new URLSearchParams();
-// //
-// //                     // Iterate over the properties of the JSON object and append them to FormData
-// //                     formData.append("text", syncTodo.text);
-// //
-// //                     // Fetch with FormData instead of JSON
-// //                     fetch('http://localhost:3000/add-todo', {
-// //                         method: 'POST',
-// //                         body: formData,
-// //                         headers: {
-// //                             'Content-Type': 'application/x-www-form-urlencoded',
-// //                         },
-// //                     }).then(() => {
-// //                         console.log('Service Worker: Syncing new Todo: ', syncTodo, ' done');
-// //                         deleteSyncTodoFromIDB(syncPostDB,syncTodo.id);
-// //                         // Send a notification
-// //                         self.registration.showNotification('Todo Synced', {
-// //                             body: 'Todo synced successfully!',
-// //                         });
-// //                     }).catch((err) => {
-// //                         console.error('Service Worker: Syncing new Todo: ', syncTodo, ' failed');
-// //                     });
-// //                 }
-// //             });
-// //         });
-// //     }
-// // });
+//Sync event to sync the entries
+self.addEventListener('sync', event => {
+    if (event.tag === 'sync-entry') {
+        console.log('Service Worker: Syncing new entries');
+        openSyncEntriesIDB().then((syncPostDB) => {
+            getAllSyncEntries(syncPostDB).then((syncEntries) => {
+                for (const syncEntry of syncEntries) {
+                    console.log('Service Worker: Syncing new entry');
+
+                    console.log(JSON.stringify(syncEntry.data))
+
+                    fetch('http://localhost:3000/create_entry', {
+                        method: 'POST',
+                        body: JSON.stringify(syncEntry.data),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }).then(() => {
+                        console.log('Service Worker: Syncing new entry done');
+                        deleteSyncEntryFromIDB(syncPostDB,syncEntry.id);
+                        // Send a notification
+                        self.registration.showNotification('Plantgram', {
+                            body: 'Entry synced successfully!',
+                        });
+                    }).catch((err) => {
+                        console.error('Service Worker: Syncing new entry failed');
+                    });
+                }
+            });
+        });
+    }
+});

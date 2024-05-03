@@ -61,7 +61,67 @@ function disableDateTime () {
     }
 }
 
+function getValue(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        if (element.type === "radio") {
+            const checkedOption = document.querySelector(`input[name="${element.name}"]:checked`);
+            return checkedOption ? checkedOption.value : '';
+        } else {
+            return element.value;
+        }
+    } else {
+        return '';
+    }
+}
+
+const createEntryEventListener = () => {
+    const formData = {
+        username: getValue("username"),
+        plant_name: getValue("plant_name"),
+        image: getValue("image_file"),
+        image_url: getValue("image_url"),
+        location: getValue("location"),
+        latitude: getValue("latitude"),
+        longitude: getValue("longitude"),
+        description: getValue("description"),
+        height: getValue("height"),
+        spread: getValue("spread"),
+        flowers: getValue("flowers"),
+        colour: getValue("colour"),
+        leaves: getValue("leaves"),
+        fruits_seeds: getValue("fruits_seeds"),
+        sun_exposure: getValue("sun_exposure"),
+        certainty: getValue("certainty"),
+        date: getValue("date_seen"),
+        time: getValue("time_seen"),
+    };
+
+    // Verify required fields
+    if (formData.username.trim() === '' || formData.plant_name.trim() === '' || formData.certainty.trim() === '') {
+        alert("Please fill in all required fields (Username, Plant Name, Certainty)");
+        return;
+    }
+
+    openSyncEntriesIDB().then((db) => {
+        addNewEntryToSync(db, formData);
+    });
+    navigator.serviceWorker.ready
+        .then(function (sw) {
+            sw.showNotification("Plantgram",
+                {body: "Entry added to pending list!"})
+                .then(r => {
+                    window.location.href = "/";
+                });
+        });
+}
+
 window.onload = function () {
+    // inject username to html
     const usernameInput = document.getElementById("username");
     usernameInput.value = getUsername();
+
+    // Add event listeners to create button
+    const create_button = document.getElementById("create_button")
+    create_button.addEventListener("click", createEntryEventListener)
 }
