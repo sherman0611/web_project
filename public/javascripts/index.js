@@ -1,8 +1,11 @@
-function fetchFilteredAndSortedData() {
+function fetchData() {
+    console.log('Fetching data...');
     const sortOrder = document.getElementById('sort-select').value;
     const filterStatus = document.getElementById('filter-select').value;
-    // const statusBoolean = filterStatus === 'completed';  // Converts 'completed' to true, otherwise false
-    fetch(`/fetch-data?order=${sortOrder}&status=${filterStatus}`)
+    const searchQuery = document.getElementById('search-input').value;
+
+    const url = `/fetch-data?order=${sortOrder}&status=${filterStatus}` + (searchQuery ? `&query=${encodeURIComponent(searchQuery)}` : '');
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             updateDisplay(data);
