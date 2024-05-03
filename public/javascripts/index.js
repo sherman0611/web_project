@@ -1,10 +1,22 @@
 document.getElementById('sort-select').addEventListener('change', function() {
     fetchSortedData();
 });
-
-function fetchSortedData() {
-    let sortOrder = document.getElementById('sort-select').value;
-    fetch(`/sort-data?order=${sortOrder}`)
+document.getElementById('filter-select').addEventListener('change', fetchFilteredAndSortedData);
+// function fetchSortedData() {
+//     let sortOrder = document.getElementById('sort-select').value;
+//     fetch(`/sort-data?order=${sortOrder}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             updateDisplay(data);
+//             res.send(data);
+//         })
+//         .catch(error => console.error('Error:', error));
+// }
+function fetchFilteredAndSortedData() {
+    const sortOrder = document.getElementById('sort-select').value;
+    const filterStatus = document.getElementById('filter-select').value;
+    // const statusBoolean = filterStatus === 'completed';  // Converts 'completed' to true, otherwise false
+    fetch(`/fetch-data?order=${sortOrder}&status=${filterStatus}`)
         .then(response => response.json())
         .then(data => {
             updateDisplay(data);
@@ -17,7 +29,9 @@ function updateDisplay(data) {
     container.innerHTML = '';
     data.forEach(item => {
         const plantEntryDiv = document.createElement('div');
-        plantEntryDiv.className = 'plant-entry-container';
+        plantEntryDiv.className = 'home';
+        plantEntryDiv.className = 'link';
+        plantEntryDiv.className = 'container';
 
         const plantLink = document.createElement('a');
         plantLink.href = `/view_plant/${item._id}`;
