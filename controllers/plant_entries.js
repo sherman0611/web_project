@@ -35,12 +35,20 @@ exports.create = function (plantData, filePath) {
 
 exports.update = function (plantData) {
     let plant_entry = this.getById(plantData.plant_id)
-    return plant_entry.save().then(plantEntry => {
-        return JSON.stringify(plantEntry);
-    }).catch(err => {
-        console.log(err);
-        return null;
-    })
+
+    if (!plant_entry) {
+        return Promise.reject(new Error("Plant not found")); // Handle missing plant
+    } else {
+        plant_entry.plant_name = plantData.plant_name
+        plant_entry.identification_status = plantData.identification_status
+
+        return plant_entry.save().then(plantEntry => {
+            return JSON.stringify(plantEntry);
+        }).catch(err => {
+            console.log(err);
+            return null;
+        })
+    }
 }
 
 exports.getAll = function () {
