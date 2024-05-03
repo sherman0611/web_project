@@ -1,3 +1,10 @@
+let input = document.getElementById('search-input');
+input.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("search-button").click();
+    }
+});
 function fetchData() {
     console.log('Fetching data...');
     const sortOrder = document.getElementById('sort-select').value;
