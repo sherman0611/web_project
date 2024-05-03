@@ -92,6 +92,10 @@ select {
   flex-direction: row;
   margin-bottom:1.5%;
 }
+.arrow-left-icon, .completed-icon{
+  height:20px;
+}
+
 
 .logo {
   background-color: #758874;
@@ -100,10 +104,6 @@ select {
   font-weight: bold;
   margin-bottom: 10px;
   flex-shrink: 0;
-}
-
-.arrow-left-icon {
-  height:20px;
 }
 
 .nav-button.active {
@@ -257,3 +257,10 @@ a .form-button {
   margin-top: 1%;
 }
 /*END USERNAME SECTION*/
+
+.warning-message{
+  background-color: indianred;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 4px;
+}

@@ -47,18 +47,19 @@
                                 <%}%>
                             </div>
                     </div>
-                    <div class="bigger-column two-columns container">
+                    <div class="bigger-column two-columns container details-container">
                         <div class="plant_details equal-column container">
+                            <p id="identification_status"><b>
                             <% if(plant_entry.identification_status === 'unknown') { %>
-                                    <p><b>Identification: </b>Unknown</p>
+                                    &#10067;Identification: </b>Unknown
                             <% } else { %>
                                     <%if(plant_entry.identification_status === "in_progress") { %>
-                                        <p><b>Identification: </b>In progress</p>
+                                        &#8987;Identification: </b>In progress
                                     <%} else {%>
-                                    <p><b>Identification: </b><%= plant_entry.identification_status %></p>
+                                        &#10003;Identification: </b>Completed
                                     <% } %>
-                                <% } %>
-
+                            <% } %>
+                            </p>
                             <% if(plant_entry.location){%>
                                 <p><b>&#128506;&#65039;Location: </b><%= plant_entry.location %></p>
                             <%}%>
@@ -94,10 +95,10 @@
                                         <p>&#127825;It has fruits and seeds!</p>
                                     <%}%>
                                         <% if(plant_entry.sun_exposure === 'full_shade') { %>
-                                            <p>&#9728;&#65039;Sun exposure: Full Shade</p>
+                                            <p>&#9729;&#65039;Sun exposure: Full Shade</p>
                                         <% } else { %>
                                         <%if(plant_entry.sun_exposure === "partial_shade") { %>
-                                            <p>&#9728;&#65039;Sun exposure: Partial Shade</p>
+                                            <p>&#9925;Sun exposure: Partial Shade</p>
                                         <%} else {%>
                                                 <p>&#9728;&#65039;Sun exposure: Full Sun</p>
                                             <% } %>

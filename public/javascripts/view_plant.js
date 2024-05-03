@@ -14,35 +14,16 @@ window.onload = function () {
         writeNewComment(data);
         scrollToBottomChat();
     });
+    // General data calls
     fetchDBPedia();
     identifyAuthor();
     usernameDefining();
+    // Chat-related calls
     assignCommentAuthor();
     scrollToBottomChat();
+    disableChat();
+    // Map calls
     initMap();
-}
-
-function sendComment(event) {
-    console.log("in sendComment")
-    event.preventDefault();
-
-    let username = getUsername();
-    if (username==="") {
-        username = document.getElementById("username")
-    }
-
-    // Send AJAX request to the server to create comment
-    $.ajax({
-        type: 'POST',
-        url: '/send_comment',
-        data: $('#comment-form').serialize(),
-        success: function(data) {
-            socket.emit('comment', plant_id, data);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error creating comment:", error);
-        }
-    });
 }
 
 async function initMap() {

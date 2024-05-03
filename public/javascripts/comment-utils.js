@@ -1,5 +1,27 @@
 const socket = io();
 
+function sendComment(event) {
+    event.preventDefault();
+
+    let username = getUsername();
+    if (username==="") {
+        username = document.getElementById("username")
+    }
+
+    // Send AJAX request to the server to create comment
+    $.ajax({
+        type: 'POST',
+        url: '/send_comment',
+        data: $('#comment-form').serialize(),
+        success: function(data) {
+            socket.emit('comment', plant_id, data);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error creating comment:", error);
+        }
+    });
+}
+
 function scrollToBottomChat(){
     if(document.getElementById("comments_container")){
         document.getElementById("comments_container").scrollTo(0, (document.getElementById("comments_container").scrollHeight))
@@ -50,4 +72,13 @@ function writeNewComment(data) {
 
     document.getElementById('comment_text').value = '';
     scrollToBottomChat()
+}
+
+function disableChat(){
+    let identification_status = document.getElementById("identification_status").textContent
+    if(identification_status.includes("Completed")){
+        let chatTextBox = document.getElementById("comment_text")
+        chatTextBox.setAttribute("disabled", "true")
+        chatTextBox.placeholder = "Chat is now disabled!"
+    }
 }
