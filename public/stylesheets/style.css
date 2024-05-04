@@ -44,8 +44,11 @@ footer {
 }
 
 button {
-  background-color: #373F32;
   transition-duration: 0.3s;
+}
+
+.search_button {
+  background-color: #373F32;
 }
 
 button:hover{

@@ -66,68 +66,12 @@ function updateDisplay(data) {
     });
 }
 
-// offline back online----------------------------------------------------------------------
-
-const insertEntryToHome = (entry) => {
-    if (entry._id) {
-        const container = document.getElementById("plant-entries-container");
-
-        const entryDiv = document.createElement("div");
-        entryDiv.classList.add("home", "link", "container");
-
-        const anchor = document.createElement("a");
-        anchor.href = "/view_plant/" + entry._id;
-
-        const img = document.createElement("img");
-        img.classList.add("plant-image");
-        img.src = entry.image ? entry.image.includes('public') ? entry.image.replace('public','') : entry.image
-            : entry.image_url ? entry.image_url : '';
-        img.alt = entry.plant_name;
-        anchor.appendChild(img);
-
-        const plantInfoDiv = document.createElement("div");
-        plantInfoDiv.classList.add("plant-info");
-
-        const usernameParagraph = document.createElement("p");
-        usernameParagraph.textContent = "Plant by " + entry.username;
-
-        const dateLocationParagraph = document.createElement("p");
-        dateLocationParagraph.textContent = entry.date ? entry.date.substring(0, 10) + ", " + entry.location : entry.location;
-
-        plantInfoDiv.appendChild(usernameParagraph);
-        plantInfoDiv.appendChild(dateLocationParagraph);
-
-        anchor.appendChild(plantInfoDiv);
-
-        entryDiv.appendChild(anchor);
-
-        container.appendChild(entryDiv);
-    }
-}
-
 window.onload = function () {
-    // online/offline mode
-    if (navigator.onLine) {
-        fetch('http://localhost:3000/entries')
-            .then(function (res) {
-                return res.json();
-            }).then(function (newEntries) {
-            openEntriesIDB().then((db) => {
-                insertEntryToHome(db, newEntries);
-                deleteEntriesFromIDB(db).then(() => {
-                    addNewEntriesToIDB(db, newEntries).then(() => {
-                        console.log("All new entries added to IDB");
-                    })
-                });
-            });
+    openEntriesIDB().then((db) => {
+        getAllEntries(db).then((entries) => {
+            for (const entry of entries) {
+                insertEntry(entry)
+            }
         });
-    } else {
-        openEntriesIDB().then((db) => {
-            getAllEntries(db).then((entries) => {
-                for (const entry of entries) {
-                    insertEntryToHome(entry)
-                }
-            });
-        });
-    }
+    });
 }

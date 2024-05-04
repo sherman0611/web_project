@@ -111,7 +111,7 @@ const createEntryEventListener = () => {
             sw.showNotification("Plantgram",
                 {body: "Entry added to pending list!"})
                 .then(r => {
-                    window.location.href = "/";
+                    // window.location.href = "/";
                 });
         });
 }

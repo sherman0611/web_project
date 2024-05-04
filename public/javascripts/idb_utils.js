@@ -20,7 +20,7 @@ const addNewEntryToSync = (syncTodoIDB, formData) => {
     if (formData) {
         const transaction = syncTodoIDB.transaction(["sync-entries"], "readwrite");
         const entryStore = transaction.objectStore("sync-entries");
-        const createRequest = entryStore.add({data: formData});
+        const createRequest = entryStore.add({formData});
 
         createRequest.addEventListener("success", () => {
             console.log("Added entry to idb");
@@ -113,8 +113,6 @@ const addNewEntriesToIDB = (entryIDB, entries) => {
                 addRequest.addEventListener("success", () => {
                     const getRequest = entryStore.get(addRequest.result);
                     getRequest.addEventListener("success", () => {
-                        // console.log("Found " + JSON.stringify(getRequest.result));
-                        insertEntryToHome(getRequest.result);
                         resolveAdd(); // Resolve the add promise
                     });
                     getRequest.addEventListener("error", (event) => {
@@ -152,4 +150,48 @@ const getAllEntries = (entryIDB) => {
     });
 }
 
+const insertEntry = (entry) => {
+    if (entry._id || entry.id) {
+        let entry_id;
+        if (entry.id) {
+            entry_id = entry.id;
+            entry = entry.formData;
+        }
 
+        const container = document.getElementById("plant-entries-container");
+
+        const entryDiv = document.createElement("div");
+        entryDiv.classList.add("home", "link", "container");
+
+        const anchor = document.createElement("a");
+        if (entry._id) {
+            anchor.href = "/view_plant/" + entry._id;
+        } else {
+            anchor.href = "/view_plant/" + entry_id;
+        }
+
+        const img = document.createElement("img");
+        img.classList.add("plant-image");
+        img.src = entry.image ? (entry.image.includes('public') ? entry.image.replace('public','') : entry.image) : (entry.image_url || '');
+        img.alt = entry.plant_name;
+        anchor.appendChild(img);
+
+        const plantInfoDiv = document.createElement("div");
+        plantInfoDiv.classList.add("plant-info");
+
+        const usernameParagraph = document.createElement("p");
+        usernameParagraph.textContent = "Plant by " + entry.username;
+
+        const dateLocationParagraph = document.createElement("p");
+        dateLocationParagraph.textContent = entry.date ? entry.date.substring(0, 10) + ", " + entry.location : entry.location;
+
+        plantInfoDiv.appendChild(usernameParagraph);
+        plantInfoDiv.appendChild(dateLocationParagraph);
+
+        anchor.appendChild(plantInfoDiv);
+
+        entryDiv.appendChild(anchor);
+
+        container.appendChild(entryDiv);
+    }
+};

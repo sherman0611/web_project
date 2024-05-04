@@ -13,6 +13,7 @@ self.addEventListener('install', event => {
                 '/',
                 '/create_plant',
                 '/enter_username',
+                '/pending_posts',
                 '/images/arrow_left_icon.png',
                 '/images/install_icon.png',
                 '/images/search_icon.png',
@@ -24,6 +25,7 @@ self.addEventListener('install', event => {
                 '/javascripts/idb_utils.js',
                 '/javascripts/index.js',
                 '/javascripts/main.js',
+                '/javascripts/pending_posts.js',
                 '/javascripts/username_utils.js',
                 '/javascripts/view_plant.js',
                 '/stylesheets/create_plant.css',
@@ -74,11 +76,9 @@ self.addEventListener('sync', event => {
                 for (const syncEntry of syncEntries) {
                     console.log('Service Worker: Syncing new entry');
 
-                    console.log(JSON.stringify(syncEntry.data))
-
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
-                        body: JSON.stringify(syncEntry.data),
+                        body: JSON.stringify(syncEntry.formData),
                         headers: {
                             'Content-Type': 'application/json',
                         },

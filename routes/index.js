@@ -26,6 +26,10 @@ router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
 });
 
+router.get('/pending_posts', function(req, res, next) {
+    res.render('pending_posts', { title: 'Pending posts' });
+});
+
 // route to get all todos
 router.get('/entries', function (req, res, next) {
     entries.getAll().then(entries => {
