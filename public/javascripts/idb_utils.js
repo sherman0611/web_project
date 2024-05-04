@@ -113,6 +113,7 @@ const addNewEntriesToIDB = (entryIDB, entries) => {
                 addRequest.addEventListener("success", () => {
                     const getRequest = entryStore.get(addRequest.result);
                     getRequest.addEventListener("success", () => {
+                        // insertEntry(getRequest.result)
                         resolveAdd(); // Resolve the add promise
                     });
                     getRequest.addEventListener("error", (event) => {

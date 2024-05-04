@@ -91,9 +91,24 @@ self.addEventListener('sync', event => {
                         });
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
+                        self.registration.showNotification('Plantgram', {
+                            body: 'Entry sync failed! Check for network',
+                        });
                     });
                 }
             });
         });
+    }
+});
+
+self.addEventListener('message', event => {
+    if (event.data && event.data.action === 'registerSync') {
+        self.registration.sync.register('sync-entry')
+            .then(() => {
+                console.log('Sync event registered');
+            })
+            .catch((err) => {
+                console.error('Sync event registration failed:', err);
+            });
     }
 });

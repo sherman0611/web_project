@@ -1,5 +1,5 @@
 function uploadPosts() {
-
+    navigator.serviceWorker.controller.postMessage({ action: 'registerSync' });
 }
 
 window.onload = function () {
