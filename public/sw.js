@@ -1,4 +1,3 @@
-// const CACHE_NAME = 'Plantgram v1';
 //
 // // Use the install event to pre-cache all initial resources.
 // self.addEventListener('install', event => {

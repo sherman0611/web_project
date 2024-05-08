@@ -191,20 +191,3 @@
   }
 
 }
-
-@media (max-width: 800px) {
-  .body_container{
-    flex-direction: column
-  }
-
-  .header{
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .main_section {
-    width: fit-content;
-  }
-}
