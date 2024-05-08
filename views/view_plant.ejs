@@ -19,7 +19,7 @@
                 <div class="nav-links">
                     <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 </div>
-                <div class="two-columns container">
+                <div class="two-columns container row-1">
                     <div class="main container smaller-column">
                         <% if (plant_entry === null) { %>
                             <p>Cannot load plant_entry</p>
@@ -113,9 +113,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="two-columns container">
-                    <div id="chat_interface">
-                        <h2>Comments</h2>
+                <div class="two-columns container row-2">
+                    <div class="smaller-column chat container" id="chat_interface">
                         <% if (comments === null) { %>
                             <p>Cannot load comments</p>
                         <% } else { %>
@@ -145,13 +144,15 @@
                     </div>
 
                     <% if(plant_entry.latitude && plant_entry.longitude) { %>
-                        <div id="map" class="equal-column container" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
+                        <div id="map" class="bigger-column map container" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
                     <% }%>
                 </div>
                 <% } %>
             </div>
         </div>
+        <%- include('partials/footer.ejs')%>
+
         <script src="/javascripts/username_utils.js"></script>
         <script src="/javascripts/comment-utils.js"></script>
         <script src="/javascripts/view_plant.js"></script>

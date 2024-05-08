@@ -26,6 +26,12 @@ window.onload = function () {
     disableChat();
     // Map calls
     initMap();
+
+    // Heights of the grid elements:
+    let main_c = document.getElementsByClassName("main container smaller-column")[0]
+    let info_c = document.getElementsByClassName("bigger-column " +
+        "two-columns container details-container")
+    // let comments_c =
 }
 
 async function initMap() {

@@ -5,8 +5,8 @@ body {
   background-color: #E4C9AC;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 100vh;
+  height: fit-content;
+  min-height: 98vh;
   margin: 0;
 }
 
@@ -22,6 +22,11 @@ footer {
   min-height: 100vh;
 }
 
+.container {
+  min-height: min-content;
+  min-width: min-content;
+}
+
 .two-columns.container, .two-columns.container:hover{
   display: flex;
   flex-direction: row;
@@ -31,6 +36,9 @@ footer {
 .main_section{
   padding: 10px 20px 0 20px;
   width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #overlay {
@@ -277,4 +285,21 @@ a .form-button {
 
 .hidden {
   display: none;
+}
+
+@media (max-width: 800px) {
+  .body_container{
+    flex-direction: column
+  }
+
+  .header{
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .main_section {
+    width: fit-content;
+  }
 }
