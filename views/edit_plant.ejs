@@ -17,6 +17,7 @@
                 <p>Cannot load plant_entry</p>
             <% } else { %>
             <div class="main_section">
+                <button class="arrow-btn" onclick="goToReferrer()"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></button>
                 <h2 class="create_entry_title">Edit your plant entry</h2>
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
@@ -41,8 +42,14 @@
                     <button class="form-button" type="submit">Update your plant entry</button>
                 </form>
                 <button class="return-button" onclick="goToReferrer()">Go Back</button>
-
+                <div id="completed-warning" class="warning-message hidden">
+                    <div><img class="announcement-icon" src="/images/announcement.png" alt="Announcement icon"></div>
+                    <div><h2>Warning!</h2><p>Make sure that the plant name is correct
+                        (e.g. has the correct name, no spelling mistakes, etc. Once the status is updated to Completed,
+                        this cannot be changed.</p></div>
+                </div>
             </div>
+
             <%}%>
             <%- include('partials/footer.ejs')%>>
             <script src="/javascripts/username_utils.js"></script>

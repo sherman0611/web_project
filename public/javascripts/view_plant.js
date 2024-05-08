@@ -15,7 +15,9 @@ window.onload = function () {
         scrollToBottomChat();
     });
     // General data calls
-    fetchDBPedia();
+    if(document.getElementById("identification_status").textContent.includes("Completed")){
+        fetchDBPedia();
+    }
     identifyAuthor();
     usernameDefining();
     // Chat-related calls
@@ -81,9 +83,11 @@ function fetchDBPedia() {
     fetch(url)
         .then(response => response.json())
         .then(data => {
+            document.getElementById("plant_infoDbp").classList.remove("hidden")
             let bindings = data.results.bindings;
+            let dbpTitle = document.getElementById('db_page_title');
+            let plantInfoElement = document.getElementById('abstract_dbp');
             if (bindings.length > 0) {
-                let dbpTitle = document.getElementById('db_page_title');
                 dbpTitle.textContent = 'DBpedia Information';
 
                 let label = bindings[0].label.value;
@@ -91,13 +95,16 @@ function fetchDBPedia() {
                 labelElement.textContent = label;
 
                 let abstract = data.results.bindings[0].abstract.value;
-                let plantInfoElement = document.getElementById('abstract_dbp');
                 plantInfoElement.innerHTML = abstract;
 
                 let linkElement = document.getElementById('link_dbp');
                 linkElement.textContent = 'More info';
                 linkElement.href = resource;
             } else {
+                let iconHTML = '<img class="announcement-icon" src="/images/announcement.png" alt="Announcement icon">'
+                document.getElementById("plant_infoDbp").insertAdjacentHTML("afterbegin", iconHTML)
+                dbpTitle.textContent = 'No match for DBpedia entries';
+                plantInfoElement.textContent = "The name you provided is not matching any of the DBPedia plants.";
                 console.log('No results found');
             }
         })

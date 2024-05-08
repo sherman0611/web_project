@@ -92,10 +92,19 @@ select {
   flex-direction: row;
   margin-bottom:1.5%;
 }
+
 .arrow-left-icon, .completed-icon{
   height:20px;
 }
 
+.arrow-btn, .arrow-btn:hover {
+  background: none;
+  border: 0px;
+}
+
+.announcement-icon {
+  width: 70px;
+}
 
 .logo {
   background-color: #758874;
@@ -263,4 +272,9 @@ a .form-button {
   padding: 1%;
   margin: 1%;
   border-radius: 4px;
+  display: flex;
+}
+
+.hidden {
+  display: none;
 }

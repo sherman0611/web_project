@@ -42,7 +42,6 @@ function identifyAuthor(){
     if(getUsername() === document.getElementById("plant_author").innerText){
         let plant_id = document.getElementById("plant_id").value;
         let identification_status = document.getElementById("identification_status").textContent;
-        console.log(identification_status)
         let html_to_insert;
         if(identification_status.includes("Completed")){
             html_to_insert = '<span class="completed-text">' +
