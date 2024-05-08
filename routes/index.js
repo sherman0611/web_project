@@ -104,6 +104,34 @@ router.post('/send_comment', function(req, res, next) {
     });
 });
 
+// Search, sort and filter data
+router.get('/fetch-data', (req, res) => {
+    try {
+        let result = plant_entries.getAll();
+        result.then(plant_entries => {
+            let data = JSON.parse(plant_entries);
+            const { order, status, query } = req.query;
+            if (!order) {
+                return res.status(400).json({ error: "Order parameter is required" });
+            }
+            let filteredData = filterDataByStatus(data, status);
+            let searchedData = query ? searchData(filteredData, query) : filteredData; //If the search input is empty, do not call searchData.
+            let sortedSearchedData = sortData(searchedData, order);
+            console.log("data", data);
+            console.log("filteredData",filteredData);
+            console.log("searchedData", searchedData);
+            console.log("sortedSearchedData", sortedSearchedData);
+            res.json(sortedSearchedData);
+        }).catch(err => {
+            console.log('Error:', err);
+        });
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
 router.get('/sort-data', (req, res) => {
     try {
         let result = plant_entries.getAll();
@@ -128,6 +156,27 @@ function sortData(data, order) {
     return data.sort((a, b) => {
         return (order === 'date-asc') ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
     });
+}
+function searchData(data, query) {
+    if (!query) return data;
+
+    return data.filter(item => {
+        const lowerQuery = query.toLowerCase();
+        return (item.username && item.username.toLowerCase().includes(lowerQuery)) ||
+            (item.plant_name && item.plant_name.toLowerCase().includes(lowerQuery)) ||
+            (item.location && item.location.toLowerCase().includes(lowerQuery)) ||
+            (item.description && item.description.toLowerCase().includes(lowerQuery)) ||
+            (item.colour && item.colour.toLowerCase().includes(lowerQuery)) ||
+            (item.sun_exposure && item.sun_exposure.toLowerCase().includes(lowerQuery));
+    });
+}
+
+
+function filterDataByStatus(data, status) {
+    if (status === "all") {
+        return data;
+    }
+    return data.filter(item => item.identification_status === status);
 }
 
 router.get('/edit_plant/:id', function(req, res, next) {

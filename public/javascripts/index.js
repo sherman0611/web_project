@@ -1,10 +1,18 @@
-document.getElementById('sort-select').addEventListener('change', function() {
-    fetchSortedData();
+let input = document.getElementById('search-input');
+input.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("search-button").click();
+    }
 });
+function fetchData() {
+    console.log('Fetching data...');
+    const sortOrder = document.getElementById('sort-select').value;
+    const filterStatus = document.getElementById('filter-select').value;
+    const searchQuery = document.getElementById('search-input').value;
 
-function fetchSortedData() {
-    let sortOrder = document.getElementById('sort-select').value;
-    fetch(`/sort-data?order=${sortOrder}`)
+    const url = `/fetch-data?order=${sortOrder}&status=${filterStatus}` + (searchQuery ? `&query=${encodeURIComponent(searchQuery)}` : '');
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             updateDisplay(data);
