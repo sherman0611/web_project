@@ -10,14 +10,14 @@
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
-                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
+                <button class="arrow-btn" onclick="goToReferrer()"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></button>
                 <h2>Enter your username: </h2>
                 <input class="text-input" type="text" id="username" placeholder="Enter your username...">
                 <button id="save_btn" class="form-button" onclick="setUsername(); goToReferrer()">Save username</button>
             </div>
         </div>
+        <%- include('partials/footer.ejs')%>>
+        <script src="/javascripts/enter_username.js"></script>
+        <script src="/javascripts/username_utils.js"></script>
     </body>
-    <%- include('partials/footer.ejs')%>>
-    <script src="/javascripts/enter_username.js"></script>
-    <script src="/javascripts/username_utils.js"></script>
 </html>

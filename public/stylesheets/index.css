@@ -1,5 +1,4 @@
 /*HOME PAGE*/
-
 #search-input {
     height: 35px;
     border-radius: 20px;
@@ -30,6 +29,7 @@
 }
 
 .search-and-sort {
+    width: 100%;
     padding: 15px;
     background: antiquewhite;
     margin: 10px 0 20px 0;
@@ -40,4 +40,21 @@
     align-content: center;
     align-items: center;
     justify-content: space-between;
+}
+
+/* PLANT ENTRIES */
+.plant-entries-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.home.link.container {
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+    margin: 10px;
 }

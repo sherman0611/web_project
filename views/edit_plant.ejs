@@ -17,42 +17,11 @@
                 <p>Cannot load plant_entry</p>
             <% } else { %>
             <div class="main_section">
+                <button class="arrow-btn" onclick="goToReferrer()"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></button>
                 <h2 class="create_entry_title">Edit your plant entry</h2>
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
-                    <div class="add_plant_entry_container">
-                        <h3>Basic details</h3>
-                        <p>
-                            <label for="description">Plant description </label>
-                            <br>
-                            <textarea class="text_box" name="description" rows="4" cols="50"><%= plant_entry.description%></textarea>
-                        </p>
-                        <p>
-                            <label for="date">Date Seen</label>
-                            <br>
-                            <input type="date" id="date" name="date" value="<%= plant_entry.date%>">
-                        </p>
-
-                        <p>
-                            <label for="time">Time Seen</label>
-                            <br>
-                            <input type="time" id="time" name="time" value="<%= plant_entry.time%>">
-<!--                            TODO-->
-                        </p>
-
-                        <p>
-                            <label for="location">Location found </label>
-                            <br>
-                            <input class="text-input" type="text" id="location" name="location" value="<%= plant_entry.location%>">
-                        </p>
-                        <p>
-                            <label for="coordinates">Coordinates of the finding (optional)</label>
-                            <br>
-                            <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
-                        </p>
-                    </div>
-
-
-                    <br>
+                    <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
+                    <input type="hidden" id="plant_identification" name="plant_identification" value="<%= plant_entry.identification_status %>">
                     <div class="add_plant_entry_container">
                         <h3>Identification</h3>
                         <p>
@@ -61,95 +30,33 @@
                             <input class="text-input" type="text" id="plant_name" name="plant_name" value="<%= plant_entry.plant_name%>" required>
                         </p>
                         <p>
-                            <label for="plant_certainty">Plant unknown or uncertain?</label>
-                            <br>
-                            <label for="plant_certainty_status">
-                                <select name="plant_certainty_status">
-                                    <option value="unknown">Unknown</option>
-                                    <option value="uncertain">Uncertain</option>
-                                </select>
-                            </label>
-                        </p>
-                        <p>
-                            <label for="image_file">Upload image file</label>
-                            <br>
-                            <input type="file" id="image_file" name="image_file" accept="image/*">
-                        </p>
-                        <p>Or</p>
-                        <p>
-                            <label for="image_url">Enter image URL</label>
-                            <br>
-                            <input class="text-input" type="url" id="image_url" name="image_url">
+                            <label for="identification_status"></label>
+                            <select id="identification_status" name="identification_status">
+                                <option id="unknown" value="unknown">Unknown</option>
+                                <option id="in_progress" value="in_progress">In Progress</option>
+                                <option id="completed" value="completed">Completed</option>
+                            </select>
                         </p>
                     </div>
                     <br>
-                    <div class="add_plant_entry_container">
-                        <h3>Plant characteristics</h3>
-                        <h4>Plant size</h4>
-                        <p>
-                            <label for="height">Plant height </label>
-                            <br>
-                            <input class="text-input" type="text" id="height" name="height" placeholder="0">
-                        </p>
-                        <p>
-                            <label for="spread">Plant spread </label>
-                            <br>
-                            <input class="text-input" type="text" id="spread" name="spread" placeholder="0">
-                        </p>
-                        <h4>Other information</h4>
-                        <p>
-                            <label for="colour">Colour</label>
-                            <br>
-                            <input class="text-input" type="text" id="colour" name="colour">
-                        </p>
-
-                        <p>
-                            <label for="flowers">Does the plant have flowers?</label>
-                            <br>
-                            <input type="radio" id="flowers_yes" name="flowers" value="yes">
-                            <label for="flowers_yes">Yes</label>
-                            <input type="radio" id="flowers_no" name="flowers" value="no">
-                            <label for="flowers_no">No</label>
-                        </p>
-                        <p>
-                            <label for="leaves">Does the plant have leaves?</label>
-                            <br>
-                            <input type="radio" id="leaves_yes" name="leaves" value="yes">
-                            <label for="leaves_yes">Yes</label>
-                            <input type="radio" id="leaves_no" name="leaves" value="no">
-                            <label for="leaves_no">No</label>
-                        </p>
-                        <p>
-                            <label for="fruits_seeds">Does the plant have fruits or seeds?</label>
-                            <br>
-                            <input type="radio" id="fruits_seeds_yes" name="fruits_seeds" value="yes">
-                            <label for="fruits_seeds_yes">Yes</label>
-                            <input type="radio" id="fruits_seeds_no" name="fruits_seeds" value="no">
-                            <label for="fruits_seeds_no">No</label>
-                        </p>
-                        <p>
-                            <label for="sun_exposure">What is the sun exposure in that area?</label>
-                            <br>
-                            <input type="radio" id="full_sun" name="sun_exposure" value="full_sun">
-                            <label for="full_sun">Full sun</label>
-                            <input type="radio" id="partial_shade" name="sun_exposure" value="partial_shade">
-                            <label for="partial_shade">Partial shade</label>
-                            <input type="radio" id="full_shade" name="sun_exposure" value="full_shade">
-                            <label for="full_shade">Full shade</label>
-                        </p>
-                    </div>
-                    <br>
-                    <button class="form-button" type="submit">Create plant entry</button>
+                    <button class="form-button" type="submit">Update your plant entry</button>
                 </form>
-                <button class="return-button" onclick="returnHome()">Go Back</button>
-
+                <button class="return-button" onclick="goToReferrer()">Go Back</button>
+                <div id="completed-warning" class="warning-message hidden">
+                    <div><img class="announcement-icon" src="/images/announcement.png" alt="Announcement icon"></div>
+                    <div><h2>Warning!</h2><p>Make sure that the plant name is correct
+                        (e.g. has the correct name, no spelling mistakes, etc. Once the status is updated to Completed,
+                        this cannot be changed.</p></div>
+                </div>
             </div>
+
             <%}%>
-            <%- include('partials/footer.ejs')%>>
-            <script src="/javascripts/username-utils.js"></script>
-            <script src="/javascripts/main.js"></script>
-            <script src="/javascripts/create_plant.js"></script>
-            <script src="/javascripts/plant_entry.js"></script>
+
         </div>
+        <%- include('partials/footer.ejs')%>>
+        <script src="/javascripts/username_utils.js"></script>
+        <script src="/javascripts/main.js"></script>
+        <script src="/javascripts/create_plant.js"></script>
+        <script src="/javascripts/edit_plant.js"></script>
     </body>
 </html>

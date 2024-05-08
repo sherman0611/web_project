@@ -5,8 +5,8 @@ body {
   background-color: #E4C9AC;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 100vh;
+  height: fit-content;
+  min-height: 98vh;
   margin: 0;
 }
 
@@ -22,6 +22,11 @@ footer {
   min-height: 100vh;
 }
 
+.container {
+  min-height: min-content;
+  min-width: min-content;
+}
+
 .two-columns.container, .two-columns.container:hover{
   display: flex;
   flex-direction: row;
@@ -31,6 +36,9 @@ footer {
 .main_section{
   padding: 10px 20px 0 20px;
   width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #overlay {
@@ -93,8 +101,17 @@ select {
   margin-bottom:1.5%;
 }
 
-.view_plant .nav-links .form-button {
-  margin: unset;
+.arrow-left-icon, .completed-icon{
+  height:20px;
+}
+
+.arrow-btn, .arrow-btn:hover {
+  background: none;
+  border: 0px;
+}
+
+.announcement-icon {
+  width: 70px;
 }
 
 .logo {
@@ -104,10 +121,6 @@ select {
   font-weight: bold;
   margin-bottom: 10px;
   flex-shrink: 0;
-}
-
-.arrow-left-icon {
-  height:20px;
 }
 
 .nav-button.active {
@@ -121,12 +134,6 @@ select {
 /*END OF HEADER*/
 
 /* PLANT ENTRIES */
-.plant-entries-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
 .container {
   background: antiquewhite;
   border-radius: 5px;
@@ -152,18 +159,6 @@ select {
   width: 100%;
   font-size: 0.9rem;
   color: #21251E;
-}
-
-.home.link.container {
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  min-width: fit-content;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
-  width: 20%;
-  max-width: 20%;
-  margin: 10px;
 }
 
 .plant-image {
@@ -224,10 +219,6 @@ a .form-button {
   margin-top: 10px;
 }
 
-.container {
-  display: flex;
-}
-
 .plant_details {
   margin-right: 20px;
 }
@@ -283,3 +274,32 @@ a .form-button {
   margin-top: 1%;
 }
 /*END USERNAME SECTION*/
+
+.warning-message{
+  background-color: indianred;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 4px;
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .body_container{
+    flex-direction: column
+  }
+
+  .header{
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .main_section {
+    width: fit-content;
+  }
+}

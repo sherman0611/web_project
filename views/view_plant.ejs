@@ -19,7 +19,7 @@
                 <div class="nav-links">
                     <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 </div>
-                <div class="two-columns container">
+                <div class="two-columns container row-1">
                     <div class="main container smaller-column">
                         <% if (plant_entry === null) { %>
                             <p>Cannot load plant_entry</p>
@@ -36,46 +36,76 @@
                             <div class="txt-container">
                                 <h1><%= plant_entry.plant_name %></h1>
                                 <h2>Submitted by <span id="plant_author"><%= plant_entry.username %></span></h2>
-                                <% if(plant_entry.date) { %>
-                                    <h4>Date Seen: </h4>
-                                    <p><%= plant_entry.date.substring(0, 10) %></p>
-                                <% }%>
-                                <% if(plant_entry.location){%>
-                                    <h4>Spotted in:</h4>
-                                    <p> <%= plant_entry.location %></p>
-                                <% }%>
-                                <% if(plant_entry.time){%>
-                                    <h4>Time Seen: </h4>
-                                    <p><%= plant_entry.time %></p>
-                                <% }%>
+                                <%if(plant_entry.time_post) { %>
+                                    <h4>Time posted: </h4>
+                                    <p><%= plant_entry.time_post %></p>
+                                <%}%>
+
+                                <%if(plant_entry.date_post) { %>
+                                    <h4>Date posted: </h4>
+                                    <p><%= plant_entry.date_post.substring(0, 10) %></p>
+                                <%}%>
                             </div>
                     </div>
-                    <div class="bigger-column two-columns container">
+                    <div class="bigger-column two-columns container details-container">
                         <div class="plant_details equal-column container">
+                            <p id="identification_status"><b>
+                            <% if(plant_entry.identification_status === 'unknown') { %>
+                                    &#10067;Identification: </b>Unknown
+                            <% } else { %>
+                                    <%if(plant_entry.identification_status === "in_progress") { %>
+                                        &#8987;Identification: </b>In progress
+                                    <%} else {%>
+                                        &#10003;Identification: </b>Completed
+                                    <% } %>
+                            <% } %>
+                            </p>
                             <% if(plant_entry.location){%>
-                                <h3>&#128506;&#65039;Location: </h3>
-                                <p><%= plant_entry.location %></p>
+                                <p><b>&#128506;&#65039;Location: </b><%= plant_entry.location %></p>
                             <%}%>
                             <% if(plant_entry.description){%>
-                                <h3>&#129534;Description:</h3>
+                                <h3>&#129534; Description:</h3>
                                 <p><%= plant_entry.description %></p>
                             <%}%>
-                            <h3>&#127793;Characteristics:</h3>
 
-                            <% if(plant_entry.height){%>
-                                <p>&#8597;&#65039;Height: <%= plant_entry.height %></p>
-                            <%}%>
-                            <% if(plant_entry.spread){%>
-                                <p>&#8596;&#65039;Spread: <%= plant_entry.spread %></p>
-                            <%}%>
-                            <% if(plant_entry.flowers){%>
-                                <p>&#127804;Flowers: <%= plant_entry.flowers %></p>
-                            <%}%>
-                            <% if(plant_entry.sun_exposure){%>
-                                <p>&#9728;&#65039;Sun exposure: <%= plant_entry.sun_exposure %></p>
-                            <%}%>
+                                <% if(plant_entry.date_seen) { %>
+                                    <p><b> &#128467; Date Seen: </b> <%= plant_entry.date_seen.substring(0, 10) %></p>
+                                <% }%>
+                                <% if(plant_entry.time_seen){%>
+                                    <p><b> &#9200; Time Seen: </b><%= plant_entry.time_seen %></p>
+                                <% }%>
+                            <h3>&#127793;Characteristics:</h3>
+                                <div class="characteristics_list" style="padding-left:10%">
+                                    <% if(plant_entry.height){%>
+                                        <p>&#8597;&#65039; Height: <%= plant_entry.height %></p>
+                                    <%}%>
+                                    <% if(plant_entry.spread){%>
+                                        <p>&#8596;&#65039; Spread: <%= plant_entry.spread %></p>
+                                    <%}%>
+                                    <% if(plant_entry.flowers){%>
+                                        <p>&#127804;Flowers: <%= plant_entry.flowers %></p>
+                                    <%}%>
+                                    <% if(plant_entry.colour_flowers){%>
+                                        <p>&#127799;Colour of the flowers: <%= plant_entry.colour_flowers %></p>
+                                    <%}%>
+                                    <% if(plant_entry.leaves){%>
+                                        <p>&#127811;It has leaves!</p>
+                                    <%}%>
+                                    <% if(plant_entry.fruits_seeds){%>
+                                        <p>&#127825;It has fruits and seeds!</p>
+                                    <%}%>
+                                        <% if(plant_entry.sun_exposure === 'full_shade') { %>
+                                            <p>&#9729;&#65039;Sun exposure: Full Shade</p>
+                                        <% } else { %>
+                                        <%if(plant_entry.sun_exposure === "partial_shade") { %>
+                                            <p>&#9925;Sun exposure: Partial Shade</p>
+                                        <%} else {%>
+                                                <p>&#9728;&#65039;Sun exposure: Full Sun</p>
+                                            <% } %>
+                                        <% } %>
+                                </div>
                         </div>
-                        <div id="plant_infoDbp" class="txt-container container equal-column">
+                        <div id="plant_infoDbp" class="txt-container container equal-column hidden">
                             <h3 id="db_page_title"></h3>
                             <h4 id="title_dbp"></h4>
                             <p id="abstract_dbp"></p>
@@ -83,9 +113,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="two-columns container">
-                    <div id="chat_interface">
-                        <h2>Comments</h2>
+                <div class="two-columns container row-2">
+                    <div class="smaller-column chat container" id="chat_interface">
                         <% if (comments === null) { %>
                             <p>Cannot load comments</p>
                         <% } else { %>
@@ -104,8 +133,8 @@
                             <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
                             <div id="username-container">
                                 <label for="username">Your username:</label>
-                                <input class="text-input" type="text" id="username" name="username" placeholder="Enter your username..." readonly>
-                                <a class="form-button" href="/enter_username">Change your username</a>
+<!--                                <input class="text-input" type="text" id="username" name="username" placeholder="Enter your username..." readonly>-->
+<!--                                <a class="form-button" href="/enter_username">Change your username</a>-->
                             </div>
                             <div class="send-message-box">
                                 <input type="text" id="comment_text" name="comment_text" placeholder="Enter your reply...">
@@ -115,13 +144,14 @@
                     </div>
 
                     <% if(plant_entry.latitude && plant_entry.longitude) { %>
-                        <div id="map" class="equal-column container" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
+                        <div id="map" class="bigger-column map container" data-lat="<%= plant_entry.latitude %>" data-lng="<%= plant_entry.longitude %>"></div>
                         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk&callback=initMap"></script>
                     <% }%>
                 </div>
                 <% } %>
             </div>
         </div>
+        <%- include('partials/footer.ejs')%>
         <script src="/javascripts/username_utils.js"></script>
         <script src="/javascripts/comment_utils.js"></script>
         <script src="/javascripts/view_plant.js"></script>

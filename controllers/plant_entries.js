@@ -18,10 +18,11 @@ exports.create = function (plantData, filePath) {
         leaves: plantData.leaves,
         fruits_seeds: plantData.fruits_seeds,
         sun_exposure: plantData.sun_exposure,
-        identification_status: false,
-        // dbpedia_URI: null,
-        date: plantData.date,
-        time: plantData.time
+        identification_status: plantData.identification_status,
+        date_post: plantData.date_post,
+        date_seen: plantData.date_seen,
+        time_post: plantData.time_post,
+        time_seen: plantData.time_seen
     });
 
     return plant_entry.save().then(plantEntry => {
@@ -30,6 +31,24 @@ exports.create = function (plantData, filePath) {
         console.log(err);
         return null;
     })
+}
+
+exports.update = function (plantData) {
+    let plant_entry = this.getById(plantData.plant_id)
+
+    if (!plant_entry) {
+        return Promise.reject(new Error("Plant not found")); // Handle missing plant
+    } else {
+        plant_entry.plant_name = plantData.plant_name
+        plant_entry.identification_status = plantData.identification_status
+
+        return plant_entry.save().then(plantEntry => {
+            return JSON.stringify(plantEntry);
+        }).catch(err => {
+            console.log(err);
+            return null;
+        })
+    }
 }
 
 exports.getAll = function () {

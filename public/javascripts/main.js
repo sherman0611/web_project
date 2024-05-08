@@ -33,3 +33,12 @@ if ("Notification" in window) {
         });
     }
 }
+
+function set_same_height(e1, e2) {
+    let height1 = e1.offsetHeight
+    let height2 = e2.offsetHeight
+    let max_height = Math.max(height1, height2)
+
+    e1.style.height = `${max_height}px`
+    e2.style.height = `${max_height}px`
+}

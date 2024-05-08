@@ -1,59 +1,31 @@
-const plant_id = document.getElementById('plant_id').value;
-const socket = io();
+let plant_id = null;
+let plant_name = null;
 
-let map
+let map;
 
 window.onload = function () {
-    // inject username to html
-    const usernameInput = document.getElementById("username");
-    console.log('dfajdfnjasdbgvkasfld');
-    usernameInput.value = getUsername();
+    plant_id = document.getElementById('plant_id').value;
+    plant_name = document.getElementsByTagName('h1')[0].textContent;
+    console.log(plant_name)
 
     socket.emit('join', plant_id);
 
     // called when a message is received
     socket.on('comment', function (room, data) {
         writeNewComment(data);
-        scrollToBottomChat();
     });
-
+    fetchDBPedia();
     identifyAuthor();
+    usernameDefining();
     assignCommentAuthor();
     scrollToBottomChat();
     initMap();
 }
 
-function sendComment(event) {
-    event.preventDefault();
-
-    // Send AJAX request to the server to create comment
-    $.ajax({
-        type: 'POST',
-        url: '/send_comment',
-        data: $('#comment-form').serialize(),
-        success: function(data) {
-            socket.emit('comment', plant_id, data);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error sending comment:", error);
-        }
-    });
-    document.getElementById('comment_text').value = '';
-}
-
-function identifyAuthor(){
-    if(getUsername() === document.getElementById("plant_author").innerText) {
-        let html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>'
-        document.getElementsByClassName("nav-links")[0].insertAdjacentHTML("beforeend", html_to_insert);
-    }
-}
-
 async function initMap() {
-    // The location of Uluru
 
     const mapElement = document.getElementById('map');
-
-    if(mapElement !== null && mapElement.dataset !== null) {
+    if(mapElement !== null && mapElement.dataset !== null){
         const lat = parseFloat(mapElement.dataset.lat);
         const lng = parseFloat(mapElement.dataset.lng);
 
@@ -74,4 +46,47 @@ async function initMap() {
             title: "Uluru",
         });
     }
+}
+
+function fetchDBPedia() {
+    const resource = `http://dbpedia.org/resource/${plant_name}`;
+    const endpointUrl = 'https://dbpedia.org/sparql';
+    const sparqlQuery = `
+                 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                 PREFIX dbo: <http://dbpedia.org/ontology/>
+                 SELECT ?label ?abstract ?link
+                 WHERE {
+                  <${resource}> dbo:abstract ?abstract .
+                  <${resource}> rdfs:label ?label .
+                  <${resource}> dbo:wikiPageID ?link .
+                 FILTER (langMatches(lang(?abstract), "EN"))
+            }`;
+
+    const encodedQuery = encodeURIComponent(sparqlQuery);
+    const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let bindings = data.results.bindings;
+            let result = JSON.stringify(bindings);
+            let dbpTitle = document.getElementById('db_page_title');
+            dbpTitle.textContent = 'DBpedia Information';
+
+            let label = bindings[0].label.value;
+            let labelElement = document.getElementById('title_dbp')
+            labelElement.textContent = label;
+
+
+            let abstract = data.results.bindings[0].abstract.value;
+            let plantInfoElement = document.getElementById('abstract_dbp');
+            plantInfoElement.innerHTML = abstract;
+
+
+            let link = bindings[0].link.value;
+            let linkElement = document.getElementById('link_dbp');
+            linkElement.textContent = 'More info';
+            linkElement.href = `http://dbpedia.org/page/${plant_name}`;
+        })
+        .catch(error => console.error('Error:', error));
 }

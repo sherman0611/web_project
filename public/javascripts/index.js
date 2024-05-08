@@ -25,9 +25,7 @@ function updateDisplay(data) {
     container.innerHTML = '';
     data.forEach(item => {
         const plantEntryDiv = document.createElement('div');
-        plantEntryDiv.className = 'home';
-        plantEntryDiv.className = 'link';
-        plantEntryDiv.className = 'container';
+        plantEntryDiv.className = 'home link container';
 
         const plantLink = document.createElement('a');
         plantLink.href = `/view_plant/${item._id}`;
@@ -45,8 +43,10 @@ function updateDisplay(data) {
         infoDiv.className = 'plant-info';
 
         const plantInfoP = document.createElement('p');
+        const plantInfoB = document.createElement('b');
         // plantInfoP.textContent = `Plant by ${item.username || 'Anonymous'}`;
-        plantInfoP.textContent = `Plant by ${item.username || 'Anonymous'}`;
+        plantInfoB.textContent = `${item.plant_name} by ${item.username}`;
+        plantInfoP.appendChild(plantInfoB)
         infoDiv.appendChild(plantInfoP);
 
         if (item.date || item.location) {
