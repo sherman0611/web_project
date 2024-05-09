@@ -20,22 +20,21 @@
             <div class="main_section">
                 <button class="arrow-btn" onclick="goToReferrer()"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></button>
                 <h2 class="create_entry_title">Edit your plant entry</h2>
-                <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
-                    <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
-                    <input type="hidden" id="plant_identification" name="plant_identification" value="<%= plant_entry.identification_status %>">
+                <form id="create_plant_form" action="/edit_plant/<%= plant_entry._id %>/update" method="post" >
                     <div class="add_plant_entry_container">
                         <h3>Identification</h3>
                         <p>
                             <label for="plant_name">Plant name </label>
                             <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name" value="<%= plant_entry.plant_name%>" required>
+                            <input class="text-input" type="text" id="plant_name" name="plant_name" value="<%= plant_entry.plant_name%>" >
                         </p>
                         <p>
-                            <label for="identification_status"></label>
+                            <label for="identification_status">Identification Status</label>
+                            <br>
                             <select id="identification_status" name="identification_status">
-                                <option id="unknown" value="unknown">Unknown</option>
-                                <option id="in_progress" value="in_progress">In Progress</option>
-                                <option id="completed" value="completed">Completed</option>
+                                <option id="unknown" value="unknown" <%if(plant_entry.identification_status === "unknown") { %>selected<% }%>>Unknown</option>
+                                <option id="in_progress" value="in_progress" <%if(plant_entry.identification_status === "in_progress") { %>selected<% }%>>In Progress</option>
+                                <option id="completed" value="completed" <%if(plant_entry.identification_status === "completed") { %>selected<% }%>>Completed</option>
                             </select>
                         </p>
                     </div>

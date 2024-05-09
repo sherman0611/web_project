@@ -54,16 +54,21 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
     });
 });
 
-router.post('/edit_plant', function(req, res, next) {
-    let updateData = req.body;
-
-    let result = plant_entries.update(updateData);
+router.post('/edit_plant/:id/update', async function (req, res, next) {
+    //get plant id
+    let plant_id = req.params.id;
+    //get the new data from the form
+    let plantDataForm = req.body;
+    //update the plant entry with the new data
+    let result = plant_entries.update(plant_id, plantDataForm);
+    //redirect to the view plant entry page
     result.then(plant_entry => {
-        res.redirect('/view_plant/:id');
+        res.redirect('/');
     }).catch(err => {
-        console.log("cannot update");
+        console.log("cannot update post");
     });
 });
+
 
 /* GET plant entry page. */
 router.get('/view_plant/:id', function(req, res, next) {

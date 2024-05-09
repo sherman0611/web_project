@@ -15,6 +15,6 @@ window.onload = function (){
 }
 
 function setSelected(){
-    let cur_status = document.getElementById("plant_identification").value
+    let cur_status = document.getElementById("identification_status").value
     document.getElementById(cur_status).selected = true
 }
