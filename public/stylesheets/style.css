@@ -27,7 +27,7 @@ footer {
   min-width: min-content;
 }
 
-.two-columns.container, .two-columns.container:hover{
+.two-columns.container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -143,10 +143,6 @@ select {
   padding: 20px;
   box-sizing: border-box;
   transition-duration: 0.4s;
-}
-
-.container:hover{
-  background-color: #AA7A54;
 }
 
 .container:last-child {
