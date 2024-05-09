@@ -208,7 +208,7 @@ input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, inpu
   border-radius: 20px;
   border: 0 hidden;
   padding: 7px;
-  margin: 1% auto auto;
+  margin: 1% auto;
 }
 
 a .form-button {

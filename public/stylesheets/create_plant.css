@@ -1,3 +1,6 @@
+.main_section{
+    flex-direction: column;
+}
 
 .add_plant_entry_container{
     text-align: center;
