@@ -20,7 +20,7 @@
             <div class="main_section">
                 <button class="arrow-btn" onclick="goToReferrer()"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></button>
                 <h2 class="create_entry_title">Edit your plant entry</h2>
-                <form id="create_plant_form" action="/edit_plant/<%= plant_entry._id %>" method="post"  >
+                <form id="create_plant_form" action="/edit_plant/<%= plant_entry._id %>/update" method="post" >
                     <div class="add_plant_entry_container">
                         <h3>Identification</h3>
                         <p>
@@ -34,7 +34,7 @@
                             <select id="identification_status" name="identification_status">
                                 <option id="unknown" value="unknown" <%if(plant_entry.identification_status === "unknown") { %>selected<% }%>>Unknown</option>
                                 <option id="in_progress" value="in_progress" <%if(plant_entry.identification_status === "in_progress") { %>selected<% }%>>In Progress</option>
-                                <option id="completed" value="completed"  <%if(plant_entry.identification_status === "completed") { %>selected<% }%>>Completed</option>
+                                <option id="completed" value="completed" <%if(plant_entry.identification_status === "completed") { %>selected<% }%>>Completed</option>
                             </select>
                         </p>
                     </div>

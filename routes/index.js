@@ -63,7 +63,7 @@ router.post('/edit_plant/:id/update', async function (req, res, next) {
     let result = plant_entries.update(plant_id, plantDataForm);
     //redirect to the view plant entry page
     result.then(plant_entry => {
-        res.redirect('/view_plant/:id');
+        res.redirect('/');
     }).catch(err => {
         console.log("cannot update post");
     });
