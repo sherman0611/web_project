@@ -2,7 +2,6 @@ let selected;
 
 window.onload = function (){
     setSelected();
-
     document.getElementById("identification_status").addEventListener("change", (event) => {
         selected = document.getElementById("identification_status").value
         if(selected==="completed"){
@@ -11,10 +10,9 @@ window.onload = function (){
             document.getElementById("completed-warning").classList.add("hidden")
         }
     })
-
 }
 
 function setSelected(){
-    let cur_status = document.getElementById("plant_identification").value
+    let cur_status = document.getElementById("identification_status").value
     document.getElementById(cur_status).selected = true
 }

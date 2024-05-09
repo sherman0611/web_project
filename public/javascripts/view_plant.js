@@ -7,7 +7,7 @@ window.onload = function () {
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
     console.log(plant_name)
-
+    console.log(plant_id)
     socket.emit('join', plant_id);
 
     // called when a message is received
@@ -49,7 +49,16 @@ async function initMap() {
 }
 
 function fetchDBPedia() {
-    const resource = `http://dbpedia.org/resource/${plant_name}`;
+    let plant = plant_name;
+    //lowercase all word
+    plant = plant.toLowerCase();
+    //uppercase the first letter of the first word only
+    plant = plant.charAt(0).toUpperCase() + plant.slice(1);
+    //replace all spaces with underscores for the dbpedia query
+    plant = plant.replace(/ /g, '_');
+
+    //replace all spaces with underscores for the dbpedia query
+    const resource = `http://dbpedia.org/resource/${plant}`;
     const endpointUrl = 'https://dbpedia.org/sparql';
     const sparqlQuery = `
                  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

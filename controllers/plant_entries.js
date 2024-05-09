@@ -33,24 +33,6 @@ exports.create = function (plantData, filePath) {
     })
 }
 
-exports.update = function (plantData) {
-    let plant_entry = this.getById(plantData.plant_id)
-
-    if (!plant_entry) {
-        return Promise.reject(new Error("Plant not found")); // Handle missing plant
-    } else {
-        plant_entry.plant_name = plantData.plant_name
-        plant_entry.identification_status = plantData.identification_status
-
-        return plant_entry.save().then(plantEntry => {
-            return JSON.stringify(plantEntry);
-        }).catch(err => {
-            console.log(err);
-            return null;
-        })
-    }
-}
-
 exports.getAll = function () {
     return plantEntryModel.find({}).then(plantEntry => {
         return JSON.stringify(plantEntry);
@@ -68,4 +50,30 @@ exports.getById = function (plant_id) {
         console.log(err);
         return null;
     });
+};
+
+
+exports.update = async (plantId, plantData) => {
+    try {
+        // Update only the name and identification fields
+        const updateData = {
+            plant_name: plantData.plant_name,
+            identification_status: plantData.identification_status
+        };
+
+        // findByIdAndUpdate used to update the plant
+        const updatedPlant = await plantEntryModel.findByIdAndUpdate(plantId, updateData,{
+            new: true,  // return the updated document
+            runValidators: true  // validate before update
+        });
+
+        if (!updatedPlant) {
+            throw new Error('Plant not found');
+        }
+
+        return { success: true, data: updatedPlant };
+    } catch (error) {
+        console.error('Error updating plant:', error);
+        throw new Error('Failed to update plant: ' + error.message);
+    }
 };
