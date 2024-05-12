@@ -1,6 +1,5 @@
+/* MAIN */
 body {
-  /*padding-left: calc(230px + 15px);*/
-  /*padding-right: 15px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #E4C9AC;
   display: flex;
@@ -52,6 +51,18 @@ footer {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.header {
+  width: 230px;
+  min-width: 230px;
+  background-color: #758874;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+/* END MAIN SECTION */
+
+/* BUTTONS, SELECTS */
 button {
   background-color: #373F32;
   transition-duration: 0.3s;
@@ -69,22 +80,29 @@ select {
   padding: 5px;
 }
 
-/*HEADER*/
-
-.header {
-  /*position: fixed;*/
-  /*top: 0;*/
-  /*left: 0;*/
-  width: 230px;
-  min-width: 230px;
-  /*height: 100%;*/
-  background-color: #758874;
-  padding: 20px;
-  box-sizing: border-box;
+.form-button, .return-button {
   display: flex;
-  flex-direction: column;
+  text-decoration: none;
+  width: fit-content;
+  background-color: #AA7A54;
+  color: #E4C9AC;
+  transition-duration: 0.4s;
+  border-radius: 20px;
+  border: 0 hidden;
+  padding: 7px;
+  margin: 1% auto;
 }
 
+a .form-button {
+  text-decoration: none;
+}
+
+.return-button {
+  margin-top: 10px;
+}
+/* END BUTTONS, SELECTS */
+
+/* NAVIGATION BAR */
 .nav-button, .logo {
   background-color: #758874;
   color: #F4EDB3;
@@ -111,10 +129,6 @@ select {
   border: 0px;
 }
 
-.announcement-icon {
-  width: 70px;
-}
-
 .logo {
   background-color: #758874;
   text-align: center;
@@ -131,8 +145,7 @@ select {
 .nav-button:hover {
   background-color: #21251E;
 }
-
-/*END OF HEADER*/
+/* END NAVIGATION BAR SECTION */
 
 /* PLANT ENTRIES */
 .container {
@@ -171,10 +184,11 @@ select {
   margin: auto;
   text-align: center;
 }
-/* END OF PLANT ENTRIES */
+/* END PLANT ENTRIES SECTION */
 
 /* OTHER UTILS */
-input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, input[type="text"]:focus:hover.input-disabled {
+input[type="text"].input-disabled, input[type="text"]:focus.input-disabled,
+input[type="text"]:focus:hover.input-disabled {
   border: 0;
   background-color: transparent;
   font-weight: bold;
@@ -195,27 +209,6 @@ input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, inpu
   margin-bottom: 10px;
 }
 
-.form-button, .return-button {
-  display: flex;
-  text-decoration: none;
-  width: fit-content;
-  background-color: #AA7A54;
-  color: #E4C9AC;
-  transition-duration: 0.4s;
-  border-radius: 20px;
-  border: 0 hidden;
-  padding: 7px;
-  margin: 1% auto;
-}
-
-a .form-button {
-  text-decoration: none;
-}
-
-.return-button {
-  margin-top: 10px;
-}
-
 .plant_details {
   margin-right: 20px;
 }
@@ -229,6 +222,10 @@ a .form-button {
 
 .plant_link:hover {
   background-color: #AA7A54;
+}
+
+.hidden {
+  display: none;
 }
 /* END OTHER UTILS */
 
@@ -265,13 +262,14 @@ a .form-button {
   padding:3px;
 }
 
-/*ENTER USERNAME SECTION*/
+/* ENTER USERNAME */
 #create_username_form > *{
   margin-bottom: 1%;
   margin-top: 1%;
 }
 /*END USERNAME SECTION*/
 
+/* ANNOUNCEMENTS */
 .warning-message{
   background-color: indianred;
   padding: 1%;
@@ -280,10 +278,12 @@ a .form-button {
   display: flex;
 }
 
-.hidden {
-  display: none;
+.announcement-icon {
+  width: 70px;
 }
+/* END ANNOUNCEMENTS SECTION */
 
+/* MEDIA */
 @media (max-width: 800px) {
   .body_container{
     flex-direction: column
@@ -302,3 +302,4 @@ a .form-button {
     margin: 3% auto;
   }
 }
+/* END MEDIA */

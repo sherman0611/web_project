@@ -4,8 +4,9 @@ function setUsername(){
     localStorage.setItem('username', username);
 }
 
-// Get the username from localStorage
-// Return: username
+/** Get the username from localStorage
+ * @returns string username
+ */
 function getUsername() {
     let username = localStorage.getItem("username");
     if (!username) {
@@ -23,12 +24,6 @@ function goToReferrer(){
     }
 }
 
-// function enterUsernameField() {
-//     let html_to_insert = '<input class = "text-input" value = "'+getUsername()+'" type = "text" id = "username" name="username" >'
-//     document.getElementById("enter_username_field").insertAdjacentHTML('beforeend',html_to_insert)
-// }
-
-
 function usernameDefining(){
     let html_to_insert = ""
     let username = getUsername();
@@ -42,9 +37,10 @@ function usernameDefining(){
     document.getElementById("username-container").insertAdjacentHTML('beforeend',html_to_insert)
 }
 
-// Check if the current user is the plant author
-// If so, allow them to edit the plant if the identification has not yet
-// been completed.
+/** Check if the current user is the plant author
+ * If so, allow them to edit the plant if the identification has not yet
+ * been completed.
+ */
 function identifyAuthor(){
     if(getUsername() === document.getElementById("plant_author").innerText){
         let plant_id = document.getElementById("plant_id").value;
