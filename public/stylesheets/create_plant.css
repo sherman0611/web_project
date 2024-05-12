@@ -1,3 +1,4 @@
+/* MAIN */
 .main_section{
     flex-direction: column;
 }
@@ -13,17 +14,6 @@
     color:#AA7A54;
 }
 
-.submitLocation{
-    display: flex;
-    background-color: #758874;
-    margin: auto;
-    color: #E4C9AC;
-    transition-duration: 0.4s;
-    border-radius: 10px;
-    border: 0 hidden;
-    padding: 7px;
-}
-
 input::file-selector-button {
     display: flex;
     background-color: #758874;
@@ -35,6 +25,19 @@ input::file-selector-button {
     padding: 7px;
 }
 
+/* LOCATION */
+.submitLocation{
+    display: flex;
+    background-color: #758874;
+    margin: auto;
+    color: #E4C9AC;
+    transition-duration: 0.4s;
+    border-radius: 10px;
+    border: 0 hidden;
+    padding: 7px;
+}
+
+/* SINGULAR FIELDS */
 .create_entry_title {
     color:#AA7A54;
     text-align: center;
@@ -45,6 +48,7 @@ input::file-selector-button {
     border-radius: 15px;
 }
 
+/* REQUIRED */
 .required {
     color: red;
 }
