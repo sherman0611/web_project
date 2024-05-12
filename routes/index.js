@@ -104,7 +104,11 @@ router.post('/send_comment', function(req, res, next) {
     });
 });
 
-// Search, sort and filter data
+/**
+ * GET main page after searching, sorting or/and filtering data
+ * @param req
+ * @param res
+ */
 router.get('/fetch-data', (req, res) => {
     try {
         let result = plant_entries.getAll();
@@ -131,32 +135,24 @@ router.get('/fetch-data', (req, res) => {
     }
 });
 
-
-router.get('/sort-data', (req, res) => {
-    try {
-        let result = plant_entries.getAll();
-        result.then(plant_entries => {
-            let data = JSON.parse(plant_entries);
-            const { order } = req.query;
-            if (!order) {
-                return res.status(400).json({ error: "Order parameter is required" });
-            }
-            const sortedData = sortData(data, order); // Ensure sortData is correctly implemented
-            res.json(sortedData);
-        }).catch(err => {
-            console.log('Error:', err);
-        });
-    } catch (err) {
-        console.error('Error:', err);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
+/**
+ * Sort data by date in ascending or descending order
+ * @param data
+ * @param order - date-asc or date-desc
+ * @returns {Array} - sorted data
+ */
 function sortData(data, order) {
     return data.sort((a, b) => {
         return (order === 'date-asc') ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
     });
 }
+
+/**
+ * Search data by username, plant name, location, description, colour, and sun exposure
+ * @param data
+ * @param query
+ * @returns {Array} - filtered data by keyword
+ */ 
 function searchData(data, query) {
     if (!query) return data;
 
@@ -171,7 +167,12 @@ function searchData(data, query) {
     });
 }
 
-
+/**
+ * Filter data by identification status
+ * @param data
+ * @param status - identification status (unknown, completed, in_progress)
+ * @returns {Array} - filtered data
+ */
 function filterDataByStatus(data, status) {
     if (status === "all") {
         return data;
