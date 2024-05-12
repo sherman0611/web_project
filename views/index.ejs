@@ -15,56 +15,27 @@
             <div class="main_section">
                 <div class="search-and-sort">
                     <div class="search">
-                        <input id="search-input" type="text" placeholder="Search user name, description, plant name...">
-                        <button id="search-button" onclick=fetchData()><img src="images/search_icon.png" alt="search button"/></button>
+                        <input id="search-input" type="text" placeholder="Search plants..">
+                        <button class="search_button"><img src="images/search_icon.png" alt="search button"/></button>
                     </div>
                     <div id="filter">
                         <label for="filter-select">Filter by Identification Status:</label>
-                        <select id="filter-select" onchange=fetchData()>
+                        <select id="filter-select" onchange=fetchFilteredAndSortedData()>
                             <option value="all">View All</option>
                             <option value="completed">Completed</option>
                             <option value="in_progress">In Progress</option>
                             <option value="unknown">Unknown</option>
                         </select>
+
                     </div>
                     <label for="sort-select">Sort by:</label>
-                    <select id="sort-select" onchange=fetchData()>
+                    <select id="sort-select" onchange=fetchFilteredAndSortedData()>
                         <option value="date-asc">Date Ascending</option>
                         <option value="date-desc">Date Descending</option>
                     </select>
                 </div>
 
-                <div class="plant-entries-container" id="plant-entries-container">
-                    <% if (data === null) { %>
-                        <p>Cannot connect to server</p>
-                    <% } else if (data.length === 0) { %>
-                        <p>No plant entries currently.</p>
-                    <% } else { %>
-                        <% data.forEach(plant_entry => { %>
-                            <div class="home link container">
-                                <a href="/view_plant/<%= plant_entry._id %>">
-                                    <% if(plant_entry.image) { %>
-                                        <% if(plant_entry.image.includes('public')) { %>
-                                            <img class="plant-image" src="<%= plant_entry.image.replace('public','') %>" alt="<%= plant_entry.plant_name %>">
-                                        <% } else { %>
-                                            <img class="plant-image" src="<%= plant_entry.image %>" alt="<%= plant_entry.plant_name %>">
-                                        <% } %>
-                                    <% } else if(plant_entry.image_url) { %>
-                                        <img class="plant-image" src="<%= plant_entry.image_url %>" alt="<%= plant_entry.plant_name %>">
-                                    <% } %>
-                                    <div class="plant-info">
-                                        <p><b><%= plant_entry.plant_name %> by <%= plant_entry.username %></b></p>
-                                        <% if (plant_entry.date) { %>
-                                            <p><%= plant_entry.date.substring(0,10) %>, <%= plant_entry.location %></p>
-                                        <% } else { %>
-                                            <p><%= plant_entry.location %></p>
-                                        <% } %>
-                                    </div>
-                                </a>
-                            </div>
-                        <% }); %>
-                    <% } %>
-                </div>
+                <div class="plant-entries-container" id="plant-entries-container"></div>
             </div>
         </div>
         <%- include('partials/footer.ejs')%>

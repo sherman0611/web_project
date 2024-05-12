@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const plant_entries = require("../controllers/plant_entries");
+const entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
 const multer = require("multer");
 
@@ -19,7 +19,7 @@ let upload = multer({ storage: storage });
 
 /* GET index page. */
 router.get('/', function(req, res, next) {
-    let result = plant_entries.getAll();
+    let result = entries.getAll();
     result.then(plant_entries => {
         let data = JSON.parse(plant_entries);
         res.render('index', { title: 'Plantgram', data: data });
@@ -28,6 +28,15 @@ router.get('/', function(req, res, next) {
         res.render('index', { title: 'Plantgram', data: null });
     });
 });
+
+router.get('/entries', function (req, res, next) {
+    entries.getAll().then(entries => {
+        return res.status(200).send(entries);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
+})
 
 router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
@@ -38,6 +47,17 @@ router.get('/create_plant', function(req, res, next) {
     res.render('create_plant', { title: 'Create plant entry' });
 });
 
+// router.post('/create_entry', function(req, res, next) {
+//     entries.create(req.body)
+//         .then(plant_entry => {
+//             res.status(200).send("Entry created!");
+//         })
+//         .catch(err => {
+//             console.log("cannot create post" + err);
+//             res.status(500).send("Cannot create post");
+//         });
+// });
+
 /* POST create plant entry form. */
 router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
     let plantData = req.body;
@@ -45,12 +65,16 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
     if (req.file && req.file.path) {
         filePath = req.file.path;
     }
-    let result = plant_entries.create(plantData, filePath);
+    let result = entries.create(plantData, filePath);
     result.then(plant_entry => {
         res.redirect('/')
     }).catch(err => {
         console.log("cannot create post");
     });
+});
+
+router.get('/pending_posts', function(req, res, next) {
+    res.render('pending_posts', { title: 'Pending posts' });
 });
 
 /* POST edit plant form */
@@ -60,7 +84,7 @@ router.post('/edit_plant/:id/update', async function (req, res, next) {
     //get the new data from the form
     let plantDataForm = req.body;
     //update the plant entry with the new data
-    let result = plant_entries.update(plant_id, plantDataForm);
+    let result = entries.update(plant_id, plantDataForm);
     //redirect to the view plant entry page
     result.then(plant_entry => {
         res.redirect('/view_plant/'+plant_id);
@@ -74,7 +98,7 @@ router.post('/edit_plant/:id/update', async function (req, res, next) {
 router.get('/view_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
 
-    let plantResult = plant_entries.getById(plant_id);
+    let plantResult = entries.getById(plant_id);
     let commentsResult = comments.getAllByPlantId(plant_id);
 
     Promise.all([plantResult, commentsResult])
@@ -116,7 +140,7 @@ router.post('/send_comment', function(req, res, next) {
  */
 router.get('/fetch-data', (req, res) => {
     try {
-        let result = plant_entries.getAll();
+        let result = entries.getAll();
         result.then(plant_entries => {
             let data = JSON.parse(plant_entries);
             const { order, status, query } = req.query;
@@ -189,7 +213,7 @@ router.get('/edit_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
     console.log("plant_id");
     console.log(plant_id);
-    let plantResult = plant_entries.getById(plant_id);
+    let plantResult = entries.getById(plant_id);
 
     Promise.all([plantResult])
         .then(results => {
