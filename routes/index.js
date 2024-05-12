@@ -1,16 +1,16 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const plant_entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
-var multer = require("multer");
+const multer = require("multer");
 
-var storage = multer.diskStorage({
-    destination :function(req, file, cb){
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
         cb(null, '../public/images/uploads/');
     },
     filename: function (req, file, cb) {
-        var original = file.originalname;
-        var file_extension = original.split(".");
+        const original = file.originalname;
+        const file_extension = original.split(".");
         filename = Date.now() + '.' + file_extension[file_extension.length - 1];
         cb(null, filename);
     }
@@ -54,6 +54,7 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
     });
 });
 
+/* POST edit plant form */
 router.post('/edit_plant/:id/update', async function (req, res, next) {
     //get plant id
     let plant_id = req.params.id;
@@ -63,7 +64,7 @@ router.post('/edit_plant/:id/update', async function (req, res, next) {
     let result = plant_entries.update(plant_id, plantDataForm);
     //redirect to the view plant entry page
     result.then(plant_entry => {
-        res.redirect('/');
+        res.redirect('/view_plant/'+plant_id);
     }).catch(err => {
         console.log("cannot update post");
     });

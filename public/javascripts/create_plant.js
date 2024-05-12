@@ -1,6 +1,11 @@
-var form;
 let displayCoords = document.getElementById("display_coordinates");
 
+window.onload = function () {
+    const usernameInput = document.getElementById("username");
+    usernameDefining();
+}
+
+// Get the current geolocation of the user
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, locationError);
@@ -9,6 +14,7 @@ function getLocation() {
     }
 }
 
+// If the user disabled the browser to read their location and other errors
 function locationError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
@@ -26,18 +32,19 @@ function locationError(error) {
     }
 }
 
+// Show the position read by geolocation services
 function showPosition(position) {
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-    let html_to_insert = '<p><label for="latitude">Latitude:</label>' +
-        '<input class="text_input_disabled" type="text" id="latitude" name="latitude" value='+lat+' readonly></p><br>' +
+    displayCoords.innerHTML = '<p><label for="latitude">Latitude:</label>' +
+        '<input class="text_input_disabled" type="text" id="latitude" name="latitude" value=' + lat + ' readonly></p><br>' +
         '<p><label for="longitude">Longitude:</label>' +
-        '<input class="text_input_disabled" type="text" id="longitude" name="longitude" value='+lon+' readonly></p>'
-
-    displayCoords.innerHTML = html_to_insert;
+        '<input class="text_input_disabled" type="text" id="longitude" name="longitude" value=' + lon + ' readonly></p>';
 }
 
+// Allow user to specify the date and time seen
+// If they are the same, allow them to click an appropriate checkbox
 function disableDateTime () {
     var checkBox = document.getElementById("toggleCheckbox");
     var datePicker = document.getElementById("date_seen");
@@ -62,27 +69,20 @@ function disableDateTime () {
     timePicker.readOnly = checkBox.checked;
 }
 
-function disableColourFlowers() {
-    var flowers_answer_no = document.getElementById("flowers_no");
-    var colour_flowers = document.getElementById("colour_flowers");
+// Enable or disable the field for flowers colour if the plant
+// has no flowers
+function toggleColourFlowers() {
+    let flowers_answer_yes = document.getElementById("flowers_yes");
+    let flowers_answer_no = document.getElementById("flowers_no");
+    let colour_flowers = document.getElementById("colour_flowers");
 
-    //if flowers radio button no is selected, disable the colour flowers input
+    // if flowers radio button no is selected, disable the colour flowers input
     if(flowers_answer_no.checked) {
         colour_flowers.disabled = true;
+        return;
     }
-}
-
-function enableColourFlowers() {
-    var flowers_answer_yes = document.getElementById("flowers_yes");
-    var colour_flowers = document.getElementById("colour_flowers");
-
-    //if flowers radio button yes is selected, enable the colour flowers input
+    // if flowers radio button yes is selected, enable the colour flowers input
     if(flowers_answer_yes.checked) {
         colour_flowers.disabled = false;
     }
-}
-
-window.onload = function () {
-    const usernameInput = document.getElementById("username");
-    usernameDefining();
 }

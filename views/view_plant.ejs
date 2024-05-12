@@ -38,7 +38,7 @@
                                 <h2>Submitted by <span id="plant_author"><%= plant_entry.username %></span></h2>
                                 <%if(plant_entry.time_post) { %>
                                     <h4>Time posted: </h4>
-                                    <p><%= plant_entry.time_post %></p>
+                                    <p><%= plant_entry.time_post.substring(0, 5) %></p>
                                 <%}%>
 
                                 <%if(plant_entry.date_post) { %>

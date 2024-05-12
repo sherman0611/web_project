@@ -1,3 +1,8 @@
+// Alert if indexedDB is not of use
+if (!window.indexedDB) {
+    alert("Sorry! Your browser does not support IndexedDB");
+}
+
 // Register service worker to control making site work offline
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', {scope: '/'})
@@ -7,6 +12,7 @@ if ('serviceWorker' in navigator) {
         .catch(function (err) {
             console.log('Service Worker registration failed: ', err);
         });
+    // TODO? from the lectures
     // if (registration.periodicSync) {
     //     // Periodic Background Sync is supported.
     // } else {
@@ -37,17 +43,4 @@ if ("Notification" in window) {
             }
         });
     }
-}
-
-function set_same_height(e1, e2) {
-    let height1 = e1.offsetHeight
-    let height2 = e2.offsetHeight
-    let max_height = Math.max(height1, height2)
-
-    e1.style.height = `${max_height}px`
-    e2.style.height = `${max_height}px`
-}
-
-if (!window.indexedDB) {
-    alert("Sorry! Your browser does not support IndexedDB");
 }

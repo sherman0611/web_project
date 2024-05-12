@@ -1,31 +1,35 @@
 let plant_id = null;
 let plant_name = null;
-
 let map;
 
 window.onload = function () {
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
-    console.log(plant_name)
 
+    // Chat
     socket.emit('join', plant_id);
 
-    // called when a message is received
+    // Called when a message is received
     socket.on('comment', function (room, data) {
         writeNewComment(data);
     });
 
+    // DBPedia
     if(document.getElementById("identification_status").textContent.includes("Completed")){
-
         fetchDBPedia();
     }
+    // Ownership, username
     identifyAuthor();
     usernameDefining();
+    // Chat functions
     assignCommentAuthor();
+    disableChat();
     scrollToBottomChat();
+    // Map
     initMap();
 }
 
+// Initialising the map element if a given plant was using the coordinates reading
 async function initMap() {
 
     const mapElement = document.getElementById('map');
@@ -43,16 +47,10 @@ async function initMap() {
             center: location,
             mapId: "DEMO_MAP_ID",
         });
-
-        const marker = new AdvancedMarkerElement({
-            map: map,
-            position: location,
-            title: "Uluru",
-        });
     }
 }
 
-
+// Fetch DBPedia data and display if found
 function fetchDBPedia() {
     let plant = plant_name;
     //lowercase all word
@@ -61,10 +59,8 @@ function fetchDBPedia() {
     plant = plant.charAt(0).toUpperCase() + plant.slice(1);
     //replace all spaces with underscores for the dbpedia query
     plant = plant.replace(/ /g, '_');
-    console.log("MADE IT HERE")
     //replace all spaces with underscores for the dbpedia query
     const resource = `http://dbpedia.org/resource/${plant}`;
-    console.log(resource)
     const endpointUrl = 'https://dbpedia.org/sparql';
     const sparqlQuery = `
                  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -79,6 +75,7 @@ function fetchDBPedia() {
     const encodedQuery = encodeURIComponent(sparqlQuery);
     const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
 
+    // fetching information
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -87,25 +84,21 @@ function fetchDBPedia() {
             let plantInfoElement = document.getElementById('abstract_dbp');
             let labelElement = document.getElementById('title_dbp');
             let linkElement = document.getElementById('link_dbp');
-            console.log(bindings)
+
+            document.getElementById("plant_infoDbp").classList.remove("hidden")
             if (bindings.length > 0) {
-                document.getElementById("plant_infoDbp").classList.remove("hidden")
-                dbpTitle.textContent = 'DBpedia Information';
-
+                // if information found
+                dbpTitle.textContent = 'DBPedia Information';
                 labelElement.textContent = bindings[0].label.value;
-
                 plantInfoElement.innerHTML = data.results.bindings[0].abstract.value;
-
-                let linkElement = document.getElementById('link_dbp');
                 linkElement.textContent = 'More info';
                 linkElement.href = resource;
             } else {
-                document.getElementById("plant_infoDbp").classList.remove("hidden")
+                // if plant not found
                 let iconHTML = '<img class="announcement-icon" src="/images/announcement.png" alt="Announcement icon">'
                 document.getElementById("plant_infoDbp").insertAdjacentHTML("afterbegin", iconHTML)
                 dbpTitle.textContent = 'No match for DBpedia entries';
                 plantInfoElement.textContent = "The name you provided is not matching any of the DBPedia plants.";
-                console.log('No results found');
             }
         })
         .catch(error =>
