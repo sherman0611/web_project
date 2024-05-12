@@ -15,14 +15,16 @@
 }
 
 input::file-selector-button {
-    display: flex;
     background-color: #758874;
-    margin: auto;
     color: #E4C9AC;
     transition-duration: 0.4s;
     border-radius: 10px;
     border: 0 hidden;
     padding: 7px;
+}
+
+input[type="file"]:disabled {
+    display: none;
 }
 
 /* LOCATION */

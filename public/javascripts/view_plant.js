@@ -47,6 +47,11 @@ async function initMap() {
             center: location,
             mapId: "DEMO_MAP_ID",
         });
+        const marker = new AdvancedMarkerElement({
+            map: map,
+            position: location,
+            title: "Marker",
+        });
     }
 }
 

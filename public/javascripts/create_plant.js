@@ -3,6 +3,20 @@ let displayCoords = document.getElementById("display_coordinates");
 window.onload = function () {
     const usernameInput = document.getElementById("username");
     usernameDefining();
+    const image_file = document.getElementById('image_file')
+    const image_url = document.getElementById('image_url')
+    image_file.addEventListener("change", () => {
+        image_url.disabled = image_file.files.length === 1;
+    });
+    image_url.addEventListener("input", () => {
+        console.log(image_url.value.length)
+        image_file.disabled = image_url.value.length > 1;
+        if(image_url.value.length > 1){
+            image_file.classList.add("disabled")
+        } else {
+            image_file.classList.remove("disabled")
+        }
+    });
 }
 
 // Get the current geolocation of the user
