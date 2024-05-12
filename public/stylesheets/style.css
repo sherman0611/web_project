@@ -1,6 +1,4 @@
 body {
-  /*padding-left: calc(230px + 15px);*/
-  /*padding-right: 15px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #E4C9AC;
   display: flex;
@@ -81,12 +79,8 @@ select {
 /*HEADER*/
 
 .header {
-  /*position: fixed;*/
-  /*top: 0;*/
-  /*left: 0;*/
   width: 230px;
   min-width: 230px;
-  /*height: 100%;*/
   background-color: #758874;
   padding: 20px;
   box-sizing: border-box;
