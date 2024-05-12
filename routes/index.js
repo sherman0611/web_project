@@ -1,16 +1,16 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const plant_entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
-var multer = require("multer");
+const multer = require("multer");
 
-var storage = multer.diskStorage({
-    destination :function(req, file, cb){
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
         cb(null, '../public/images/uploads/');
     },
     filename: function (req, file, cb) {
-        var original = file.originalname;
-        var file_extension = original.split(".");
+        const original = file.originalname;
+        const file_extension = original.split(".");
         filename = Date.now() + '.' + file_extension[file_extension.length - 1];
         cb(null, filename);
     }
@@ -54,16 +54,22 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
     });
 });
 
-router.post('/edit_plant', function(req, res, next) {
-    let updateData = req.body;
-
-    let result = plant_entries.update(updateData);
+/* POST edit plant form */
+router.post('/edit_plant/:id/update', async function (req, res, next) {
+    //get plant id
+    let plant_id = req.params.id;
+    //get the new data from the form
+    let plantDataForm = req.body;
+    //update the plant entry with the new data
+    let result = plant_entries.update(plant_id, plantDataForm);
+    //redirect to the view plant entry page
     result.then(plant_entry => {
-        res.redirect('/view_plant/:id');
+        res.redirect('/view_plant/'+plant_id);
     }).catch(err => {
-        console.log("cannot update");
+        console.log("cannot update post");
     });
 });
+
 
 /* GET plant entry page. */
 router.get('/view_plant/:id', function(req, res, next) {
@@ -181,11 +187,15 @@ function filterDataByStatus(data, status) {
 
 router.get('/edit_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
-
+    console.log("plant_id");
+    console.log(plant_id);
     let plantResult = plant_entries.getById(plant_id);
+
     Promise.all([plantResult])
         .then(results => {
             let plantData = JSON.parse(results[0]);
+            console.log("plantData");
+            console.log(plantData);
             res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
         })
         .catch(errors => {

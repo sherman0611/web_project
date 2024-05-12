@@ -1,10 +1,14 @@
 let input = document.getElementById('search-input');
+
+// Search on enter
 input.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
         document.getElementById("search-button").click();
     }
 });
+
+// TODO comment
 function fetchData() {
     console.log('Fetching data...');
     const sortOrder = document.getElementById('sort-select').value;
@@ -20,6 +24,8 @@ function fetchData() {
         .catch(error => console.error('Error:', error));
 }
 
+
+// TODO comment
 function updateDisplay(data) {
     const container = document.getElementById('plant-entries-container');
     container.innerHTML = '';

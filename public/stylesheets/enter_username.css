@@ -1,0 +1,12 @@
+.main_section {
+    width: 50%;
+    margin: 2% auto;
+}
+
+@media (max-width: 800px) {
+    .main_section {
+        width: 95%;
+        padding: 0;
+        margin: 3% auto;
+    }
+}

@@ -1,5 +1,6 @@
 const socket = io();
 
+// Fired on a comment being sent
 function sendComment(event) {
     event.preventDefault();
 
@@ -22,12 +23,14 @@ function sendComment(event) {
     });
 }
 
+// As the page loads, scroll to the latest messages
 function scrollToBottomChat(){
     if(document.getElementById("comments_container")){
         document.getElementById("comments_container").scrollTo(0, (document.getElementById("comments_container").scrollHeight))
     }
 }
 
+// Correctly assign who is conversing and authorship for the comments
 function assignCommentAuthor(){
     let curUser = getUsername()
     let comments = document.getElementsByClassName("comment-container")
@@ -35,15 +38,19 @@ function assignCommentAuthor(){
         if(typeof comments[comment] !== "object"){
             break;
         }
+
         if(comments[comment].getElementsByClassName("comment-author")[0].value === curUser ){
+            // If it is the current user whose message is being loaded,
+            // show to the right
             comments[comment].classList.add("right")
         } else {
+            // If it is some other user, show to the left
             comments[comment].classList.add("left")
         }
     }
 }
 
-
+// Display a new comment in the comment box
 function writeNewComment(data) {
     let commentsContainer = document.getElementById('comments_container');
 
@@ -64,21 +71,26 @@ function writeNewComment(data) {
     dateParagraph.style.fontSize = "0.6rem";
     dateParagraph.textContent = 'Sent on ' + data.date.substring(0, 10);
 
+    // Add elements of a single message
     commentContainer.appendChild(usernameParagraph);
     commentContainer.appendChild(commentParagraph);
     commentContainer.appendChild(dateParagraph);
-
+    // Add a message to a pool of messages
     commentsContainer.appendChild(commentContainer);
 
+    // Clear out the message field
     document.getElementById('comment_text').value = '';
     scrollToBottomChat()
 }
 
+// Disable the chat function if the identification is completed
 function disableChat(){
     let identification_status = document.getElementById("identification_status").textContent
     if(identification_status.includes("Completed")){
         let chatTextBox = document.getElementById("comment_text")
         chatTextBox.setAttribute("disabled", "true")
         chatTextBox.placeholder = "Chat is now disabled!"
+
+        document.getElementById('username-container').style.display = 'none';
     }
 }

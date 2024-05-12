@@ -7,7 +7,7 @@
   width: fit-content;
 }
 
-.container, .container:hover {
+.container {
   width: 100%;
   max-width: unset;
   flex-direction: column;
@@ -16,8 +16,7 @@
   background-color: transparent;
 }
 
-.container.bigger-column, .container.smaller-column, .container.equal-column,
-.container.bigger-column:hover, .container.smaller-column:hover, .container.equal-column:hover{
+.container.bigger-column, .container.smaller-column, .container.equal-column {
   background-color: antiquewhite;
 }
 

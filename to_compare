@@ -1,4 +1,4 @@
-const CACHE_NAME = "Plantgram v1";
+const CACHE_NAME = 'Plantgram v1';
 
 // Use the install event to pre-cache all initial resources.
 self.addEventListener('install', event => {
@@ -11,16 +11,13 @@ self.addEventListener('install', event => {
                 '/',
                 '/create_plant',
                 '/enter_username',
-                '/images/announcement.png',
                 '/images/arrow_left_icon.png',
-                '/images/completed.png',
                 '/images/install_icon.png',
                 '/images/search_icon.png',
                 '/images/white_arrow.png',
                 '/manifest.json',
                 '/javascripts/comment_utils.js',
                 '/javascripts/create_plant.js',
-                '/javascripts/edit_plant.js',
                 '/javascripts/enter_username.js',
                 '/javascripts/idb_utils.js',
                 '/javascripts/index.js',
@@ -28,9 +25,9 @@ self.addEventListener('install', event => {
                 '/javascripts/username_utils.js',
                 '/javascripts/view_plant.js',
                 '/stylesheets/create_plant.css',
-                '/stylesheets/enter_username.css',
                 '/stylesheets/index.css',
                 '/stylesheets/style.css',
+                '/stylesheets/view_plant.css',
             ]);
             console.log('Service Worker: App Shell Cached');
         }

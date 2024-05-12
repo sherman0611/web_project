@@ -27,7 +27,7 @@ footer {
   min-width: min-content;
 }
 
-.two-columns.container, .two-columns.container:hover{
+.two-columns.container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -39,6 +39,7 @@ footer {
   height: fit-content;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 #overlay {
@@ -144,10 +145,6 @@ select {
   transition-duration: 0.4s;
 }
 
-.container:hover{
-  background-color: #AA7A54;
-}
-
 .container:last-child {
   margin-right: 0; /* Remove margin from last container */
 }
@@ -208,7 +205,7 @@ input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, inpu
   border-radius: 20px;
   border: 0 hidden;
   padding: 7px;
-  margin: 1% auto auto;
+  margin: 1% auto;
 }
 
 a .form-button {
@@ -300,6 +297,8 @@ a .form-button {
   }
 
   .main_section {
-    width: fit-content;
+    width: 100%;
+    padding: 0;
+    margin: 3% auto;
   }
 }

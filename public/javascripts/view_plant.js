@@ -1,27 +1,35 @@
 let plant_id = null;
 let plant_name = null;
-
 let map;
 
 window.onload = function () {
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
-    console.log(plant_name)
 
+    // Chat
     socket.emit('join', plant_id);
 
-    // called when a message is received
+    // Called when a message is received
     socket.on('comment', function (room, data) {
         writeNewComment(data);
     });
-    fetchDBPedia();
+
+    // DBPedia
+    if(document.getElementById("identification_status").textContent.includes("Completed")){
+        fetchDBPedia();
+    }
+    // Ownership, username
     identifyAuthor();
     usernameDefining();
+    // Chat functions
     assignCommentAuthor();
+    disableChat();
     scrollToBottomChat();
+    // Map
     initMap();
 }
 
+// Initialising the map element if a given plant was using the coordinates reading
 async function initMap() {
 
     const mapElement = document.getElementById('map');
@@ -39,54 +47,60 @@ async function initMap() {
             center: location,
             mapId: "DEMO_MAP_ID",
         });
-
-        const marker = new AdvancedMarkerElement({
-            map: map,
-            position: location,
-            title: "Uluru",
-        });
     }
 }
 
+// Fetch DBPedia data and display if found
 function fetchDBPedia() {
-    const resource = `http://dbpedia.org/resource/${plant_name}`;
+    let plant = plant_name;
+    //lowercase all word
+    plant = plant.toLowerCase();
+    //uppercase the first letter of the first word only
+    plant = plant.charAt(0).toUpperCase() + plant.slice(1);
+    //replace all spaces with underscores for the dbpedia query
+    plant = plant.replace(/ /g, '_');
+    //replace all spaces with underscores for the dbpedia query
+    const resource = `http://dbpedia.org/resource/${plant}`;
     const endpointUrl = 'https://dbpedia.org/sparql';
     const sparqlQuery = `
                  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                  PREFIX dbo: <http://dbpedia.org/ontology/>
-                 SELECT ?label ?abstract ?link
+                 SELECT ?label ?abstract
                  WHERE {
                   <${resource}> dbo:abstract ?abstract .
                   <${resource}> rdfs:label ?label .
-                  <${resource}> dbo:wikiPageID ?link .
                  FILTER (langMatches(lang(?abstract), "EN"))
             }`;
 
     const encodedQuery = encodeURIComponent(sparqlQuery);
     const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
 
+    // fetching information
     fetch(url)
         .then(response => response.json())
         .then(data => {
             let bindings = data.results.bindings;
-            let result = JSON.stringify(bindings);
             let dbpTitle = document.getElementById('db_page_title');
-            dbpTitle.textContent = 'DBpedia Information';
-
-            let label = bindings[0].label.value;
-            let labelElement = document.getElementById('title_dbp')
-            labelElement.textContent = label;
-
-
-            let abstract = data.results.bindings[0].abstract.value;
             let plantInfoElement = document.getElementById('abstract_dbp');
-            plantInfoElement.innerHTML = abstract;
-
-
-            let link = bindings[0].link.value;
+            let labelElement = document.getElementById('title_dbp');
             let linkElement = document.getElementById('link_dbp');
-            linkElement.textContent = 'More info';
-            linkElement.href = `http://dbpedia.org/page/${plant_name}`;
+
+            document.getElementById("plant_infoDbp").classList.remove("hidden")
+            if (bindings.length > 0) {
+                // if information found
+                dbpTitle.textContent = 'DBPedia Information';
+                labelElement.textContent = bindings[0].label.value;
+                plantInfoElement.innerHTML = data.results.bindings[0].abstract.value;
+                linkElement.textContent = 'More info';
+                linkElement.href = resource;
+            } else {
+                // if plant not found
+                let iconHTML = '<img class="announcement-icon" src="/images/announcement.png" alt="Announcement icon">'
+                document.getElementById("plant_infoDbp").insertAdjacentHTML("afterbegin", iconHTML)
+                dbpTitle.textContent = 'No match for DBpedia entries';
+                plantInfoElement.textContent = "The name you provided is not matching any of the DBPedia plants.";
+            }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error =>
+            console.error('Error:', error));
 }
