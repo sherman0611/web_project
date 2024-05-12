@@ -1,6 +1,9 @@
 const commentModel = require('../models/comments');
 
-// Function to create new plant entries
+// Create a new comment
+// Input:  commentData
+// Return: JSON object on success
+//         null on failure
 exports.create = function (commentData) {
     let comment = new commentModel({
         plant_id: commentData.plant_id,
@@ -16,6 +19,10 @@ exports.create = function (commentData) {
     })
 }
 
+// Get all comments from a given plant
+// Input:  plant_id
+// Return: JSON object of all comments on success
+//         null on failure
 exports.getAllByPlantId = function (plant_id) {
     return commentModel.find({ plant_id: plant_id }).then(comments => {
         return JSON.stringify(comments);

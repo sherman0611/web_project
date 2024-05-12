@@ -7,6 +7,11 @@ if ('serviceWorker' in navigator) {
         .catch(function (err) {
             console.log('Service Worker registration failed: ', err);
         });
+    // if (registration.periodicSync) {
+    //     // Periodic Background Sync is supported.
+    // } else {
+    //     // Periodic Background Sync isn't supported. }
+    // });
 }
 
 // Check if the browser supports the Notification API
@@ -41,4 +46,8 @@ function set_same_height(e1, e2) {
 
     e1.style.height = `${max_height}px`
     e2.style.height = `${max_height}px`
+}
+
+if (!window.indexedDB) {
+    alert("Sorry! Your browser does not support IndexedDB");
 }

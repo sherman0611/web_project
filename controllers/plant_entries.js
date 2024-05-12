@@ -1,6 +1,10 @@
 const plantEntryModel = require('../models/plant_entries');
 
 // Function to create new plant entries
+// Input:  plantData
+//         filePath - for saving the image
+// Return: JSON object on success
+//         null on failure
 exports.create = function (plantData, filePath) {
     let plant_entry = new plantEntryModel({
         username: plantData.username,
