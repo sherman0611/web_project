@@ -1,3 +1,4 @@
+// Keypress event listener for the search input field
 let input = document.getElementById('search-input');
 
 // Search on enter
@@ -8,7 +9,10 @@ input.addEventListener("keypress", function(event) {
     }
 });
 
-// TODO comment
+/**
+ * Fetch data from the server based on the selected sort order, filter status, and search query
+ * Then update the display with the fetched data
+ */
 function fetchData() {
     console.log('Fetching data...');
     const sortOrder = document.getElementById('sort-select').value;
@@ -24,8 +28,12 @@ function fetchData() {
         .catch(error => console.error('Error:', error));
 }
 
-
-// TODO comment
+/**
+ * Update the display with the fetched data
+ * Display plant image, username, date, and location in a card format
+ * @param data
+ * @returns {void}
+ */
 function updateDisplay(data) {
     const container = document.getElementById('plant-entries-container');
     container.innerHTML = '';
