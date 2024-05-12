@@ -12,13 +12,14 @@
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
-                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
+                <button class="arrow-btn" onclick="goToReferrer()">
+                    <img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to the previous page">
+                </button>
                 <h2 class="create_entry_title">New plant sightings</h2>
+
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div id="username-container" class="add_plant_entry_container">
                         <label for="username">Your username:</label>
-<!--                        <input class="text-input" type="text" id="username" placeholder="Enter your username..." readonly>-->
-<!--                        <a class="form-button" href="/enter_username">Change your username</a>-->
                     </div>
                     <div class="add_plant_entry_container">
                         <span class="required_text"><span class="required"> * </span> Required field</span>
@@ -26,32 +27,36 @@
                         <p>
                             <label for="description">Plant description <span class="required">*</span></label>
                             <br>
-                            <textarea class="text_box" name="description" rows="4" cols="50" placeholder="Describe your plant here..."></textarea>
+                            <textarea class="text_box" name="description" rows="4" cols="50"
+                                      placeholder="Describe your plant here..." required></textarea>
                         </p>
                         <p>
-                            <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()"> Are you posting a plant you have just seen?</label>
+                            <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()">
+                                Are you posting a plant you have just seen?</label>
                             <br>
                         </p>
                         <p>
                             <label for="date_seen">Date Spotted at <span class="required">*</span></label>
                             <br>
-                            <input type="date" id="date_seen" name="date_seen">
+                            <input type="date" id="date_seen" name="date_seen" required>
                         </p>
                         <p>
                             <label for="time_seen">Time Spotted at <span class="required">*</span></label>
                             <br>
-                            <input type="time" id="time_seen" name="time_seen"><br>
+                            <input type="time" id="time_seen" name="time_seen" required><br>
                         </p>
 
                         <p>
                             <label for="location">Location found <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="location" name="location" placeholder="Location...">
+                            <input class="text-input" type="text" id="location" name="location"
+                                   placeholder="Location..." required>
                         </p>
                         <p>
                             <label for="coordinates">Coordinates of the finding (optional)</label>
                             <br>
-                            <button class="submitLocation" type="button" onclick="getLocation()">Get Current Location</button>
+                            <button class="submitLocation" type="button"
+                                    onclick="getLocation()">Get Current Location</button>
                             <div id="display_coordinates"></div>
                         </p>
                     </div>
@@ -63,32 +68,32 @@
                         <p>
                             <label for="plant_name">Plant name <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name" placeholder="Name..." required>
+                            <input class="text-input" type="text" id="plant_name" name="plant_name"
+                                   placeholder="Name..." required>
                         </p>
                         <p>
                             <label for="plant_certainty">Identification status <span class="required">*</span> </label>
                             <br>
                             <label for="plant_certainty_status">
-                                <select name="identification_status">
+                                <select name="identification_status" required>
                                     <option value="unknown">Unknown</option>
                                     <option value="in_progress">In Progress</option>
                                 </select>
                             </label>
                         </p>
-                        <p>
-                            <label for="plant_family">Upload Image <span class="required">*</span> </label>
-                            <br>
-                            <br>
+                        <div><p>Upload image or enter image URL <span class="required">*</span></p>
+<!--                            <label for="plant_family">Upload Image</label>-->
+<!--                            <br>-->
+<!--                            <br>-->
                             <label for="image_file">Image file</label>
                             <br>
                             <input type="file" id="image_file" name="image_file" accept="image/*">
-                        </p>
-                        <p>Or</p>
-                        <p>
+                            <br>
+                            <br>
                             <label for="image_url">Enter image URL</label>
                             <br>
                             <input class="text-input" type="url" id="image_url" name="image_url">
-                        </p>
+                        </div>
                     </div>
                     <br>
                     <div class="add_plant_entry_container">
@@ -97,20 +102,22 @@
                         <p>
                             <label for="height">Plant height(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="height" name="height" placeholder="0">
+                            <input class="text-input" type="text" id="height" name="height" placeholder="0" required>
                         </p>
                         <p>
                             <label for="spread">Plant spread(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="spread" name="spread" placeholder="0">
+                            <input class="text-input" type="text" id="spread" name="spread" placeholder="0" required>
                         </p>
                         <h4>Other information</h4>
                         <p>
                             <label for="flowers">Does the plant have flowers? <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="flowers_yes" name="flowers" value="yes" onchange="toggleColourFlowers()">
+                            <input type="radio" id="flowers_yes" name="flowers" value="yes"
+                                   onchange="toggleColourFlowers()" required>
                             <label for="flowers_yes">Yes</label>
-                            <input type="radio" id="flowers_no" name="flowers" value="no" onchange="toggleColourFlowers()">
+                            <input type="radio" id="flowers_no" name="flowers" value="no"
+                                   onchange="toggleColourFlowers()">
                             <label for="flowers_no">No</label>
                         </p>
                         <p>
@@ -121,23 +128,25 @@
                         <p>
                             <label for="leaves">Does the plant have leaves? <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="leaves_yes" name="leaves" value="yes">
+                            <input type="radio" id="leaves_yes" name="leaves" value="yes" required>
                             <label for="leaves_yes">Yes</label>
                             <input type="radio" id="leaves_no" name="leaves" value="no">
                             <label for="leaves_no">No</label>
                         </p>
                         <p>
-                            <label for="fruits_seeds">Does the plant have fruits or seeds? <span class="required">*</span> </label>
+                            <label for="fruits_seeds">Does the plant have fruits or seeds?
+                                <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="fruits_seeds_yes" name="fruits_seeds" value="yes">
+                            <input type="radio" id="fruits_seeds_yes" name="fruits_seeds" value="yes" required>
                             <label for="fruits_seeds_yes">Yes</label>
                             <input type="radio" id="fruits_seeds_no" name="fruits_seeds" value="no">
                             <label for="fruits_seeds_no">No</label>
                         </p>
                         <p>
-                            <label for="sun_exposure">What is the sun exposure in that area? <span class="required">*</span> </label>
+                            <label for="sun_exposure">What is the sun exposure in that area?
+                                <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="full_sun" name="sun_exposure" value="full_sun">
+                            <input type="radio" id="full_sun" name="sun_exposure" value="full_sun" required>
                             <label for="full_sun">Full sun</label>
                             <input type="radio" id="partial_shade" name="sun_exposure" value="partial_shade">
                             <label for="partial_shade">Partial shade</label>

@@ -48,7 +48,10 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
     }
     let result = plant_entries.create(plantData, filePath);
     result.then(plant_entry => {
-        res.redirect('/');
+        console.log(plantData)
+        console.log(plantData.plant_id)
+        // res.redirect('/view_plant/'+plan);
+        res.redirect('/')
     }).catch(err => {
         console.log("cannot create post");
     });
