@@ -20,7 +20,7 @@
                     </div>
                     <div id="filter">
                         <label for="filter-select">Filter by Identification Status:</label>
-                        <select id="filter-select" onchange=fetchFilteredAndSortedData()>
+                        <select id="filter-select" onchange=fetchData()>
                             <option value="all">View All</option>
                             <option value="completed">Completed</option>
                             <option value="in_progress">In Progress</option>
@@ -29,7 +29,7 @@
 
                     </div>
                     <label for="sort-select">Sort by:</label>
-                    <select id="sort-select" onchange=fetchFilteredAndSortedData()>
+                    <select id="sort-select" onchange=fetchData()>
                         <option value="date-asc">Date Ascending</option>
                         <option value="date-desc">Date Descending</option>
                     </select>

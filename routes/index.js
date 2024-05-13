@@ -19,14 +19,7 @@ let upload = multer({ storage: storage });
 
 /* GET index page. */
 router.get('/', function(req, res, next) {
-    let result = entries.getAll();
-    result.then(plant_entries => {
-        let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data });
-    }).catch(err => {
-        console.log("Error retrieving plant entries: ", err);
-        res.render('index', { title: 'Plantgram', data: null });
-    });
+    res.render('index', { title: 'Home page' });
 });
 
 router.get('/entries', function (req, res, next) {
