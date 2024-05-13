@@ -1,8 +1,4 @@
-function uploadPosts() {
-    navigator.serviceWorker.controller.postMessage({ action: 'registerSync' });
-}
-
-window.onload = function () {
+function updatePosts() {
     openSyncEntriesIDB().then((db) => {
         setTimeout(() => { // Adding delay here
             getAllSyncEntries(db).then((entries) => {
@@ -12,4 +8,18 @@ window.onload = function () {
             });
         }, 100);
     });
+}
+
+function uploadPosts() {
+    navigator.serviceWorker.ready.then((sw) => {
+        sw.sync.register("sync-entry").then(() => {
+            const container = document.getElementById("plant-entries-container");
+            container.innerHTML = "";
+            updatePosts();
+        });
+    })
+}
+
+window.onload = function () {
+    updatePosts();
 }

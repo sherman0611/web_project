@@ -6,7 +6,7 @@ const plantEntryModel = require('../models/plant_entries');
 // Return: JSON object on success
 //         null on failure
 exports.create = function (plantData, filePath) {
-    let plant_entry = new plantEntryModel({
+    let entry = new plantEntryModel({
         username: plantData.username,
         plant_name: plantData.plant_name,
         image: filePath,
@@ -18,18 +18,16 @@ exports.create = function (plantData, filePath) {
         height: plantData.height,
         spread: plantData.spread,
         flowers: plantData.flowers,
-        colour_flowers: plantData.colour_flowers,
+        colour: plantData.colour,
         leaves: plantData.leaves,
         fruits_seeds: plantData.fruits_seeds,
         sun_exposure: plantData.sun_exposure,
-        identification_status: plantData.identification_status,
-        date_post: plantData.date_post,
+        certainty: plantData.certainty,
         date_seen: plantData.date_seen,
-        time_post: plantData.time_post,
         time_seen: plantData.time_seen
     });
 
-    return plant_entry.save().then(plantEntry => {
+    return entry.save().then(plantEntry => {
         return JSON.stringify(plantEntry);
     }).catch(err => {
         console.log(err);
@@ -38,8 +36,8 @@ exports.create = function (plantData, filePath) {
 }
 
 exports.getAll = function () {
-    return plantEntryModel.find({}).then(plantEntry => {
-        return JSON.stringify(plantEntry);
+    return plantEntryModel.find({}).then(entry => {
+        return JSON.stringify(entry);
     }).catch(err => {
         console.log(err);
         return null;
@@ -48,14 +46,13 @@ exports.getAll = function () {
 
 // Function to get plant entry by ID
 exports.getById = function (plant_id) {
-    return plantEntryModel.findById(plant_id).then(plant => {
-        return JSON.stringify(plant);
+    return plantEntryModel.findById(plant_id).then(entry => {
+        return JSON.stringify(entry);
     }).catch(err => {
         console.log(err);
         return null;
     });
 };
-
 
 exports.update = async (plantId, plantData) => {
     try {
@@ -72,12 +69,12 @@ exports.update = async (plantId, plantData) => {
         });
 
         if (!updatedPlant) {
-            throw new Error('Plant not found');
+            alert('Plant not found');
         }
 
         return { success: true, data: updatedPlant };
     } catch (error) {
         console.error('Error updating plant:', error);
-        throw new Error('Failed to update plant: ' + error.message);
+        alert('Failed to update plant');
     }
 };

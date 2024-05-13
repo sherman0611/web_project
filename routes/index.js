@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/entries', function (req, res, next) {
     entries.getAll().then(entries => {
-        return res.status(200).send(entries);
+        return res.send(entries);
     }).catch(err => {
         console.log(err);
         res.status(500).send(err);
@@ -35,40 +35,41 @@ router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
 });
 
+router.get('/pending_posts', function(req, res, next) {
+    res.render('pending_posts', { title: 'Pending posts' });
+});
+
 /* GET create plant entry page. */
 router.get('/create_plant', function(req, res, next) {
     res.render('create_plant', { title: 'Create plant entry' });
 });
 
-// router.post('/create_entry', function(req, res, next) {
-//     entries.create(req.body)
-//         .then(plant_entry => {
-//             res.status(200).send("Entry created!");
-//         })
-//         .catch(err => {
-//             console.log("cannot create post" + err);
-//             res.status(500).send("Cannot create post");
-//         });
-// });
+/* POST create plant entry form. */
+router.post('/create_entry', function(req, res, next) {
+    entries.create(req.body)
+        .then(plant_entry => {
+            res.status(200).send("Entry created!");
+        })
+        .catch(err => {
+            console.log("cannot create post" + err);
+            res.status(500).send("Cannot create post");
+        });
+});
 
 /* POST create plant entry form. */
-router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
-    let plantData = req.body;
-    let filePath = null;
-    if (req.file && req.file.path) {
-        filePath = req.file.path;
-    }
-    let result = entries.create(plantData, filePath);
-    result.then(plant_entry => {
-        res.redirect('/')
-    }).catch(err => {
-        console.log("cannot create post");
-    });
-});
-
-router.get('/pending_posts', function(req, res, next) {
-    res.render('pending_posts', { title: 'Pending posts' });
-});
+// router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
+//     let plantData = req.body;
+//     let filePath = null;
+//     if (req.file && req.file.path) {
+//         filePath = req.file.path;
+//     }
+//     let result = entries.create(plantData, filePath);
+//     result.then(plant_entry => {
+//         res.redirect('/')
+//     }).catch(err => {
+//         console.log("cannot create post");
+//     });
+// });
 
 /* POST edit plant form */
 router.post('/edit_plant/:id/update', async function (req, res, next) {

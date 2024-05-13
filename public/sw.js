@@ -71,8 +71,8 @@ self.addEventListener('fetch', function(event) {
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-entry') {
         console.log('Service Worker: Syncing new entries');
-        openSyncEntriesIDB().then((syncPostDB) => {
-            getAllSyncEntries(syncPostDB).then((syncEntries) => {
+        openSyncEntriesIDB().then((syncEntryDB) => {
+            getAllSyncEntries(syncEntryDB).then((syncEntries) => {
                 for (const syncEntry of syncEntries) {
                     console.log('Service Worker: Syncing new entry');
 
@@ -84,8 +84,7 @@ self.addEventListener('sync', event => {
                         },
                     }).then(() => {
                         console.log('Service Worker: Syncing new entry done');
-                        deleteSyncEntryFromIDB(syncPostDB,syncEntry.id);
-                        // Send a notification
+                        deleteSyncEntryFromIDB(syncEntryDB,syncEntry.id);
                         self.registration.showNotification('Plantgram', {
                             body: 'Entry synced successfully!',
                         });
@@ -98,17 +97,5 @@ self.addEventListener('sync', event => {
                 }
             });
         });
-    }
-});
-
-self.addEventListener('message', event => {
-    if (event.data && event.data.action === 'registerSync') {
-        self.registration.sync.register('sync-entry')
-            .then(() => {
-                console.log('Sync event registered');
-            })
-            .catch((err) => {
-                console.error('Sync event registration failed:', err);
-            });
     }
 });

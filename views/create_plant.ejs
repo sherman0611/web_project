@@ -28,7 +28,7 @@
                             <label for="description">Plant description <span class="required">*</span></label>
                             <br>
                             <textarea class="text_box" name="description" rows="4" cols="50"
-                                      placeholder="Describe your plant here..." required></textarea>
+                                      placeholder="Describe your plant here..."></textarea>
                         </p>
                         <p>
                             <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()">
@@ -38,19 +38,19 @@
                         <p>
                             <label for="date_seen">Date Spotted at <span class="required">*</span></label>
                             <br>
-                            <input type="date" id="date_seen" name="date_seen" required>
+                            <input type="date" id="date_seen" name="date_seen">
                         </p>
                         <p>
                             <label for="time_seen">Time Spotted at <span class="required">*</span></label>
                             <br>
-                            <input type="time" id="time_seen" name="time_seen" required><br>
+                            <input type="time" id="time_seen" name="time_seen"><br>
                         </p>
 
                         <p>
                             <label for="location">Location found <span class="required">*</span> </label>
                             <br>
                             <input class="text-input" type="text" id="location" name="location"
-                                   placeholder="Location..." required>
+                                   placeholder="Location...">
                         </p>
                         <p>
                             <label for="coordinates">Coordinates of the finding (optional)</label>
@@ -69,17 +69,7 @@
                             <label for="plant_name">Plant name <span class="required">*</span> </label>
                             <br>
                             <input class="text-input" type="text" id="plant_name" name="plant_name"
-                                   placeholder="Name..." required>
-                        </p>
-                        <p>
-                            <label for="plant_certainty">Identification status <span class="required">*</span> </label>
-                            <br>
-                            <label for="plant_certainty_status">
-                                <select name="identification_status" required>
-                                    <option value="unknown">Unknown</option>
-                                    <option value="in_progress">In Progress</option>
-                                </select>
-                            </label>
+                                   placeholder="Name...">
                         </p>
                         <div><p>Upload image or enter image URL <span class="required">*</span></p>
                             <label for="image_file">Image file</label>
@@ -91,6 +81,17 @@
                             <br>
                             <input class="text-input" type="url" id="image_url" name="image_url">
                         </div>
+                        <p>
+                            <label for="plant_certainty">Plant unknown or uncertain?</label>
+                            <br>
+                            <label for="plant_certainty_status">
+                                <select id="certainty" name="plant_certainty_status">
+                                    <option value="">Select an option</option>
+                                    <option value="unknown">Unknown</option>
+                                    <option value="uncertain">Uncertain</option>
+                                </select>
+                            </label>
+                        </p>
                     </div>
                     <br>
                     <div class="add_plant_entry_container">
@@ -99,60 +100,60 @@
                         <p>
                             <label for="height">Plant height(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="height" name="height" placeholder="0" required>
+                            <input class="text-input" type="text" id="height" name="height">
                         </p>
                         <p>
                             <label for="spread">Plant spread(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="spread" name="spread" placeholder="0" required>
+                            <input class="text-input" type="text" id="spread" name="spread">
                         </p>
                         <h4>Other information</h4>
                         <p>
                             <label for="flowers">Does the plant have flowers? <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="flowers_yes" name="flowers" value="yes"
-                                   onchange="toggleColourFlowers()" required>
+                            <input type="radio" id="flowers" name="flowers" value="yes"
+                                   onchange="toggleColourInput()">
                             <label for="flowers_yes">Yes</label>
-                            <input type="radio" id="flowers_no" name="flowers" value="no"
-                                   onchange="toggleColourFlowers()">
+                            <input type="radio" id="flowers" name="flowers" value="no"
+                                   onchange="toggleColourInput()">
                             <label for="flowers_no">No</label>
                         </p>
                         <p>
-                            <label for="colour_flowers">If so, what is the colour of these flowers: </label>
+                            <label for="colour">If so, what is the colour of these flowers: </label>
                             <br>
-                            <input class="text-input" type="text" id="colour_flowers" name="colour_flowers">
+                            <input class="text-input" type="text" id="colour" name="colour">
                         </p>
                         <p>
                             <label for="leaves">Does the plant have leaves? <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="leaves_yes" name="leaves" value="yes" required>
+                            <input type="radio" id="leaves" name="leaves" value="yes">
                             <label for="leaves_yes">Yes</label>
-                            <input type="radio" id="leaves_no" name="leaves" value="no">
+                            <input type="radio" id="leaves" name="leaves" value="no">
                             <label for="leaves_no">No</label>
                         </p>
                         <p>
                             <label for="fruits_seeds">Does the plant have fruits or seeds?
                                 <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="fruits_seeds_yes" name="fruits_seeds" value="yes" required>
+                            <input type="radio" id="fruits_seeds" name="fruits_seeds" value="yes">
                             <label for="fruits_seeds_yes">Yes</label>
-                            <input type="radio" id="fruits_seeds_no" name="fruits_seeds" value="no">
+                            <input type="radio" id="fruits_seeds" name="fruits_seeds" value="no">
                             <label for="fruits_seeds_no">No</label>
                         </p>
                         <p>
                             <label for="sun_exposure">What is the sun exposure in that area?
                                 <span class="required">*</span> </label>
                             <br>
-                            <input type="radio" id="full_sun" name="sun_exposure" value="full_sun" required>
+                            <input type="radio" id="sun_exposure" name="sun_exposure" value="full_sun">
                             <label for="full_sun">Full sun</label>
-                            <input type="radio" id="partial_shade" name="sun_exposure" value="partial_shade">
+                            <input type="radio" id="sun_exposure" name="sun_exposure" value="partial_shade">
                             <label for="partial_shade">Partial shade</label>
-                            <input type="radio" id="full_shade" name="sun_exposure" value="full_shade">
+                            <input type="radio" id="sun_exposure" name="sun_exposure" value="full_shade">
                             <label for="full_shade">Full shade</label>
                         </p>
                     </div>
                     <br>
-                    <button class="form-button" type="submit">Create plant entry</button>
+                    <input id="create_button" class="new_todo" type="button" value="Create plant entry"/>
                     <br>
                 </form>
             </div>
