@@ -54,7 +54,6 @@ function disableDateTime () {
     if (checkBox.checked) {
         let date = new Date();
         datePicker.value =date.toISOString().split('T') [0];
-        // timePicker.value = new Date().toTimeString().split(' ') [0];
 
         let hours = date.getHours();
         let minutes = date.getMinutes();
@@ -65,6 +64,7 @@ function disableDateTime () {
         timePicker.value = hours + ":" + minutes;
     }
 
+    // Set the date and time pickers to read-only if the checkbox is checked
     datePicker.readOnly = checkBox.checked;
     timePicker.readOnly = checkBox.checked;
 }

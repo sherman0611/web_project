@@ -14,7 +14,7 @@ window.onload = function () {
         writeNewComment(data);
     });
 
-    // DBPedia
+    // Fetch DBPedia data only if the identification is completed
     if(document.getElementById("identification_status").textContent.includes("Completed")){
         fetchDBPedia();
     }
@@ -29,7 +29,7 @@ window.onload = function () {
     initMap();
 }
 
-// Initialising the map element if a given plant was using the coordinates reading
+// Initialising the map element if a given plant was using the coordinates
 async function initMap() {
 
     const mapElement = document.getElementById('map');
@@ -47,11 +47,18 @@ async function initMap() {
             center: location,
             mapId: "DEMO_MAP_ID",
         });
+
+        const marker = new AdvancedMarkerElement({
+            map: map,
+            position: location,
+            title: "Uluru",
+        });
     }
 }
 
 // Fetch DBPedia data and display if found
 function fetchDBPedia() {
+    // Making sure the plant name is in the correct format for fetching data
     let plant = plant_name;
     //lowercase all word
     plant = plant.toLowerCase();
@@ -59,8 +66,10 @@ function fetchDBPedia() {
     plant = plant.charAt(0).toUpperCase() + plant.slice(1);
     //replace all spaces with underscores for the dbpedia query
     plant = plant.replace(/ /g, '_');
-    //replace all spaces with underscores for the dbpedia query
+
+    // DBPedia query
     const resource = `http://dbpedia.org/resource/${plant}`;
+    // SPARQL query
     const endpointUrl = 'https://dbpedia.org/sparql';
     const sparqlQuery = `
                  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -85,6 +94,7 @@ function fetchDBPedia() {
             let labelElement = document.getElementById('title_dbp');
             let linkElement = document.getElementById('link_dbp');
 
+            // Displaying the information if found
             document.getElementById("plant_infoDbp").classList.remove("hidden")
             if (bindings.length > 0) {
                 // if information found
