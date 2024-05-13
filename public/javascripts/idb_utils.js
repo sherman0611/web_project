@@ -77,10 +77,12 @@ function openEntriesIDB() {
         request.onupgradeneeded = function (event) {
             const db = event.target.result;
             db.createObjectStore('entries', {keyPath: '_id'});
+            // console.log("123")
         };
         request.onsuccess = function (event) {
             const db = event.target.result;
             resolve(db);
+            // console.log("1234")
         };
     });
 }

@@ -78,11 +78,13 @@ function updateDisplay(data) {
 
 window.onload = function () {
     openEntriesIDB().then((db) => {
-        getAllEntries(db).then((entries) => {
-            for (const entry of entries) {
-                insertEntry(entry)
-            }
-        });
+        setTimeout(() => { // Adding delay here
+            getAllEntries(db).then((entries) => {
+                for (const entry of entries) {
+                    insertEntry(entry)
+                }
+            });
+        }, 100);
     });
 }
 
