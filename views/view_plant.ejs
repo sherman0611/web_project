@@ -16,9 +16,7 @@
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section view_plant">
-                <div class="nav-links">
-                    <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
-                </div>
+                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 <div class="two-columns container row-1">
                     <div class="main container smaller-column">
                         <% if (plant_entry === null) { %>
@@ -133,8 +131,8 @@
                             <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
                             <div id="username-container">
                                 <label for="username">Your username:</label>
-<!--                                <input class="text-input" type="text" id="username" name="username" placeholder="Enter your username..." readonly>-->
-<!--                                <a class="form-button" href="/enter_username">Change your username</a>-->
+                                <input class="text-input" type="text" id="username" name="username" placeholder="Enter your username..." readonly>
+                                <a class="form-button" href="/enter_username">Change your username</a>
                             </div>
                             <div class="send-message-box">
                                 <input type="text" id="comment_text" name="comment_text" placeholder="Enter your reply...">
