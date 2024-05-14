@@ -152,7 +152,7 @@ const deleteEntriesFromIDB = (entryIDB) => {
     });
 };
 
-const insertEntry = (entry) => {
+const insertEntry = (entry, isPending = false) => {
     if (entry._id || entry.id) {
         let entry_id;
         if (entry.id) {
@@ -166,15 +166,21 @@ const insertEntry = (entry) => {
         entryDiv.classList.add("home", "link", "container");
 
         const anchor = document.createElement("a");
-        if (entry._id) {
-            anchor.href = "/view_plant/" + entry._id;
-        } else {
+        if (isPending) {
             anchor.href = "/view_plant/" + entry_id;
+        } else {
+            anchor.href = "/view_plant/" + entry._id;
         }
 
         const img = document.createElement("img");
         img.classList.add("plant-image");
-        img.src = entry.image ? (entry.image.includes('public') ? entry.image.replace('public','') : entry.image) : (entry.image_url || '');
+        if (entry.image) {
+            if (isPending) {
+                img.src = URL.createObjectURL(entry.image);
+            } else {
+                img.src = entry.image.includes('public') ? entry.image.replace('public','') : entry.image;
+            }
+        }
         img.alt = entry.plant_name;
         anchor.appendChild(img);
 

@@ -3,7 +3,7 @@ function updatePosts() {
         setTimeout(() => { // Adding delay here
             getAllSyncEntries(db).then((entries) => {
                 for (const entry of entries) {
-                    insertEntry(entry);
+                    insertEntry(entry, true);
                 }
             });
         }, 100);

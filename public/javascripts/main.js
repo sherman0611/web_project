@@ -50,12 +50,12 @@ if (navigator.onLine) {
         .then(function (res) {
             return res.json();
         }).then(function (newEntries) {
-        openEntriesIDB().then((db) => {
-            deleteEntriesFromIDB(db).then(() => {
-                addNewEntriesToIDB(db, newEntries).then(() => {
-                    console.log("All new entries added to IDB");
-                })
-            });
+            openEntriesIDB().then((db) => {
+                deleteEntriesFromIDB(db).then(() => {
+                    addNewEntriesToIDB(db, newEntries).then(() => {
+                        console.log("All new entries added to IDB");
+                    })
+                });
         });
     });
 }

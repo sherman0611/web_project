@@ -162,7 +162,6 @@ window.onload = function () {
         image_url.disabled = image_file.files.length === 1;
     });
     image_url.addEventListener("input", () => {
-        console.log(image_url.value.length)
         image_file.disabled = image_url.value.length > 1;
         if(image_url.value.length > 1){
             image_file.classList.add("disabled")
