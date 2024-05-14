@@ -98,7 +98,9 @@ self.addEventListener('sync', event => {
                     appendIfDefined(formData, 'certainty', syncEntry.formData.certainty);
                     appendIfDefined(formData, 'date_seen', syncEntry.formData.date_seen);
                     appendIfDefined(formData, 'time_seen', syncEntry.formData.time_seen);
-                    appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, { type: syncEntry.formData.image.type }));
+                    if (syncEntry.formData.image) {
+                        appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, { type: syncEntry.formData.image.type }));
+                    }
 
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
@@ -109,7 +111,6 @@ self.addEventListener('sync', event => {
                         self.registration.showNotification('Plantgram', {
                             body: 'Entry uploaded successfully!',
                         });
-                        // window.location.href = "/";
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
                         self.registration.showNotification('Plantgram', {
