@@ -17,7 +17,11 @@ const storage = multer.diskStorage({
 });
 let upload = multer({ storage: storage });
 
-/* GET index page. */
+/**
+ * GET index page
+ * @param req
+ * @param res
+ */
 router.get('/', function(req, res, next) {
     let result = plant_entries.getAll();
     result.then(plant_entries => {
@@ -29,16 +33,29 @@ router.get('/', function(req, res, next) {
     });
 });
 
+/**
+ * GET enter_username page
+ * @param req
+ * @param res
+ */
 router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
 });
 
-/* GET create plant entry page. */
+/**
+ * GET create plant entry page
+ * @param req
+ * @param res
+ */
 router.get('/create_plant', function(req, res, next) {
     res.render('create_plant', { title: 'Create plant entry' });
 });
 
-/* POST create plant entry form. */
+/**
+ * POST create plant entry page
+ * @param req
+ * @param res
+ */
 router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
     let plantData = req.body;
     let filePath = null;
@@ -53,7 +70,38 @@ router.post('/create_plant', upload.single('image_file'), function(req, res, nex
     });
 });
 
-/* POST edit plant form */
+/**
+ * GET edit plant entry page
+ * @param req
+ * @param res
+ */
+router.get('/edit_plant/:id', function(req, res, next) {
+    const plant_id = req.params.id;
+    console.log("plant_id");
+    console.log(plant_id);
+    let plantResult = plant_entries.getById(plant_id);
+
+    Promise.all([plantResult])
+        .then(results => {
+            let plantData = JSON.parse(results[0]);
+            console.log("plantData");
+            console.log(plantData);
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+        })
+        .catch(errors => {
+            let plantData = null;
+            if (!errors[0]) {
+                plantData = JSON.parse(errors[0]);
+            }
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+        });
+});
+
+/**
+ * POST edit plant entry page
+ * @param req
+ * @param res
+ */
 router.post('/edit_plant/:id/update', async function (req, res, next) {
     //get plant id
     let plant_id = req.params.id;
@@ -70,7 +118,11 @@ router.post('/edit_plant/:id/update', async function (req, res, next) {
 });
 
 
-/* GET plant entry page. */
+/**
+ * GET view plant entry page
+ * @param req
+ * @param res
+ */
 router.get('/view_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
 
@@ -96,7 +148,11 @@ router.get('/view_plant/:id', function(req, res, next) {
         });
 });
 
-/* POST comment form. */
+/**
+ * POST new comment
+ * @param req
+ * @param res
+ */
 router.post('/send_comment', function(req, res, next) {
     let commentData = req.body;
     let result = comments.create(commentData);
@@ -184,27 +240,5 @@ function filterDataByStatus(data, status) {
     }
     return data.filter(item => item.identification_status === status);
 }
-
-router.get('/edit_plant/:id', function(req, res, next) {
-    const plant_id = req.params.id;
-    console.log("plant_id");
-    console.log(plant_id);
-    let plantResult = plant_entries.getById(plant_id);
-
-    Promise.all([plantResult])
-        .then(results => {
-            let plantData = JSON.parse(results[0]);
-            console.log("plantData");
-            console.log(plantData);
-            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
-        })
-        .catch(errors => {
-            let plantData = null;
-            if (!errors[0]) {
-                plantData = JSON.parse(errors[0]);
-            }
-            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
-        });
-});
 
 module.exports = router;
