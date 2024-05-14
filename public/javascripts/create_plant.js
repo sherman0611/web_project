@@ -120,7 +120,7 @@ const submitForm = () => {
         alert("Please enter your username!");
         return;
     }
-    if (formData.image && formData.image_url) {
+    if (formData.image && formData.image_url || !formData.image && !formData.image_url) {
         alert("Please select either image upload or URL!");
         return;
     }
