@@ -18,9 +18,8 @@
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div id="username-container" class="add_plant_entry_container">
                         <label for="username">Your username:</label>
-                        <input class="text-input" type="text" id="username" placeholder="Enter your username..."
-                               readonly required>
-                        <a class="form-button" href="/enter_username">Change your username</a>
+                        <input class="text_input" type="text" id="username" name="username">
+                        <button class="form-button" type="button" onclick="setUsername()">Save username</button>
                     </div>
                     <div class="add_plant_entry_container">
                         <span class="required_text"><span class="required">*</span> Required field</span>
@@ -72,10 +71,9 @@
                             <input class="text-input" type="text" id="plant_name" name="plant_name" required>
                         </p>
                         <div><p>Upload image or enter image URL <span class="required">*</span></p>
-                            <label for="image_file">Image file</label>
+                            <label for="image_file">Upload image file</label>
                             <br>
                             <input type="file" id="image_file" name="image_file" accept="image/*">
-                            <br>
                             <br>
                             <label for="image_url">Enter image URL</label>
                             <br>

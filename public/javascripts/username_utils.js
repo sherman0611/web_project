@@ -2,6 +2,13 @@
 function setUsername(){
     let username = document.getElementById('username').value;
     localStorage.setItem('username', username);
+
+    navigator.serviceWorker.ready
+        .then(function (sw) {
+            sw.showNotification('Plantgram', {
+                body: 'Username saved!',
+            });
+        });
 }
 
 /** Get the username from localStorage

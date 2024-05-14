@@ -94,6 +94,7 @@ function getValue(id) {
 }
 
 const submitForm = () => {
+    setUsername();
     const formData = {
         username: getValue("username"),
         plant_name: getValue("plant_name"),
@@ -153,4 +154,20 @@ window.onload = function () {
     // Add event listeners to create button
     const create_button = document.getElementById("create_button")
     create_button.addEventListener("click", submitForm)
+
+    // upload image file or image url guard
+    const image_file = document.getElementById('image_file')
+    const image_url = document.getElementById('image_url')
+    image_file.addEventListener("change", () => {
+        image_url.disabled = image_file.files.length === 1;
+    });
+    image_url.addEventListener("input", () => {
+        console.log(image_url.value.length)
+        image_file.disabled = image_url.value.length > 1;
+        if(image_url.value.length > 1){
+            image_file.classList.add("disabled")
+        } else {
+            image_file.classList.remove("disabled")
+        }
+    });
 }

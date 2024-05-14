@@ -131,8 +131,8 @@
                             <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
                             <div id="username-container">
                                 <label for="username">Your username:</label>
-                                <input class="text-input" type="text" id="username" name="username" placeholder="Enter your username..." readonly>
-                                <a class="form-button" href="/enter_username">Change your username</a>
+                                <input class="text_input" type="text" id="username" name="username">
+                                <button class="form-button" type="button" onclick="setUsername()">Save username</button>
                             </div>
                             <div class="send-message-box">
                                 <input type="text" id="comment_text" name="comment_text" placeholder="Enter your reply...">
