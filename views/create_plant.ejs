@@ -23,13 +23,13 @@
                         <a class="form-button" href="/enter_username">Change your username</a>
                     </div>
                     <div class="add_plant_entry_container">
-                        <span class="required_text"><span class="required"> * </span> Required field</span>
+                        <span class="required_text"><span class="required">*</span> Required field</span>
                         <h3>Basic details</h3>
                         <p>
-                            <label for="description">Plant description <span class="required">*</span></label>
+                            <label for="description">Plant description<span class="required">*</span></label>
                             <br>
-                            <textarea class="text_box" name="description" rows="4" cols="50"
-                                      placeholder="Describe your plant here..."></textarea>
+                            <textarea class="text_box" name="description" placeholder="Describe your plant here..."
+                                      required></textarea>
                         </p>
                         <p>
                             <label><input type="checkbox" id="toggleCheckbox" onchange="disableDateTime()">
@@ -54,7 +54,7 @@
                                    placeholder="Location..." required>
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding (optional)</label>
+                            <label for="coordinates">Coordinates of the finding</label>
                             <br>
                             <button class="submitLocation" type="button"
                                     onclick="getLocation()">Get Current Location</button>
@@ -82,7 +82,7 @@
                             <input class="text-input" type="url" id="image_url" name="image_url">
                         </div>
                         <p>
-                            <label for="plant_certainty">Plant unknown or uncertain?</label>
+                            <label for="plant_certainty">Plant unknown or uncertain?<span class="required">*</span></label>
                             <br>
                             <label for="plant_certainty_status">
                                 <select id="certainty" name="plant_certainty_status">
@@ -119,7 +119,7 @@
                             <label for="flowers_no">No</label>
                         </p>
                         <p>
-                            <label for="colour">If so, what is the colour of these flowers: </label>
+                            <label for="colour">If so, what is the colour of these flowers:</label>
                             <br>
                             <input class="text-input" type="text" id="colour" name="colour">
                         </p>

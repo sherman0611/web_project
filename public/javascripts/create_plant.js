@@ -61,28 +61,31 @@ function disableDateTime () {
 
 // Enable or disable the field for flowers colour based on selection
 function toggleColourInput() {
-    let input = document.getElementById("colour_flowers");
+    let label = document.querySelector("[for='colour']");
+    let input = document.getElementById("colour");
 
-    if(document.getElementById("flowers_no").checked) {
+    let value = document.querySelector("input[name='flowers']:checked").value;
+    if (value === "no") {
         input.disabled = true;
-        return;
-    }
-    if(document.getElementById("flowers_yes").checked) {
+        label.innerHTML = "If so, what is the colour of these flowers:";
+    } else {
         input.disabled = false;
+        label.innerHTML = "If so, what is the colour of these flowers: <span class='required'>*</span>";
     }
 }
 
 function getValue(id) {
     const element = document.getElementById(id);
     if (element) {
-        if (element.type === "text" || element.type === "number") {
+        if (element.type === "text" || element.type === "number" || element.type === "url") {
             if (element.value.trim() !== "") {
                 return element.value;
             }
         } else if (element.type === "radio") {
-            const checkedOption = document.querySelector(`input[name="${element.name}"]:checked`);
-            if (checkedOption) {
-                return checkedOption.value;
+            const checked = document.querySelector(`input[name="${element.name}"]:checked`);
+
+            if (checked) {
+                return checked.value;
             }
         } else {
             return element.value;
@@ -90,11 +93,10 @@ function getValue(id) {
     }
 }
 
-const submitEventListener = () => {
+const submitForm = () => {
     const formData = {
         username: getValue("username"),
         plant_name: getValue("plant_name"),
-        image: getValue("image_file"),
         image_url: getValue("image_url"),
         location: getValue("location"),
         latitude: getValue("latitude"),
@@ -110,28 +112,35 @@ const submitEventListener = () => {
         certainty: getValue("certainty"),
         date_seen: getValue("date_seen"),
         time_seen: getValue("time_seen"),
+        image: document.getElementById('image_file').files[0],
     };
 
-    console.log(formData.description)
-    console.log(formData.height)
+    // verify inputs
+    if (!formData.username) {
+        alert("Please enter your username!");
+        return;
+    }
+    if (formData.image && formData.image_url) {
+        alert("Please select either image upload or URL!");
+        return;
+    }
+    if (!formData.plant_name || !formData.certainty || !formData.date_seen || !formData.time_seen ||
+        !formData.location || !formData.height || !formData.spread || !formData.flowers || !formData.leaves ||
+        !formData.fruits_seeds || !formData.sun_exposure || !formData.description ||
+        formData.flowers === "yes" && !formData.colour) {
 
-    // verify form inputs
-    if (!formData.username || !formData.plant_name || !formData.certainty || !formData.date_seen ||
-        !formData.time_seen || !formData.location || !formData.height || !formData.spread) {
         alert("Please fill in all required fields!");
         return;
     }
 
     openSyncEntriesIDB().then((db) => {
-        addNewEntryToSync(db, formData);
+        addEntryToSync(db, formData);
     });
 
     navigator.serviceWorker.ready
         .then(function (sw) {
             sw.showNotification("Plantgram", {
                 body: "Entry added to pending list!"
-            }).then(r => {
-                // window.location.href = "/";
             });
         });
 }
@@ -143,20 +152,5 @@ window.onload = function () {
 
     // Add event listeners to create button
     const create_button = document.getElementById("create_button")
-    create_button.addEventListener("click", submitEventListener)
-
-    // const image_file = document.getElementById('image_file')
-    // const image_url = document.getElementById('image_url')
-    // image_file.addEventListener("change", () => {
-    //     image_url.disabled = image_file.files.length === 1;
-    // });
-    // image_url.addEventListener("input", () => {
-    //     console.log(image_url.value.length)
-    //     image_file.disabled = image_url.value.length > 1;
-    //     if(image_url.value.length > 1){
-    //         image_file.classList.add("disabled")
-    //     } else {
-    //         image_file.classList.remove("disabled")
-    //     }
-    // });
+    create_button.addEventListener("click", submitForm)
 }

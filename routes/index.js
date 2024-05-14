@@ -1,20 +1,21 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 const entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
-const multer = require("multer");
+var multer = require("multer");
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+var storage = multer.diskStorage({
+    destination :function(req, file, cb){
         cb(null, '../public/images/uploads/');
     },
     filename: function (req, file, cb) {
-        const original = file.originalname;
-        const file_extension = original.split(".");
+        var original = file.originalname;
+        var file_extension = original.split(".");
         filename = Date.now() + '.' + file_extension[file_extension.length - 1];
         cb(null, filename);
     }
 });
+
 let upload = multer({ storage: storage });
 
 /* GET index page. */
@@ -45,31 +46,19 @@ router.get('/create_plant', function(req, res, next) {
 });
 
 /* POST create plant entry form. */
-router.post('/create_entry', function(req, res, next) {
-    entries.create(req.body)
-        .then(plant_entry => {
-            res.status(200).send("Entry created!");
-        })
-        .catch(err => {
-            console.log("cannot create post" + err);
-            res.status(500).send("Cannot create post");
-        });
+router.post('/create_entry', upload.single('image'), function(req, res, next) {
+    let filePath = null;
+    if (req.file && req.file.path) {
+        filePath = req.file.path;
+    }
+    let result = entries.create(req.body, filePath)
+    result.then(plant_entry => {
+        res.send("Entry created!");
+    }).catch(err => {
+        console.log("cannot create entry" + err);
+        res.status(500).send("Cannot create entry");
+    });
 });
-
-/* POST create plant entry form. */
-// router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
-//     let plantData = req.body;
-//     let filePath = null;
-//     if (req.file && req.file.path) {
-//         filePath = req.file.path;
-//     }
-//     let result = entries.create(plantData, filePath);
-//     result.then(plant_entry => {
-//         res.redirect('/')
-//     }).catch(err => {
-//         console.log("cannot create post");
-//     });
-// });
 
 /* POST edit plant form */
 router.post('/edit_plant/:id/update', async function (req, res, next) {
