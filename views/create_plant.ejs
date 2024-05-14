@@ -18,7 +18,8 @@
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div id="username-container" class="add_plant_entry_container">
                         <label for="username">Your username:</label>
-                        <input class="text-input" type="text" id="username" placeholder="Enter your username..." readonly>
+                        <input class="text-input" type="text" id="username" placeholder="Enter your username..."
+                               readonly required>
                         <a class="form-button" href="/enter_username">Change your username</a>
                     </div>
                     <div class="add_plant_entry_container">
@@ -38,19 +39,19 @@
                         <p>
                             <label for="date_seen">Date Spotted at <span class="required">*</span></label>
                             <br>
-                            <input type="date" id="date_seen" name="date_seen">
+                            <input type="date" id="date_seen" name="date_seen" required>
                         </p>
                         <p>
                             <label for="time_seen">Time Spotted at <span class="required">*</span></label>
                             <br>
-                            <input type="time" id="time_seen" name="time_seen"><br>
+                            <input type="time" id="time_seen" name="time_seen" required><br>
                         </p>
 
                         <p>
                             <label for="location">Location found <span class="required">*</span> </label>
                             <br>
                             <input class="text-input" type="text" id="location" name="location"
-                                   placeholder="Location...">
+                                   placeholder="Location..." required>
                         </p>
                         <p>
                             <label for="coordinates">Coordinates of the finding (optional)</label>
@@ -68,8 +69,7 @@
                         <p>
                             <label for="plant_name">Plant name <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name"
-                                   placeholder="Name...">
+                            <input class="text-input" type="text" id="plant_name" name="plant_name" required>
                         </p>
                         <div><p>Upload image or enter image URL <span class="required">*</span></p>
                             <label for="image_file">Image file</label>
@@ -100,12 +100,12 @@
                         <p>
                             <label for="height">Plant height(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="height" name="height">
+                            <input class="text-input" type="number" id="height" name="height" required>
                         </p>
                         <p>
                             <label for="spread">Plant spread(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="spread" name="spread">
+                            <input class="text-input" type="number" id="spread" name="spread" required>
                         </p>
                         <h4>Other information</h4>
                         <p>

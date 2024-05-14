@@ -87,7 +87,6 @@ router.post('/edit_plant/:id/update', async function (req, res, next) {
     });
 });
 
-
 /* GET plant entry page. */
 router.get('/view_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;

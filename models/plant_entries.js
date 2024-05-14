@@ -7,7 +7,7 @@ let PlantEntrySchema  = new Schema({
         plant_name: {type: String, max: 50, required: true},
         image: {type: String, required: false},
         image_url : {type: String, required: false},
-        location: {type: String, max: 100, required: false},
+        location: {type: String, max: 100, required: true},
         latitude:{type: String, max: 50, required: false},
         longitude:{type: String, max: 50, required: false},
         description: {type: String, max: 1000, required: false},
@@ -20,8 +20,8 @@ let PlantEntrySchema  = new Schema({
         sun_exposure: {type: String, required: false},
         certainty: {type: String, required: true},
         identification_status: {type: String, default: "none"},
-        date_seen: {type: Date, required: false},
-        time_seen: {type: String, required: false},
+        date_seen: {type: Date, required: true},
+        time_seen: {type: String, required: true},
         date_post: {type: Date, default: Date.now()},
         time_post: {type: String, default: () => new Date().toTimeString().split(' ')[0]}
     }

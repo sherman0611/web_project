@@ -75,14 +75,18 @@ function toggleColourInput() {
 function getValue(id) {
     const element = document.getElementById(id);
     if (element) {
-        if (element.type === "radio") {
+        if (element.type === "text" || element.type === "number") {
+            if (element.value.trim() !== "") {
+                return element.value;
+            }
+        } else if (element.type === "radio") {
             const checkedOption = document.querySelector(`input[name="${element.name}"]:checked`);
-            return checkedOption ? checkedOption.value : '';
+            if (checkedOption) {
+                return checkedOption.value;
+            }
         } else {
             return element.value;
         }
-    } else {
-        return '';
     }
 }
 
@@ -108,9 +112,13 @@ const submitEventListener = () => {
         time_seen: getValue("time_seen"),
     };
 
+    console.log(formData.description)
+    console.log(formData.height)
+
     // verify form inputs
-    if (formData.username.trim() === '' || formData.plant_name.trim() === '' || formData.certainty.trim() === '') {
-        alert("Please fill in all required fields (Username, Plant Name, Certainty)");
+    if (!formData.username || !formData.plant_name || !formData.certainty || !formData.date_seen ||
+        !formData.time_seen || !formData.location || !formData.height || !formData.spread) {
+        alert("Please fill in all required fields!");
         return;
     }
 

@@ -70,12 +70,10 @@ self.addEventListener('fetch', function(event) {
 //Sync event to sync the entries
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-entry') {
-        console.log('Service Worker: Syncing new entries');
+        console.log('Service Worker: Uploading new entries');
         openSyncEntriesIDB().then((syncEntryDB) => {
             getAllSyncEntries(syncEntryDB).then((syncEntries) => {
                 for (const syncEntry of syncEntries) {
-                    console.log('Service Worker: Syncing new entry');
-
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
                         body: JSON.stringify(syncEntry.formData),
@@ -86,12 +84,12 @@ self.addEventListener('sync', event => {
                         console.log('Service Worker: Syncing new entry done');
                         deleteSyncEntryFromIDB(syncEntryDB,syncEntry.id);
                         self.registration.showNotification('Plantgram', {
-                            body: 'Entry synced successfully!',
+                            body: 'Entry uploaded successfully!',
                         });
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
                         self.registration.showNotification('Plantgram', {
-                            body: 'Entry sync failed! Check for network',
+                            body: 'Entry upload failed! Check for network',
                         });
                     });
                 }
