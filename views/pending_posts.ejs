@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/index.css'/>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+<div class="body_container">
+    <%- include('partials/header') %>
+    <div class="main_section">
+        <div class="search-and-sort">
+            <div class="search">
+                <input id="search-input" type="text" placeholder="Search plants..">
+                <button class="search_button"><img src="images/search_icon.png" alt="search button"/></button>
+            </div>
+            <div id="filter">
+                <label for="filter-select">Filter by Identification Status:</label>
+                <select id="filter-select" onchange=sortPosts()>
+                    <option value="all">View All</option>
+                    <option value="completed">Completed</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="unknown">Unknown</option>
+                </select>
+
+            </div>
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select" onchange=sortPosts()>
+                <option value="date-asc">Date Ascending</option>
+                <option value="date-desc">Date Descending</option>
+            </select>
+        </div>
+
+        <p>Posts created offline will be shown here. All posts will be uploaded to server when back online.</p>
+
+        <button onclick="uploadPosts()">Upload Now</button>
+
+        <div class="plant-entries-container" id="plant-entries-container"></div>
+    </div>
+</div>
+<%- include('partials/footer.ejs')%>
+<script src="javascripts/pending_posts.js"></script>
+</body>
+</html>

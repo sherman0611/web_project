@@ -13,7 +13,7 @@ input.addEventListener("keypress", function(event) {
  * Fetch data from the server based on the selected sort order, filter status, and search query
  * Then update the display with the fetched data
  */
-function fetchData() {
+function sortPosts() {
     console.log('Fetching data...');
     const sortOrder = document.getElementById('sort-select').value;
     const filterStatus = document.getElementById('filter-select').value;
@@ -76,3 +76,14 @@ function updateDisplay(data) {
     });
 }
 
+window.onload = function () {
+    openEntriesIDB().then((db) => {
+        setTimeout(() => { // Adding delay here
+            getAllEntries(db).then((entries) => {
+                for (const entry of entries) {
+                    insertEntry(entry)
+                }
+            });
+        }, 100);
+    });
+}

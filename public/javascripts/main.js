@@ -44,3 +44,18 @@ if ("Notification" in window) {
         });
     }
 }
+
+if (navigator.onLine) {
+    fetch('http://localhost:3000/entries')
+        .then(function (res) {
+            return res.json();
+        }).then(function (newEntries) {
+        openEntriesIDB().then((db) => {
+            deleteEntriesFromIDB(db).then(() => {
+                addNewEntriesToIDB(db, newEntries).then(() => {
+                    console.log("All new entries added to IDB");
+                })
+            });
+        });
+    });
+}

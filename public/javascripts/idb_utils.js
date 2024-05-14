@@ -1,53 +1,94 @@
-// Function to handle adding a new todo
-const addNewTodoToSync = (syncTodoIDB, txt_val) => {
-    // Retrieve todo text and add it to the IndexedDB
+function openEntriesIDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open("entries", 1);
 
-    if (txt_val !== "") {
-        const transaction = syncTodoIDB.transaction(["sync-todos"], "readwrite")
-        const todoStore = transaction.objectStore("sync-todos")
-        const addRequest = todoStore.add({text: txt_val})
-        addRequest.addEventListener("success", () => {
-            console.log("Added " + "#" + addRequest.result + ": " + txt_val)
-            const getRequest = todoStore.get(addRequest.result)
-            getRequest.addEventListener("success", () => {
-                console.log("Found " + JSON.stringify(getRequest.result))
-                // Send a sync message to the service worker
-                navigator.serviceWorker.ready.then((sw) => {
-                    sw.sync.register("sync-todo")
-                }).then(() => {
-                    console.log("Sync registered");
-                }).catch((err) => {
-                    console.log("Sync registration failed: " + JSON.stringify(err))
-                })
-            })
-        })
-    }
+        request.onerror = function (event) {
+            reject(new Error(`Database error: ${event.target}`));
+        };
+        request.onupgradeneeded = function (event) {
+            const db = event.target.result;
+            db.createObjectStore('entries', {keyPath: '_id'});
+            // console.log("123")
+        };
+        request.onsuccess = function (event) {
+            const db = event.target.result;
+            resolve(db);
+            // console.log("1234")
+        };
+    });
 }
 
-// Function to add new todos to IndexedDB and return a promise
-const addNewTodosToIDB = (todoIDB, todos) => {
+function openSyncEntriesIDB() {
     return new Promise((resolve, reject) => {
-        const transaction = todoIDB.transaction(["todos"], "readwrite");
-        const todoStore = transaction.objectStore("todos");
+        const request = indexedDB.open("sync-entries", 1);
 
-        const addPromises = todos.map(todo => {
+        request.onerror = function (event) {
+            reject(new Error(`Database error: ${event.target}`));
+        };
+        request.onupgradeneeded = function (event) {
+            const db = event.target.result;
+            db.createObjectStore('sync-entries', {keyPath: 'id', autoIncrement: true});
+        };
+        request.onsuccess = function (event) {
+            const db = event.target.result;
+            resolve(db);
+        };
+    });
+}
+
+// Function to get the entry list from idb
+const getAllEntries = (entryIDB) => {
+    return new Promise((resolve, reject) => {
+        const transaction = entryIDB.transaction(["entries"]);
+        const entryStore = transaction.objectStore("entries");
+        const req = entryStore.getAll();
+
+        req.addEventListener("success", (event) => {
+            resolve(event.target.result); // Use event.target.result to get the result
+        });
+        req.addEventListener("error", (event) => {
+            reject(event.target.error);
+        });
+    });
+}
+
+// Function to get the entry list from idb
+const getAllSyncEntries = (syncEntryIDB) => {
+    return new Promise((resolve, reject) => {
+        const transaction = syncEntryIDB.transaction(["sync-entries"]);
+        const entryStore = transaction.objectStore("sync-entries");
+        const req = entryStore.getAll();
+
+        req.addEventListener("success", () => {
+            resolve(req.result);
+        });
+        req.addEventListener("error", (event) => {
+            reject(event.target.error);
+        });
+    });
+}
+
+// Function to add new entries to idb and return a promise
+const addNewEntriesToIDB = (entryIDB, entries) => {
+    return new Promise((resolve, reject) => {
+        const transaction = entryIDB.transaction(["entries"], "readwrite");
+        const entryStore = transaction.objectStore("entries");
+
+        const addPromises = entries.map(entry => {
             return new Promise((resolveAdd, rejectAdd) => {
-                const addRequest = todoStore.add(todo);
+                const addRequest = entryStore.add(entry);
                 addRequest.addEventListener("success", () => {
-                    console.log("Added " + "#" + addRequest.result + ": " + todo.text);
-                    const getRequest = todoStore.get(addRequest.result);
+                    const getRequest = entryStore.get(addRequest.result);
                     getRequest.addEventListener("success", () => {
-                        console.log("Found " + JSON.stringify(getRequest.result));
-                        // Assume insertTodoInList is defined elsewhere
-                        insertTodoInList(getRequest.result);
+                        // insertEntry(getRequest.result)
                         resolveAdd(); // Resolve the add promise
                     });
                     getRequest.addEventListener("error", (event) => {
-                        rejectAdd(event.target.error); // Reject the add promise if there's an error
+                        rejectAdd(event.target.error);
                     });
                 });
                 addRequest.addEventListener("error", (event) => {
-                    rejectAdd(event.target.error); // Reject the add promise if there's an error
+                    rejectAdd(event.target.error);
                 });
             });
         });
@@ -61,105 +102,99 @@ const addNewTodosToIDB = (todoIDB, todos) => {
     });
 };
 
-// Function to remove all todos from idb
-const deleteAllExistingEntriesFromIDB = (entryIDB) => {
+const addNewEntryToSync = (syncEntryIDB, formData) => {
+    // Retrieve form data and add it to the IndexedDB
+    if (formData) {
+        const transaction = syncEntryIDB.transaction(["sync-entries"], "readwrite");
+        const entryStore = transaction.objectStore("sync-entries");
+        const createRequest = entryStore.add({formData});
+
+        createRequest.addEventListener("success", () => {
+            console.log("Added entry to idb");
+
+            const getRequest = entryStore.get(createRequest.result);
+            getRequest.addEventListener("success", () => {
+                navigator.serviceWorker.ready.then((sw) => {
+                    sw.sync.register("sync-entry");
+                }).then(() => {
+                    console.log("Sync registered");
+                }).catch((err) => {
+                    console.log("Sync registration failed: " + JSON.stringify(err));
+                })
+            })
+        })
+    }
+}
+
+// Function to delete a sync
+const deleteSyncEntryFromIDB = (syncEntryIDB, id) => {
+    const transaction = syncEntryIDB.transaction(["sync-entries"], "readwrite");
+    const entryStore = transaction.objectStore("sync-entries");
+    const req = entryStore.delete(id);
+
+    req.addEventListener("success", () => {
+        console.log("Deleted " + id);
+    })
+}
+
+// Function to remove all entries from idb
+const deleteEntriesFromIDB = (entryIDB) => {
     const transaction = entryIDB.transaction(["entries"], "readwrite");
     const entryStore = transaction.objectStore("entries");
-    const clearRequest = entryStore.clear();
+    const req = entryStore.clear();
 
     return new Promise((resolve, reject) => {
-        clearRequest.addEventListener("success", () => {
+        req.addEventListener("success", () => {
             resolve();
         });
-
-        clearRequest.addEventListener("error", (event) => {
+        req.addEventListener("error", (event) => {
             reject(event.target.error);
         });
     });
 };
 
-// Function to get the todo list from the IndexedDB
-const getAllEntries = (entryIDB) => {
-    return new Promise((resolve, reject) => {
-        const transaction = entryIDB.transaction(["entries"]);
-        const entryStore = transaction.objectStore("entries");
-        const getAllRequest = entryStore.getAll();
+const insertEntry = (entry) => {
+    if (entry._id || entry.id) {
+        let entry_id;
+        if (entry.id) {
+            entry_id = entry.id;
+            entry = entry.formData;
+        }
 
-        // Handle success event
-        getAllRequest.addEventListener("success", (event) => {
-            resolve(event.target.result); // Use event.target.result to get the result
-        });
+        const container = document.getElementById("plant-entries-container");
 
-        // Handle error event
-        getAllRequest.addEventListener("error", (event) => {
-            reject(event.target.error);
-        });
-    });
-}
+        const entryDiv = document.createElement("div");
+        entryDiv.classList.add("home", "link", "container");
 
-// Function to get the todo list from the IndexedDB
-const getAllSyncEntries = (syncEntryIDB) => {
-    return new Promise((resolve, reject) => {
-        const transaction = syncEntryIDB.transaction(["sync-entries"]);
-        const entryStore = transaction.objectStore("sync-entries");
-        const getAllRequest = entryStore.getAll();
+        const anchor = document.createElement("a");
+        if (entry._id) {
+            anchor.href = "/view_plant/" + entry._id;
+        } else {
+            anchor.href = "/view_plant/" + entry_id;
+        }
 
-        getAllRequest.addEventListener("success", () => {
-            resolve(getAllRequest.result);
-        });
+        const img = document.createElement("img");
+        img.classList.add("plant-image");
+        img.src = entry.image ? (entry.image.includes('public') ? entry.image.replace('public','') : entry.image) : (entry.image_url || '');
+        img.alt = entry.plant_name;
+        anchor.appendChild(img);
 
-        getAllRequest.addEventListener("error", (event) => {
-            reject(event.target.error);
-        });
-    });
-}
+        const plantInfoDiv = document.createElement("div");
+        plantInfoDiv.classList.add("plant-info");
 
-// Function to delete a syn
-const deleteSyncEntryFromIDB = (syncEntryIDB, id) => {
-    const transaction = syncEntryIDB.transaction(["sync-entries"], "readwrite")
-    const entryStore = transaction.objectStore("sync-entries")
-    const deleteRequest = entryStore.delete(id)
-    deleteRequest.addEventListener("success", () => {
-        console.log("Deleted " + id)
-    })
-}
+        const usernameParagraph = document.createElement("p");
+        usernameParagraph.textContent = "Plant by " + entry.username;
 
-function openEntriesIDB() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open("entries", 1);
+        const dateLocationParagraph = document.createElement("p");
+        dateLocationParagraph.textContent = entry.date ? entry.date.substring(0, 10) + ", " + entry.location : entry.location;
 
-        request.onerror = function (event) {
-            reject(new Error(`Database error: ${event.target}`));
-        };
+        plantInfoDiv.appendChild(usernameParagraph);
+        plantInfoDiv.appendChild(dateLocationParagraph);
 
-        request.onupgradeneeded = function (event) {
-            const db = event.target.result;
-            db.createObjectStore('entries', {keyPath: '_id'});
-        };
+        anchor.appendChild(plantInfoDiv);
 
-        request.onsuccess = function (event) {
-            const db = event.target.result;
-            resolve(db);
-        };
-    });
-}
+        entryDiv.appendChild(anchor);
 
-function openSyncEntriesIDB() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open("sync-entries", 1);
-
-        request.onerror = function (event) {
-            reject(new Error(`Database error: ${event.target}`));
-        };
-
-        request.onupgradeneeded = function (event) {
-            const db = event.target.result;
-            db.createObjectStore('sync-entries', {keyPath: 'id', autoIncrement: true});
-        };
-
-        request.onsuccess = function (event) {
-            const db = event.target.result;
-            resolve(db);
-        };
-    });
-}
+        container.appendChild(entryDiv);
+    }
+};

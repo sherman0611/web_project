@@ -52,6 +52,15 @@ router.get('/create_plant', function(req, res, next) {
 });
 
 /**
+ * GET pending posts
+ * @param req
+ * @param res
+ */
+router.get('/pending_posts', function(req, res, next) {
+    res.render('pending_posts', { title: 'Pending posts' });
+});
+
+/**
  * POST create plant entry page
  * @param req
  * @param res
@@ -172,7 +181,7 @@ router.post('/send_comment', function(req, res, next) {
  */
 router.get('/fetch-data', (req, res) => {
     try {
-        let result = plant_entries.getAll();
+        let result = entries.getAll();
         result.then(plant_entries => {
             let data = JSON.parse(plant_entries);
             const { order, status, query } = req.query;
