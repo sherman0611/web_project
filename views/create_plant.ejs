@@ -12,22 +12,22 @@
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section">
-                <button class="arrow-btn" onclick="goToReferrer()">
-                    <img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to the previous page">
-                </button>
+                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
                 <h2 class="create_entry_title">New plant sightings</h2>
 
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div id="username-container" class="add_plant_entry_container">
-                        <label for="username">Your username:<span class="required">*</span></label>
+                        <label for="username">Your username:</label>
+                        <input class="text_input" type="text" id="username" name="username">
+                        <button class="form-button" type="button" onclick="setUsername()">Save username</button>
                     </div>
                     <div class="add_plant_entry_container">
-                        <span class="required_text"><span class="required"> * </span> Required field</span>
+                        <span class="required_text"><span class="required">*</span> Required field</span>
                         <h3>Basic details</h3>
                         <p>
-                            <label for="description">Plant description <span class="required">*</span></label>
+                            <label for="description">Plant description<span class="required">*</span></label>
                             <br>
-                            <textarea class="text_box" name="description" rows="4" cols="50"
+                            <textarea class="text_box" id="description" name="description"
                                       placeholder="Describe your plant here..." required></textarea>
                         </p>
                         <p>
@@ -53,7 +53,7 @@
                                    placeholder="Location..." required>
                         </p>
                         <p>
-                            <label for="coordinates">Coordinates of the finding (optional)</label>
+                            <label for="coordinates">Coordinates of the finding</label>
                             <br>
                             <button class="submitLocation" type="button"
                                     onclick="getLocation()">Get Current Location</button>
@@ -68,27 +68,25 @@
                         <p>
                             <label for="plant_name">Plant name <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name"
-                                   placeholder="Name...">
+                            <input class="text-input" type="text" id="plant_name" name="plant_name" required>
                         </p>
                         <div><p>Upload image or enter image URL <span class="required">*</span></p>
-                            <label for="image_file">Image file</label>
+                            <label for="image_file">Upload image file</label>
                             <br>
                             <input type="file" id="image_file" name="image_file" accept="image/*">
-                            <br>
                             <br>
                             <label for="image_url">Enter image URL</label>
                             <br>
                             <input class="text-input" type="url" id="image_url" name="image_url">
                         </div>
                         <p>
-                            <label for="plant_certainty">Plant unknown or uncertain?</label>
+                            <label for="plant_certainty">Plant unknown or uncertain?<span class="required">*</span></label>
                             <br>
                             <label for="plant_certainty_status">
                                 <select id="certainty" name="plant_certainty_status">
                                     <option value="">Select an option</option>
                                     <option value="unknown">Unknown</option>
-                                    <option value="in_progress">In Progress</option>
+                                    <option value="uncertain">Uncertain</option>
                                 </select>
                             </label>
                         </p>
@@ -100,12 +98,12 @@
                         <p>
                             <label for="height">Plant height(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="height" name="height">
+                            <input class="text-input" type="number" id="height" name="height" required>
                         </p>
                         <p>
                             <label for="spread">Plant spread(cm) <span class="required">*</span> </label>
                             <br>
-                            <input class="text-input" type="text" id="spread" name="spread">
+                            <input class="text-input" type="number" id="spread" name="spread" required>
                         </p>
                         <h4>Other information</h4>
                         <p>
@@ -119,7 +117,7 @@
                             <label for="flowers_no">No</label>
                         </p>
                         <p>
-                            <label for="colour">If so, what is the colour of these flowers: </label>
+                            <label for="colour">If so, what is the colour of these flowers:</label>
                             <br>
                             <input class="text-input" type="text" id="colour" name="colour">
                         </p>

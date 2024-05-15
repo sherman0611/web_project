@@ -29,8 +29,8 @@ exports.create = function (plantData, filePath) {
         time_seen: plantData.time_seen
     });
 
-    return entry.save().then(plantEntry => {
-        return JSON.stringify(plantEntry);
+    return entry.save().then(entry => {
+        return JSON.stringify(entry);
     }).catch(err => {
         console.log(err);
         return null;

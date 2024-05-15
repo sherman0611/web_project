@@ -13,8 +13,7 @@ function updatePosts() {
 function uploadPosts() {
     navigator.serviceWorker.ready.then((sw) => {
         sw.sync.register("sync-entry").then(() => {
-            const container = document.getElementById("plant-entries-container");
-            container.innerHTML = "";
+            document.getElementById("plant-entries-container").innerHTML = "";
             updatePosts();
         });
     })

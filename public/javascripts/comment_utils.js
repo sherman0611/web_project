@@ -2,6 +2,7 @@ const socket = io();
 
 // Fired on a comment being sent
 function sendComment(event) {
+    setUsername();
     event.preventDefault();
 
     let username = getUsername();

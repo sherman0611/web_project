@@ -1,123 +1,73 @@
-const express = require('express');
-const router = express.Router();
-const plant_entries = require("../controllers/plant_entries");
+var express = require('express');
+var router = express.Router();
+const entries = require("../controllers/plant_entries");
 const comments = require("../controllers/comments");
-const multer = require("multer");
+var multer = require("multer");
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+var storage = multer.diskStorage({
+    destination :function(req, file, cb){
         cb(null, '../public/images/uploads/');
     },
     filename: function (req, file, cb) {
-        const original = file.originalname;
-        const file_extension = original.split(".");
+        var original = file.originalname;
+        var file_extension = original.split(".");
         filename = Date.now() + '.' + file_extension[file_extension.length - 1];
         cb(null, filename);
     }
 });
+
 let upload = multer({ storage: storage });
 
-/**
- * GET index page
- * @param req
- * @param res
- */
+/* GET index page. */
 router.get('/', function(req, res, next) {
-    let result = plant_entries.getAll();
-    result.then(plant_entries => {
-        let data = JSON.parse(plant_entries);
-        res.render('index', { title: 'Plantgram', data: data });
-    }).catch(err => {
-        console.log("Error retrieving plant entries: ", err);
-        res.render('index', { title: 'Plantgram', data: null });
-    });
+    res.render('index', { title: 'Home page' });
 });
 
-/**
- * GET enter_username page
- * @param req
- * @param res
- */
+router.get('/entries', function (req, res, next) {
+    entries.getAll().then(entries => {
+        return res.send(entries);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
+})
+
 router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
 });
 
-/**
- * GET create plant entry page
- * @param req
- * @param res
- */
-router.get('/create_plant', function(req, res, next) {
-    res.render('create_plant', { title: 'Create plant entry' });
-});
-
-/**
- * GET pending posts
- * @param req
- * @param res
- */
 router.get('/pending_posts', function(req, res, next) {
     res.render('pending_posts', { title: 'Pending posts' });
 });
 
-/**
- * POST create plant entry page
- * @param req
- * @param res
- */
-router.post('/create_plant', upload.single('image_file'), function(req, res, next) {
-    let plantData = req.body;
+/* GET create plant entry page. */
+router.get('/create_plant', function(req, res, next) {
+    res.render('create_plant', { title: 'Create plant entry' });
+});
+
+/* POST create plant entry form. */
+router.post('/create_entry', upload.single('image'), function(req, res, next) {
     let filePath = null;
     if (req.file && req.file.path) {
         filePath = req.file.path;
     }
-    let result = plant_entries.create(plantData, filePath);
+    let result = entries.create(req.body, filePath)
     result.then(plant_entry => {
-        res.redirect('/')
+        res.send("Entry created!");
     }).catch(err => {
-        console.log("cannot create post");
+        console.log("cannot create entry" + err);
+        res.status(500).send("Cannot create entry");
     });
 });
 
-/**
- * GET edit plant entry page
- * @param req
- * @param res
- */
-router.get('/edit_plant/:id', function(req, res, next) {
-    const plant_id = req.params.id;
-    console.log("plant_id");
-    console.log(plant_id);
-    let plantResult = plant_entries.getById(plant_id);
-
-    Promise.all([plantResult])
-        .then(results => {
-            let plantData = JSON.parse(results[0]);
-            console.log("plantData");
-            console.log(plantData);
-            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
-        })
-        .catch(errors => {
-            let plantData = null;
-            if (!errors[0]) {
-                plantData = JSON.parse(errors[0]);
-            }
-            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
-        });
-});
-
-/**
- * POST edit plant entry page
- * @param req
- * @param res
- */
+/* POST edit plant form */
 router.post('/edit_plant/:id/update', async function (req, res, next) {
     //get plant id
     let plant_id = req.params.id;
     //get the new data from the form
     let plantDataForm = req.body;
     //update the plant entry with the new data
-    let result = plant_entries.update(plant_id, plantDataForm);
+    let result = entries.update(plant_id, plantDataForm);
     //redirect to the view plant entry page
     result.then(plant_entry => {
         res.redirect('/view_plant/'+plant_id);
@@ -126,16 +76,11 @@ router.post('/edit_plant/:id/update', async function (req, res, next) {
     });
 });
 
-
-/**
- * GET view plant entry page
- * @param req
- * @param res
- */
+/* GET plant entry page. */
 router.get('/view_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
 
-    let plantResult = plant_entries.getById(plant_id);
+    let plantResult = entries.getById(plant_id);
     let commentsResult = comments.getAllByPlantId(plant_id);
 
     Promise.all([plantResult, commentsResult])
@@ -157,11 +102,7 @@ router.get('/view_plant/:id', function(req, res, next) {
         });
 });
 
-/**
- * POST new comment
- * @param req
- * @param res
- */
+/* POST comment form. */
 router.post('/send_comment', function(req, res, next) {
     let commentData = req.body;
     let result = comments.create(commentData);
@@ -249,5 +190,27 @@ function filterDataByStatus(data, status) {
     }
     return data.filter(item => item.identification_status === status);
 }
+
+router.get('/edit_plant/:id', function(req, res, next) {
+    const plant_id = req.params.id;
+    console.log("plant_id");
+    console.log(plant_id);
+    let plantResult = entries.getById(plant_id);
+
+    Promise.all([plantResult])
+        .then(results => {
+            let plantData = JSON.parse(results[0]);
+            console.log("plantData");
+            console.log(plantData);
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+        })
+        .catch(errors => {
+            let plantData = null;
+            if (!errors[0]) {
+                plantData = JSON.parse(errors[0]);
+            }
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+        });
+});
 
 module.exports = router;

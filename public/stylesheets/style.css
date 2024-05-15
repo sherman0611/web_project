@@ -186,11 +186,12 @@ input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, inpu
 }
 
 .text_box {
-  height: 50px;
-  border-radius: 20px;
+  height: 150px;
+  border-radius: 10px;
   border: antiquewhite 2px solid;
   padding: 5px;
   width: 80%;
+  resize: none;
 }
 
 .form_div {

@@ -71,31 +71,54 @@ self.addEventListener('fetch', function(event) {
     );
 });
 
+function appendIfDefined(formData, key, value) {
+    if (value !== undefined) {
+        formData.append(key, value);
+    }
+}
+
 //Sync event to sync the entries
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-entry') {
-        console.log('Service Worker: Syncing new entries');
+        console.log('Service Worker: Uploading new entries');
         openSyncEntriesIDB().then((syncEntryDB) => {
             getAllSyncEntries(syncEntryDB).then((syncEntries) => {
                 for (const syncEntry of syncEntries) {
-                    console.log('Service Worker: Syncing new entry');
+                    const formData = new FormData();
+                    appendIfDefined(formData, 'username', syncEntry.formData.username);
+                    appendIfDefined(formData, 'plant_name', syncEntry.formData.plant_name);
+                    appendIfDefined(formData, 'image_url', syncEntry.formData.image_url);
+                    appendIfDefined(formData, 'location', syncEntry.formData.location);
+                    appendIfDefined(formData, 'latitude', syncEntry.formData.latitude);
+                    appendIfDefined(formData, 'longitude', syncEntry.formData.longitude);
+                    appendIfDefined(formData, 'description', syncEntry.formData.description);
+                    appendIfDefined(formData, 'height', syncEntry.formData.height);
+                    appendIfDefined(formData, 'spread', syncEntry.formData.spread);
+                    appendIfDefined(formData, 'flowers', syncEntry.formData.flowers);
+                    appendIfDefined(formData, 'colour', syncEntry.formData.colour);
+                    appendIfDefined(formData, 'leaves', syncEntry.formData.leaves);
+                    appendIfDefined(formData, 'fruits_seeds', syncEntry.formData.fruits_seeds);
+                    appendIfDefined(formData, 'sun_exposure', syncEntry.formData.sun_exposure);
+                    appendIfDefined(formData, 'certainty', syncEntry.formData.certainty);
+                    appendIfDefined(formData, 'date_seen', syncEntry.formData.date_seen);
+                    appendIfDefined(formData, 'time_seen', syncEntry.formData.time_seen);
+                    if (syncEntry.formData.image) {
+                        appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, { type: syncEntry.formData.image.type }));
+                    }
 
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
-                        body: JSON.stringify(syncEntry.formData),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        body: formData,
                     }).then(() => {
                         console.log('Service Worker: Syncing new entry done');
                         deleteSyncEntryFromIDB(syncEntryDB,syncEntry.id);
                         self.registration.showNotification('Plantgram', {
-                            body: 'Entry synced successfully!',
+                            body: 'Entry uploaded successfully!',
                         });
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
                         self.registration.showNotification('Plantgram', {
-                            body: 'Entry sync failed! Check for network',
+                            body: 'Entry upload failed! Check for network',
                         });
                     });
                 }

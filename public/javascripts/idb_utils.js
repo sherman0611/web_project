@@ -102,8 +102,7 @@ const addNewEntriesToIDB = (entryIDB, entries) => {
     });
 };
 
-const addNewEntryToSync = (syncEntryIDB, formData) => {
-    // Retrieve form data and add it to the IndexedDB
+const addEntryToSync = (syncEntryIDB, formData) => {
     if (formData) {
         const transaction = syncEntryIDB.transaction(["sync-entries"], "readwrite");
         const entryStore = transaction.objectStore("sync-entries");
