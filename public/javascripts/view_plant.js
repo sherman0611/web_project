@@ -19,11 +19,11 @@ window.onload = function () {
     });
 
     // DBPedia
-    if(document.getElementById("identification_status").textContent.includes("Completed")){
+    if(document.getElementById("identification_status").textContent.includes("completed")){
         fetchDBPedia();
     }
     // Ownership
-    identifyAuthor();
+    allowEdit();
 
     // Chat functions
     assignCommentAuthor();
@@ -33,9 +33,31 @@ window.onload = function () {
     initMap();
 }
 
+/** Check if the current user is the plant author
+ * If so, allow them to edit the plant if the identification has not yet
+ * been completed.
+ */
+function allowEdit(){
+    if(getUsername() === document.getElementById("plant_author").innerText){
+        let identification_status = document.getElementById("identification_status").textContent.trim();
+
+        let html_to_insert
+        if(identification_status.includes("Completed")){
+            html_to_insert = '<span class="completed-text">' +
+                '<b>Editing is disabled since identification is completed</b></span><br>';
+        } else {
+            html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>';
+        }
+
+        const parentDiv = document.querySelector('.two-columns.container.row-1');
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html_to_insert;
+        parentDiv.insertBefore(tempDiv.firstChild, parentDiv.firstChild);
+    }
+}
+
 // Initialising the map element if a given plant was using the coordinates reading
 async function initMap() {
-
     const mapElement = document.getElementById('map');
     if(mapElement !== null && mapElement.dataset !== null){
         const lat = parseFloat(mapElement.dataset.lat);

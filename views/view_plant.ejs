@@ -48,14 +48,12 @@
                     <div class="bigger-column two-columns container details-container">
                         <div class="plant_details equal-column container">
                             <p id="identification_status"><b>
-                            <% if(plant_entry.identification_status === 'none') { %>
+                            <% if (plant_entry.identification_status === 'unknown') { %>
                                     &#10067;Identification: </b>Unknown
-                            <% } else { %>
-                                    <%if(plant_entry.identification_status === "in_progress") { %>
-                                        &#8987;Identification: </b>In progress
-                                    <%} else {%>
-                                        &#10003;Identification: </b>Completed
-                                    <% } %>
+                            <% } else if (plant_entry.identification_status === "in_progress") { %>
+                                &#8987;Identification: </b>In progress
+                            <%} else {%>
+                                &#10003;Identification: </b>Completed
                             <% } %>
                             </p>
                             <% if(plant_entry.location){%>
