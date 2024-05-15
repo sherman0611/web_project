@@ -22,14 +22,9 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Home page' });
 });
 
-router.get('/entries', function (req, res, next) {
-    entries.getAll().then(entries => {
-        return res.send(entries);
-    }).catch(err => {
-        console.log(err);
-        res.status(500).send(err);
-    });
-})
+router.get('/create_plant', function(req, res, next) {
+    res.render('create_plant', { title: 'Create plant entry' });
+});
 
 router.get('/enter_username', function(req, res, next) {
     res.render('enter_username', { title: 'Enter your username' });
@@ -39,12 +34,15 @@ router.get('/pending_posts', function(req, res, next) {
     res.render('pending_posts', { title: 'Pending posts' });
 });
 
-/* GET create plant entry page. */
-router.get('/create_plant', function(req, res, next) {
-    res.render('create_plant', { title: 'Create plant entry' });
-});
+router.get('/entries', function (req, res, next) {
+    entries.getAll().then(entries => {
+        return res.send(entries);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
+})
 
-/* POST create plant entry form. */
 router.post('/create_entry', upload.single('image'), function(req, res, next) {
     let filePath = null;
     if (req.file && req.file.path) {
