@@ -33,11 +33,13 @@ footer {
 
 .main_section{
   padding: 10px 20px 0 20px;
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  /*width: 100%;*/
+  /*height: fit-content;*/
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
+  /*flex-direction: column;*/
+  flex-grow: 1;
+  margin-left: 230px;
 }
 
 #overlay {
@@ -70,13 +72,16 @@ select {
 /*HEADER*/
 
 .header {
+  position: fixed;
   width: 230px;
   min-width: 230px;
+  height: 100vh;
   background-color: #758874;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  z-index: 1000;
 }
 
 .nav-button, .logo {
