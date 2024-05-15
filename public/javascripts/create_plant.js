@@ -129,7 +129,7 @@ const submitForm = () => {
         leaves: getValue("leaves"),
         fruits_seeds: getValue("fruits_seeds"),
         sun_exposure: getValue("sun_exposure"),
-        certainty: getValue("certainty"),
+        identification_status: getValue("identification_status"),
         date_seen: getValue("date_seen"),
         time_seen: getValue("time_seen"),
         image: document.getElementById('image_file').files[0],
@@ -144,7 +144,7 @@ const submitForm = () => {
         alert("Please select either image upload or URL!");
         return;
     }
-    if (!formData.plant_name || !formData.certainty || !formData.date_seen || !formData.time_seen ||
+    if (!formData.plant_name || !formData.identification_status || !formData.date_seen || !formData.time_seen ||
         !formData.location || !formData.height || !formData.spread || !formData.flowers || !formData.leaves ||
         !formData.fruits_seeds || !formData.sun_exposure || !formData.description ||
         formData.flowers === "yes" && !formData.colour) {
@@ -181,7 +181,6 @@ window.onload = function () {
         image_url.disabled = image_file.files.length === 1;
     });
     image_url.addEventListener("input", () => {
-        console.log(image_url.value.length)
         image_file.disabled = image_url.value.length > 1;
         if(image_url.value.length > 1){
             image_file.classList.add("disabled")

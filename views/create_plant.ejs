@@ -80,13 +80,13 @@
                             <input class="text-input" type="url" id="image_url" name="image_url">
                         </div>
                         <p>
-                            <label for="plant_certainty">Plant unknown or uncertain?<span class="required">*</span></label>
+                            <label for="plant_status">Identification status: <span class="required">*</span></label>
                             <br>
-                            <label for="plant_certainty_status">
-                                <select id="certainty" name="plant_certainty_status">
-                                    <option value="">Select an option</option>
+                            <label for="plant_status">
+                                <select id="identification_status" name="plant_status">
+                                    <option hidden disabled selected value> -- select an option -- </option>
                                     <option value="unknown">Unknown</option>
-                                    <option value="uncertain">Uncertain</option>
+                                    <option value="uncertain">In Progress</option>
                                 </select>
                             </label>
                         </p>
@@ -151,7 +151,7 @@
                         </p>
                     </div>
                     <br>
-                    <input id="create_button" class="new_todo" type="button" value="Create plant entry"/>
+                    <input id="create_button" class="new_todo form-button" type="button" value="Create plant entry"/>
                     <br>
                 </form>
             </div>

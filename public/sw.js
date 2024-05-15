@@ -47,7 +47,7 @@ self.addEventListener('install', event => {
 
 //clear cache on reload
 self.addEventListener('activate', event => {
-// Remove old caches
+    // Remove old caches
     event.waitUntil(
         (async () => {
             const keys = await caches.keys();
@@ -82,7 +82,9 @@ self.addEventListener('sync', event => {
     if (event.tag === 'sync-entry') {
         console.log('Service Worker: Uploading new entries');
         openSyncEntriesIDB().then((syncEntryDB) => {
-            getAllSyncEntries(syncEntryDB).then((syncEntries) => {
+            console.log("after openSyncEntriesIDB()")
+            getAllSyncEntries(syncEntryDB).then(async (syncEntries) => {
+                console.log("after getAllSyncEntries(syncEntryDB)")
                 for (const syncEntry of syncEntries) {
                     const formData = new FormData();
                     appendIfDefined(formData, 'username', syncEntry.formData.username);
@@ -99,27 +101,35 @@ self.addEventListener('sync', event => {
                     appendIfDefined(formData, 'leaves', syncEntry.formData.leaves);
                     appendIfDefined(formData, 'fruits_seeds', syncEntry.formData.fruits_seeds);
                     appendIfDefined(formData, 'sun_exposure', syncEntry.formData.sun_exposure);
-                    appendIfDefined(formData, 'certainty', syncEntry.formData.certainty);
+                    appendIfDefined(formData, 'identification_status', syncEntry.formData.identification_status);
                     appendIfDefined(formData, 'date_seen', syncEntry.formData.date_seen);
                     appendIfDefined(formData, 'time_seen', syncEntry.formData.time_seen);
                     if (syncEntry.formData.image) {
-                        appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, { type: syncEntry.formData.image.type }));
+                        appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, {type: syncEntry.formData.image.type}));
                     }
 
+                    console.log(formData)
+
+                    // TODO we have to get the permission
+                    const permission = await Notification.permission;
+                    if (permission !== 'granted') {
+                        return;
+                    }
+                    console.log("fetching create post")
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
                         body: formData,
                     }).then(() => {
                         console.log('Service Worker: Syncing new entry done');
-                        deleteSyncEntryFromIDB(syncEntryDB,syncEntry.id);
-                        self.registration.showNotification('Plantgram', {
-                            body: 'Entry uploaded successfully!',
-                        });
+                        deleteSyncEntryFromIDB(syncEntryDB, syncEntry.id);
+                        // self.registration.showNotification('Plantgram', {
+                        //     body: 'Entry uploaded successfully!',
+                        // });
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
-                        self.registration.showNotification('Plantgram', {
-                            body: 'Entry upload failed! Check for network',
-                        });
+                        // self.registration.showNotification('Plantgram', {
+                        //     body: 'Entry upload failed! Check for network',
+                        // });
                     });
                 }
             });

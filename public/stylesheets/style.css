@@ -55,15 +55,6 @@ input[type="file" i]{
   align-items: center;
   align-content: center;
 }
-button, input[type="file"]::file-selector-button {
-  background-color: #758874;
-  transition-duration: 0.3s;
-}
-
-button:hover, input[type="file"]::file-selector-button:hover{
-  background-color: #AA7A54;
-  cursor: pointer;
-}
 
 button:disabled, input[type="file"]::file-selector-button:disabled, #image_file::file-selector-button:disabled{
   background-color: gray;
@@ -200,17 +191,24 @@ input[type="text"].input-disabled, input[type="text"]:focus.input-disabled, inpu
   margin-bottom: 10px;
 }
 
-.form-button, .return-button {
+.form-button, .return-button, .submitLocation,
+button, input[type="file"]::file-selector-button {
   display: flex;
   text-decoration: none;
   width: fit-content;
-  background-color: #AA7A54;
-  color: #E4C9AC;
+  background-color: #758874;
+  color: antiquewhite;
   transition-duration: 0.4s;
   border-radius: 20px;
   border: 0 hidden;
   padding: 7px;
   margin: 1% auto;
+}
+
+.form-button:hover, .return-button:hover, .submitLocation:hover, .plant_link:hover,
+button:hover, input[type="file"]::file-selector-button:hover {
+  background-color: #AA7A54;
+  cursor: pointer;
 }
 
 a .form-button {
@@ -230,10 +228,6 @@ a .form-button {
   align-items: center;
   text-decoration: none;
   color: inherit;
-}
-
-.plant_link:hover {
-  background-color: #AA7A54;
 }
 /* END OTHER UTILS */
 
