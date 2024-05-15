@@ -151,7 +151,7 @@ router.get('/fetch-data', (req, res) => {
  */
 function sortData(data, order) {
     return data.sort((a, b) => {
-        return (order === 'date-asc') ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+        return (order === 'date-asc') ? new Date(a.date_post) - new Date(b.date_post) : new Date(b.date_post) - new Date(a.date_post);
     });
 }
 
@@ -185,7 +185,7 @@ function filterDataByStatus(data, status) {
     if (status === "all") {
         return data;
     }
-    return data.filter(item => item.identification_status === status);
+    return data.filter(item => item.status === status);
 }
 
 router.get('/edit_plant/:id', function(req, res, next) {

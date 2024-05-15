@@ -193,7 +193,7 @@ const insertEntry = (entry, isPending = false) => {
         locationParagraph.textContent = "Found at " + entry.location;
 
         const dateParagraph = document.createElement("p");
-        dateParagraph.textContent = "Found on " + entry.date_post.substring(0, 10);
+        dateParagraph.textContent = "Found on " + entry.date_seen.substring(0, 10);
 
         plantInfoDiv.appendChild(usernameParagraph);
         plantInfoDiv.appendChild(locationParagraph);

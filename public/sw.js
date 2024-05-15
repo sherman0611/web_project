@@ -60,18 +60,14 @@ self.addEventListener('activate', event => {
     );
 })
 
-// Fetch event to fetch from cache first
-self.addEventListener('fetch', event => {
-    event.respondWith((async () => {
-        const cache = await caches.open("static");
-        const cachedResponse = await cache.match(event.request);
-        if (cachedResponse) {
-            console.log('Service Worker: Fetching from Cache: ', event.request.url);
-            return cachedResponse;
-        }
-        console.log('Service Worker: Fetching from URL: ', event.request.url);
-        return fetch(event.request);
-    })());
+self.addEventListener('fetch', function(event) {
+    console.log('Service Worker: Fetch', event.request.url);
+
+    event.respondWith(
+        caches.match(event.request).then(function(response) {
+            return response || fetch(event.request);
+        })
+    );
 });
 
 function appendIfDefined(formData, key, value) {
