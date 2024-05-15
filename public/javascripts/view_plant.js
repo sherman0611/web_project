@@ -24,7 +24,6 @@ window.onload = function () {
     }
     // Ownership
     allowEdit();
-
     // Chat functions
     assignCommentAuthor();
     disableChat();
