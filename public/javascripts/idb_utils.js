@@ -8,12 +8,10 @@ function openEntriesIDB() {
         request.onupgradeneeded = function (event) {
             const db = event.target.result;
             db.createObjectStore('entries', {keyPath: '_id'});
-            // console.log("123")
         };
         request.onsuccess = function (event) {
             const db = event.target.result;
             resolve(db);
-            // console.log("1234")
         };
     });
 }
@@ -112,14 +110,12 @@ const addEntryToSync = (syncEntryIDB, formData) => {
             console.log("Added entry to idb");
 
             const getRequest = entryStore.get(createRequest.result);
-            console.log(getRequest)
+            // console.log(getRequest)
             getRequest.addEventListener("success", () => {
-                console.log("getRequest ready")
+                // console.log("getRequest ready")
                 navigator.serviceWorker.ready.then((sw) => {
-                    console.log("in navigator.serviceWorker.ready")
+                    // console.log("in navigator.serviceWorker.ready")
                     sw.sync.register("sync-entry");
-                }).then(() => {
-                    console.log("Sync registered");
                 }).catch((err) => {
                     console.log("Sync registration failed: " + JSON.stringify(err));
                 })

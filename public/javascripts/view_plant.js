@@ -6,6 +6,10 @@ window.onload = function () {
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
 
+    // inject username to html
+    const usernameInput = document.getElementById("username");
+    usernameInput.value = getUsername();
+
     // Chat
     socket.emit('join', plant_id);
 
@@ -18,9 +22,9 @@ window.onload = function () {
     if(document.getElementById("identification_status").textContent.includes("Completed")){
         fetchDBPedia();
     }
-    // Ownership, username
+    // Ownership
     identifyAuthor();
-    usernameDefining();
+
     // Chat functions
     assignCommentAuthor();
     disableChat();

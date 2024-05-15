@@ -8,16 +8,23 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', {scope: '/'})
         .then(function (reg) {
             console.log('Service Worker Registered!', reg);
-        })
-        .catch(function (err) {
+        }).catch(function (err) {
             console.log('Service Worker registration failed: ', err);
         });
-    // TODO? from the lectures
-    // if (registration.periodicSync) {
-    //     // Periodic Background Sync is supported.
-    // } else {
-    //     // Periodic Background Sync isn't supported. }
-    // });
+
+    // navigator.serviceWorker.ready.then(registration => {
+    //     if (registration.periodicSync) {
+    //         try {
+    //             registration.periodicSync.register("upload-pending", {
+    //                 minInterval: 24 * 60 * 60 * 1000,
+    //             });
+    //             console.log('Periodic Background registered');
+    //         } catch {
+    //             console.log("Periodic Sync could not be registered!");
+    //         }
+    //     } else {
+    //         console.log('Periodic Background Sync not supported');
+    //     }});
 }
 
 // Check if the browser supports the Notification API
@@ -46,6 +53,11 @@ if ("Notification" in window) {
 }
 
 if (navigator.onLine) {
+    // upload pending entries when online
+    navigator.serviceWorker.ready.then((sw) => {
+        sw.sync.register("sync-entry");
+    })
+
     fetch('http://localhost:3000/entries')
         .then(function (res) {
             return res.json();

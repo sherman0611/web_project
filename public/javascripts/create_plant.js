@@ -1,8 +1,10 @@
 let displayCoords = document.getElementById("display_coordinates");
 
 window.onload = function () {
+    // inject username to html
     const usernameInput = document.getElementById("username");
-    usernameDefining();
+    usernameInput.value = getUsername();
+
     const image_file = document.getElementById('image_file')
     const image_url = document.getElementById('image_url')
     image_file.addEventListener("change", () => {
@@ -129,7 +131,6 @@ const submitForm = () => {
         leaves: getValue("leaves"),
         fruits_seeds: getValue("fruits_seeds"),
         sun_exposure: getValue("sun_exposure"),
-        identification_status: getValue("identification_status"),
         date_seen: getValue("date_seen"),
         time_seen: getValue("time_seen"),
         image: document.getElementById('image_file').files[0],
@@ -144,10 +145,9 @@ const submitForm = () => {
         alert("Please select either image upload or URL!");
         return;
     }
-    if (!formData.plant_name || !formData.identification_status || !formData.date_seen || !formData.time_seen ||
-        !formData.location || !formData.height || !formData.spread || !formData.flowers || !formData.leaves ||
-        !formData.fruits_seeds || !formData.sun_exposure || !formData.description ||
-        formData.flowers === "yes" && !formData.colour) {
+    if (!formData.plant_name || !formData.date_seen || !formData.time_seen || !formData.location || !formData.height ||
+        !formData.spread || !formData.flowers || !formData.leaves || !formData.fruits_seeds || !formData.sun_exposure ||
+        !formData.description || formData.flowers === "yes" && !formData.colour) {
 
         alert("Please fill in all required fields!");
         return;

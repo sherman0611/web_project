@@ -15,7 +15,6 @@ var storage = multer.diskStorage({
         cb(null, filename);
     }
 });
-
 let upload = multer({ storage: storage });
 
 /* GET index page. */
