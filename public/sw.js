@@ -71,11 +71,11 @@ self.addEventListener('fetch', function(event) {
     );
 });
 
-function appendIfDefined(formData, key, value) {
-    if (value !== undefined) {
-        formData.append(key, value);
-    }
-}
+// function appendIfDefined(formData, key, value) {
+//     if (value !== undefined) {
+//         formData.append(key, value);
+//     }
+// }
 
 //Sync event to sync the entries
 self.addEventListener('sync', event => {
@@ -85,36 +85,39 @@ self.addEventListener('sync', event => {
             console.log("after openSyncEntriesIDB()")
             getAllSyncEntries(syncEntryDB).then(async (syncEntries) => {
                 console.log("after getAllSyncEntries(syncEntryDB)")
+                console.log(syncEntries)
                 for (const syncEntry of syncEntries) {
                     const formData = new FormData();
-                    appendIfDefined(formData, 'username', syncEntry.formData.username);
-                    appendIfDefined(formData, 'plant_name', syncEntry.formData.plant_name);
-                    appendIfDefined(formData, 'image_url', syncEntry.formData.image_url);
-                    appendIfDefined(formData, 'location', syncEntry.formData.location);
-                    appendIfDefined(formData, 'latitude', syncEntry.formData.latitude);
-                    appendIfDefined(formData, 'longitude', syncEntry.formData.longitude);
-                    appendIfDefined(formData, 'description', syncEntry.formData.description);
-                    appendIfDefined(formData, 'height', syncEntry.formData.height);
-                    appendIfDefined(formData, 'spread', syncEntry.formData.spread);
-                    appendIfDefined(formData, 'flowers', syncEntry.formData.flowers);
-                    appendIfDefined(formData, 'colour', syncEntry.formData.colour);
-                    appendIfDefined(formData, 'leaves', syncEntry.formData.leaves);
-                    appendIfDefined(formData, 'fruits_seeds', syncEntry.formData.fruits_seeds);
-                    appendIfDefined(formData, 'sun_exposure', syncEntry.formData.sun_exposure);
-                    appendIfDefined(formData, 'identification_status', syncEntry.formData.identification_status);
-                    appendIfDefined(formData, 'date_seen', syncEntry.formData.date_seen);
-                    appendIfDefined(formData, 'time_seen', syncEntry.formData.time_seen);
-                    if (syncEntry.formData.image) {
-                        appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, {type: syncEntry.formData.image.type}));
-                    }
+                    formData.append('username', syncEntry.formData.username?.value);
+                    formData.append('plant_name', syncEntry.formData.plant_name?.value);
+                    // formData.append('image', syncEntry.formData.image?.value);
+                    formData.append('image_url', syncEntry.formData.image_url?.value);
+                    formData.append('location', syncEntry.formData.location?.value);
+                    formData.append('latitude', syncEntry.formData.latitude?.value);
+                    formData.append('longitude', syncEntry.formData.longitude?.value);
+                    formData.append('description', syncEntry.formData.description?.value);
+                    formData.append('height', syncEntry.formData.height?.value);
+                    formData.append('spread', syncEntry.formData.spread?.value);
+                    formData.append('flowers', syncEntry.formData.flowers?.value);
+                    formData.append('colour', syncEntry.formData.colour?.value);
+                    formData.append('leaves', syncEntry.formData.leaves?.value);
+                    formData.append('fruits_seeds', syncEntry.formData.fruits_seeds?.value);
+                    formData.append('sun_exposure', syncEntry.formData.sun_exposure?.value);
+                    formData.append('identification_status', syncEntry.formData.identification_status?.value);
+                    formData.append('date_seen', syncEntry.formData.date_seen?.value);
+                    formData.append('time_seen', syncEntry.formData.time_seen?.value);
+                    formData.append('date_post', syncEntry.formData.date_post = Date.now());
+                    formData.append('time_post', syncEntry.formData.time_post.value= new Date().toTimeString().split(' ')[0]);
 
-                    console.log(formData)
+                    if (syncEntry.formData.image) {
+                        formData.append('image', new File([syncEntry.formData.image], syncEntry.formData.image.name, {type: syncEntry.formData.image.type}));
+                    }
 
                     // TODO we have to get the permission
-                    const permission = await Notification.permission;
-                    if (permission !== 'granted') {
-                        return;
-                    }
+                    // const permission = await Notification.permission;
+                    // if (permission !== 'granted') {
+                    //     return;
+                    // }
                     console.log("fetching create post")
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
@@ -131,6 +134,7 @@ self.addEventListener('sync', event => {
                         //     body: 'Entry upload failed! Check for network',
                         // });
                     });
+
                 }
             });
         });

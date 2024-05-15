@@ -5,9 +5,9 @@ function setUsername(){
 
     navigator.serviceWorker.ready
         .then(function (sw) {
-            sw.showNotification('Plantgram', {
-                body: 'Username saved!',
-            });
+            // sw.showNotification('Plantgram', {
+            //     body: 'Username saved!',
+            // });
         });
 }
 
