@@ -173,7 +173,9 @@ const insertEntry = (entry, isPending = false) => {
 
         const img = document.createElement("img");
         img.classList.add("plant-image");
-        if (entry.image) {
+        if (entry.image_url) {
+            img.src = entry.image_url;
+        } else if (entry.image) {
             if (isPending) {
                 img.src = URL.createObjectURL(entry.image);
             } else {
