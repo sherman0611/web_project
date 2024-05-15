@@ -37,6 +37,14 @@ self.addEventListener('install', event => {
                 '/stylesheets/style.css',
                 '/stylesheets/view_plant.css',
             ]);
+
+
+            // cache.addAll([
+            //     '/view_plant/1',
+            //     '/view_plant/2',
+            //     // Add more URLs as needed
+            // ]);
+
             console.log('Service Worker: App Shell Cached');
         }
         catch{

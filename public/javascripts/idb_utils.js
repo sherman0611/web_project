@@ -187,13 +187,17 @@ const insertEntry = (entry, isPending = false) => {
         plantInfoDiv.classList.add("plant-info");
 
         const usernameParagraph = document.createElement("p");
-        usernameParagraph.textContent = "Plant by " + entry.username;
+        usernameParagraph.textContent = entry.plant_name + ", by " + entry.username;
 
-        const dateLocationParagraph = document.createElement("p");
-        dateLocationParagraph.textContent = entry.date ? entry.date.substring(0, 10) + ", " + entry.location : entry.location;
+        const locationParagraph = document.createElement("p");
+        locationParagraph.textContent = "Found at " + entry.location;
+
+        const dateParagraph = document.createElement("p");
+        dateParagraph.textContent = "Found on " + entry.date_post.substring(0, 10);
 
         plantInfoDiv.appendChild(usernameParagraph);
-        plantInfoDiv.appendChild(dateLocationParagraph);
+        plantInfoDiv.appendChild(locationParagraph);
+        plantInfoDiv.appendChild(dateParagraph);
 
         anchor.appendChild(plantInfoDiv);
 

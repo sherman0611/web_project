@@ -21,9 +21,26 @@
                         <input class="text_input" type="text" id="username" name="username">
                         <button class="form-button" type="button" onclick="setUsername()">Save username</button>
                     </div>
+                    <br>
                     <div class="add_plant_entry_container">
                         <span class="required_text"><span class="required">*</span> Required field</span>
-                        <h3>Basic details</h3>
+                        <div><p>Upload image or enter image URL <span class="required">*</span></p>
+                            <label for="image_file">Upload image file</label>
+                            <br>
+                            <input type="file" id="image_file" name="image_file" accept="image/*">
+                            <br>
+                            <label for="image_url">Enter image URL</label>
+                            <br>
+                            <input class="text-input" type="url" id="image_url" name="image_url">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="add_plant_entry_container">
+                        <p>
+                            <label for="plant_name">Plant name <span class="required">*</span> </label>
+                            <br>
+                            <input class="text-input" type="text" id="plant_name" name="plant_name" required>
+                        </p>
                         <p>
                             <label for="description">Plant description<span class="required">*</span></label>
                             <br>
@@ -60,29 +77,8 @@
                             <div id="display_coordinates"></div>
                         </p>
                     </div>
-
-
                     <br>
                     <div class="add_plant_entry_container">
-                        <h3>Identification</h3>
-                        <p>
-                            <label for="plant_name">Plant name <span class="required">*</span> </label>
-                            <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name" required>
-                        </p>
-                        <div><p>Upload image or enter image URL <span class="required">*</span></p>
-                            <label for="image_file">Upload image file</label>
-                            <br>
-                            <input type="file" id="image_file" name="image_file" accept="image/*">
-                            <br>
-                            <label for="image_url">Enter image URL</label>
-                            <br>
-                            <input class="text-input" type="url" id="image_url" name="image_url">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="add_plant_entry_container">
-                        <h3>Plant characteristics</h3>
                         <h4>Plant size </h4>
                         <p>
                             <label for="height">Plant height(cm) <span class="required">*</span> </label>
