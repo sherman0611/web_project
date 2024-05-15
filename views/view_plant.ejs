@@ -48,8 +48,8 @@
                     <div class="bigger-column two-columns container details-container">
                         <div class="plant_details equal-column container">
                             <p id="identification_status"><b>
-                            <% if(plant_entry.identification_status === 'none') { %>
-                                    &#10067;Identification: </b><%= plant_entry.certainty.charAt(0).toUpperCase() + plant_entry.certainty.slice(1) %>
+                            <% if(plant_entry.identification_status === 'unknown') { %>
+                                    &#10067;Identification: </b>Unknown
                             <% } else { %>
                                     <%if(plant_entry.identification_status === "in_progress") { %>
                                         &#8987;Identification: </b>In progress
@@ -83,8 +83,8 @@
                                     <% if(plant_entry.flowers){%>
                                         <p>&#127804;Flowers: <%= plant_entry.flowers %></p>
                                     <%}%>
-                                    <% if(plant_entry.colour_flowers){%>
-                                        <p>&#127799;Colour of the flowers: <%= plant_entry.colour_flowers %></p>
+                                    <% if(plant_entry.colour){%>
+                                        <p>&#127799;Colour of the flowers: <%= plant_entry.colour %></p>
                                     <%}%>
                                     <% if(plant_entry.leaves){%>
                                         <p>&#127811;It has leaves!</p>

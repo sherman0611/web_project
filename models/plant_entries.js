@@ -18,7 +18,6 @@ let PlantEntrySchema  = new Schema({
         leaves: {type: String, required: true},
         fruits_seeds: {type: String, required: true},
         sun_exposure: {type: String, required: true},
-        certainty: {type: String, required: true},
         identification_status: {type: String, default: "none"},
         date_seen: {type: Date, required: true},
         time_seen: {type: String, required: true},
