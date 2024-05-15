@@ -105,11 +105,15 @@
                                         <% } %>
                                 </div>
                         </div>
+
                         <div id="plant_infoDbp" class="txt-container container equal-column hidden">
-                            <h3 id="db_page_title"></h3>
-                            <h4 id="title_dbp"></h4>
-                            <p id="abstract_dbp"></p>
-                            <a id="link_dbp" href=""></a>
+                            <button type="button" class="collapsible">DBPedia Information</button>
+                            <div class="content">
+                                <h3 id="db_page_title"></h3>
+                                <h4 id="title_dbp"></h4>
+                                <p id="abstract_dbp"></p>
+                                <a id="link_dbp" href=""></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -152,6 +156,19 @@
             </div>
         </div>
         <%- include('partials/footer.ejs')%>
+        <script> var coll = document.getElementsByClassName("collapsible");
+            for (let i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+        </script>
         <script src="/javascripts/username_utils.js"></script>
         <script src="/javascripts/comment_utils.js"></script>
         <script src="/javascripts/view_plant.js"></script>
