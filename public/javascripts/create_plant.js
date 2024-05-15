@@ -115,6 +115,12 @@ function getValue(id) {
 }
 
 const submitForm = () => {
+    //check if username exist
+    if (document.getElementById("username").value === "") {
+        alert("Please enter your username!");
+        return;
+    }
+
     setUsername();
     const formData = {
         username: getValue("username"),
@@ -137,10 +143,6 @@ const submitForm = () => {
     };
 
     // verify inputs
-    if (!formData.username) {
-        alert("Please enter your username!");
-        return;
-    }
     if (formData.image && formData.image_url || !formData.image && !formData.image_url) {
         alert("Please select either image upload or URL!");
         return;

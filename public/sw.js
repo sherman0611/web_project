@@ -6,7 +6,6 @@ const CACHE_NAME = 'Plantgram v1';
 self.addEventListener('install', event => {
     console.log('Service Worker: Installing....');
     event.waitUntil((async () => {
-        console.log('Service Worker: Caching App Shell at the moment......');
         try {
             const cache = await caches.open(CACHE_NAME);
             cache.addAll([
@@ -46,8 +45,7 @@ self.addEventListener('install', event => {
             // ]);
 
             console.log('Service Worker: App Shell Cached');
-        }
-        catch{
+        } catch {
             console.log("error occured while caching...")
         }
     })());
@@ -66,17 +64,21 @@ self.addEventListener('activate', event => {
                 }
             })
         })()
-    )
+    );
 })
 
-self.addEventListener('fetch', function(event) {
-    console.log('Service Worker: Fetch', event.request.url);
-
-    event.respondWith(
-        caches.match(event.request).then(function(response) {
-            return response || fetch(event.request);
-        })
-    );
+// Fetch event to fetch from cache first
+self.addEventListener('fetch', event => {
+    event.respondWith((async () => {
+        const cache = await caches.open("static");
+        const cachedResponse = await cache.match(event.request);
+        if (cachedResponse) {
+            console.log('Service Worker: Fetching from Cache: ', event.request.url);
+            return cachedResponse;
+        }
+        console.log('Service Worker: Fetching from URL: ', event.request.url);
+        return fetch(event.request);
+    })());
 });
 
 function appendIfDefined(formData, key, value) {
@@ -141,3 +143,34 @@ self.addEventListener('sync', event => {
 //         event.waitUntil(self.sync.register("sync-entry"));
 //     }
 // });
+
+self.addEventListener('install', event => {
+    console.log('Service Worker: Installing....');
+    event.waitUntil((async () => {
+        const cache = await caches.open("static");
+        const resources = [
+            '/',
+            '/stylesheets/style.css',
+            '/stylesheets/index.css',
+            '/javascripts/app.js',
+            '/javascripts/index.js',
+            '/javascripts/new_plant.js',
+            '/javascripts/view.js',
+            '/new_plant',
+            '/javascripts/view_local.js',
+            '/javascripts/edit_local.js',
+            '/edit_plant_local',
+            '/view_local'
+        ];
+
+        for (const resource of resources) {
+            try {
+                await cache.add(resource);
+            } catch (error) {
+                console.log(`Error occurred while caching ${resource}:`, error);
+            }
+        }
+
+        console.log('Service Worker: App Shell Cached');
+    })());
+});
