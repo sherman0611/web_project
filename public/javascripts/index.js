@@ -65,8 +65,9 @@ function updateDisplay(data) {
 
         if (item.date || item.location) {
             const dateLocationP = document.createElement('p');
-            let dateText = item.date ? new Date(item.date).toISOString().substring(0, 10) : 'Unknown date';
-            dateLocationP.textContent = `${dateText}, ${item.location || 'Unknown location'}`;
+            // let dateText = item.date ? new Date(item.date).toISOString().substring(0, 10) : 'Unknown Date';
+            // dateLocationP.textContent = `${dateText}, ${item.location || 'Unknown location'}`;
+            dateLocationP.textContent = `${item.location || 'Unknown location'}`;
             infoDiv.appendChild(dateLocationP);
         }
 
