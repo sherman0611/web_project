@@ -87,23 +87,3 @@ window.onload = function () {
         }, 100);
     });
 }
-
-// Caching all View Plant links
-// window.onload = function (){
-//     let hrefs = []
-//     const elements = document.getElementById("plant-entries-container")
-//         .getElementsByTagName("a")
-//     for (const a of elements) {
-//         let href = a.getAttribute("href");
-//
-//         if (href && href.trim()) { // exists and not empty
-//             hrefs.push(href);
-//         }
-//     }
-//     try {
-//         const cache = await caches.open(CACHE_NAME);
-//         cache.addAll(hrefs)
-//     } catch {
-//         console.log("Error while caching View Plant links")
-//     }
-// }

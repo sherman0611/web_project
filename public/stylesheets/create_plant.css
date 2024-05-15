@@ -14,29 +14,8 @@
     color:#AA7A54;
 }
 
-input::file-selector-button {
-    background-color: #758874;
-    color: #E4C9AC;
-    transition-duration: 0.4s;
-    border-radius: 10px;
-    border: 0 hidden;
-    padding: 7px;
-}
-
 input[type="file"]:disabled {
     display: none;
-}
-
-/* LOCATION */
-.submitLocation{
-    display: flex;
-    background-color: #758874;
-    margin: auto;
-    color: #E4C9AC;
-    transition-duration: 0.4s;
-    border-radius: 10px;
-    border: 0 hidden;
-    padding: 7px;
 }
 
 /* SINGULAR FIELDS */

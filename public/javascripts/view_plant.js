@@ -3,9 +3,6 @@ let plant_name = null;
 let map;
 
 window.onload = function () {
-    const usernameInput = document.getElementById("username");
-    usernameInput.value = getUsername();
-
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
 
@@ -21,8 +18,9 @@ window.onload = function () {
     if(document.getElementById("identification_status").textContent.includes("Completed")){
         fetchDBPedia();
     }
-    // Ownership
+    // Ownership, username
     identifyAuthor();
+    usernameDefining();
     // Chat functions
     assignCommentAuthor();
     disableChat();

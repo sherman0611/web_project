@@ -114,7 +114,7 @@ self.addEventListener('sync', event => {
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
                         self.registration.showNotification('Plantgram', {
-                            body: 'Entry upload failed, Check for network connection!',
+                            body: 'Entry upload failed! Check for network',
                         });
                     });
                 }

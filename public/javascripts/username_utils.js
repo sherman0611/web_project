@@ -31,6 +31,19 @@ function goToReferrer(){
     }
 }
 
+function usernameDefining(){
+    let html_to_insert = ""
+    let username = getUsername();
+    if(username === "") {
+        html_to_insert = '<input class="text_input" type="text" id="username" name="username">'+
+            '<button class="form-button" type="button" id="save-username" onclick="setUsername()">Save your username</button>'
+    } else {
+        html_to_insert = '<input type="text" class="input-disabled" id="username" name="username" value='+username+' readonly><br>' +
+            '<a class="form-button" href="/enter_username">Change your username</a>'
+    }
+    document.getElementById("username-container").insertAdjacentHTML('beforeend',html_to_insert)
+}
+
 /** Check if the current user is the plant author
  * If so, allow them to edit the plant if the identification has not yet
  * been completed.

@@ -112,8 +112,11 @@ const addEntryToSync = (syncEntryIDB, formData) => {
             console.log("Added entry to idb");
 
             const getRequest = entryStore.get(createRequest.result);
+            console.log(getRequest)
             getRequest.addEventListener("success", () => {
+                console.log("getRequest ready")
                 navigator.serviceWorker.ready.then((sw) => {
+                    console.log("in navigator.serviceWorker.ready")
                     sw.sync.register("sync-entry");
                 }).then(() => {
                     console.log("Sync registered");
