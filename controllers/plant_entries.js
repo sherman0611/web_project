@@ -22,6 +22,7 @@ exports.create = function (plantData, filePath) {
         leaves: plantData.leaves,
         fruits_seeds: plantData.fruits_seeds,
         sun_exposure: plantData.sun_exposure,
+        status: plantData.status,
         date_seen: plantData.date_seen,
         time_seen: plantData.time_seen
     });
@@ -58,7 +59,7 @@ exports.update = async (plantId, plantData) => {
         // Update only the name and identification fields
         const updateData = {
             plant_name: plantData.plant_name,
-            identification_status: plantData.identification_status
+            status: plantData.status
         };
 
         // findByIdAndUpdate used to update the plant

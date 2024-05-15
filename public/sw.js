@@ -102,7 +102,7 @@ self.addEventListener('sync', event => {
                     appendIfDefined(formData, 'leaves', syncEntry.formData.leaves);
                     appendIfDefined(formData, 'fruits_seeds', syncEntry.formData.fruits_seeds);
                     appendIfDefined(formData, 'sun_exposure', syncEntry.formData.sun_exposure);
-                    appendIfDefined(formData, 'identification_status', syncEntry.formData.identification_status);
+                    appendIfDefined(formData, 'status', syncEntry.formData.status);
                     appendIfDefined(formData, 'date_seen', syncEntry.formData.date_seen);
                     appendIfDefined(formData, 'time_seen', syncEntry.formData.time_seen);
                     if (syncEntry.formData.image) {
@@ -115,20 +115,14 @@ self.addEventListener('sync', event => {
                     }).then(() => {
                         console.log('Service Worker: Syncing new entry done');
                         deleteSyncEntryFromIDB(syncEntryDB, syncEntry.id);
-                        navigator.serviceWorker.ready
-                            .then(function (sw) {
-                                sw.showNotification("Todo App", {
-                                    body: 'Entry uploaded successfully!'
-                                });
-                            });
+                        self.registration.showNotification('Plantgram', {
+                            body: 'Entry uploaded successfully!',
+                        });
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
-                        navigator.serviceWorker.ready
-                            .then(function (sw) {
-                                sw.showNotification("Todo App", {
-                                    body: 'Entry upload failed, Check for network connection!'
-                                });
-                            });
+                        self.registration.showNotification('Plantgram', {
+                            body: 'Entry upload failed, Check for network!',
+                        });
                     });
                 }
             }).then(() => {
