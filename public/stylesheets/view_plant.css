@@ -14,6 +14,10 @@
 .nav-links .form-button {
   margin: unset;
 }
+
+.arrow-btn, .arrow-btn:hover {
+  margin: auto 0;
+}
 /* END NAVIGATION BAR SECTION */
 
 /* CONTAINER UTILS */
@@ -33,6 +37,10 @@
 
 .container.bigger-column, .container.smaller-column, .container.equal-column {
   background-color: antiquewhite;
+}
+
+.plant-image {
+  margin: 0 auto;
 }
 
 .view.container .txt-container {

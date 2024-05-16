@@ -37,14 +37,10 @@ window.onload = function () {
  * If so, allow them to edit the plant if the identification has not yet
  * been completed.
  */
-/** Check if the current user is the plant author
- * If so, allow them to edit the plant if the identification has not yet
- * been completed.
- */
 function allowEdit(){
     if(getUsername() === document.getElementById("plant_author").innerText){
         let plant_id = document.getElementById("plant_id").value;
-        let identification_status = document.getElementById("identification_status").textContent;
+        let identification_status = document.getElementById("identification_status").textContent.trim();
         let html_to_insert;
         if(identification_status.includes("Completed")){
             html_to_insert = '<span class="completed-text">' +

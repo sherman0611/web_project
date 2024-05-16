@@ -16,7 +16,9 @@
         <div class="body_container">
             <%- include('partials/header') %>
             <div class="main_section view_plant">
-                <a href="/"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to homepage"></a>
+                <div class="nav-links">
+                    <button class="arrow-btn" onclick="goToReferrer()"><img class="arrow-left-icon" src="/images/arrow_left_icon.png" alt="Go back to the previous page"></button>
+                </div>
                 <div class="two-columns container row-1">
                     <div class="main container smaller-column">
                         <% if (plant_entry === null) { %>
