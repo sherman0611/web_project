@@ -125,16 +125,11 @@ router.get('/fetch-data', (req, res) => {
         result.then(plant_entries => {
             let data = JSON.parse(plant_entries);
             const { order, status, query } = req.query;
-            if (!order) {
-                return res.status(400).json({ error: "Order parameter is required" });
-            }
+
             let filteredData = filterDataByStatus(data, status);
-            let searchedData = query ? searchData(filteredData, query) : filteredData; //If the search input is empty, do not call searchData.
+            let searchedData = searchData(filteredData, query);
             let sortedSearchedData = sortData(searchedData, order);
-            console.log("data", data);
-            console.log("filteredData",filteredData);
-            console.log("searchedData", searchedData);
-            console.log("sortedSearchedData", sortedSearchedData);
+
             res.json(sortedSearchedData);
         }).catch(err => {
             console.log('Error:', err);
@@ -145,17 +140,32 @@ router.get('/fetch-data', (req, res) => {
     }
 });
 
-/**
- * Sort data by date in ascending or descending order
- * @param data
- * @param order - date-asc or date-desc
- * @returns {Array} - sorted data
- */
 function sortData(data, order) {
     return data.sort((a, b) => {
-        return (order === 'date-asc') ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+        let datetimeA, datetimeB;
+        switch (order) {
+            case 'time_seen_asc':
+                datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
+                datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
+                return datetimeA - datetimeB;
+            case 'time_seen_desc':
+                datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
+                datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
+                return datetimeB - datetimeA;
+            case 'time_post_asc':
+                datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
+                datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
+                return datetimeA - datetimeB;
+            case 'time_post_desc':
+                datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
+                datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
+                return datetimeB - datetimeA;
+            default:
+                return 0; // No sorting applied
+        }
     });
 }
+
 
 /**
  * Search data by username, plant name, location, description, colour, and sun exposure
