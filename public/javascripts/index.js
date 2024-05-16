@@ -23,7 +23,11 @@ function sortPosts() {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            updateDisplay(data);
+            const container = document.getElementById('plant-entries-container');
+            container.innerHTML = '';
+            data.forEach(item => {
+                insertEntry(item);
+            });
         })
         .catch(error => console.error('Error:', error));
 }

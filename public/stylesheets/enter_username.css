@@ -1,7 +1,12 @@
-/* MAIN */
+ /*MAIN*/
 .main_section {
     width: 50%;
     margin: 2% auto;
+    /*padding-left: 300px;*/
+}
+
+.arrow-btn {
+ margin-left: 0;
 }
 
 @media (max-width: 800px) {

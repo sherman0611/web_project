@@ -6,7 +6,6 @@ const CACHE_NAME = 'Plantgram v1';
 self.addEventListener('install', event => {
     console.log('Service Worker: Installing....');
     event.waitUntil((async () => {
-        console.log('Service Worker: Caching App Shell at the moment......');
         try {
             const cache = await caches.open(CACHE_NAME);
             cache.addAll([
@@ -37,9 +36,9 @@ self.addEventListener('install', event => {
                 '/stylesheets/style.css',
                 '/stylesheets/view_plant.css',
             ]);
+
             console.log('Service Worker: App Shell Cached');
-        }
-        catch{
+        } catch {
             console.log("error occured while caching...")
         }
     })());
@@ -58,7 +57,7 @@ self.addEventListener('activate', event => {
                 }
             })
         })()
-    )
+    );
 })
 
 self.addEventListener('fetch', function(event) {
@@ -80,11 +79,9 @@ function appendIfDefined(formData, key, value) {
 //Sync event to sync the entries
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-entry') {
-        console.log('Service Worker: Uploading new entries');
+        console.log('Service Worker: Uploading pending entries');
         openSyncEntriesIDB().then((syncEntryDB) => {
-            console.log("after openSyncEntriesIDB()")
             getAllSyncEntries(syncEntryDB).then(async (syncEntries) => {
-                console.log("after getAllSyncEntries(syncEntryDB)")
                 for (const syncEntry of syncEntries) {
                     const formData = new FormData();
                     appendIfDefined(formData, 'username', syncEntry.formData.username);
@@ -101,38 +98,38 @@ self.addEventListener('sync', event => {
                     appendIfDefined(formData, 'leaves', syncEntry.formData.leaves);
                     appendIfDefined(formData, 'fruits_seeds', syncEntry.formData.fruits_seeds);
                     appendIfDefined(formData, 'sun_exposure', syncEntry.formData.sun_exposure);
-                    appendIfDefined(formData, 'identification_status', syncEntry.formData.identification_status);
+                    appendIfDefined(formData, 'status', syncEntry.formData.status);
                     appendIfDefined(formData, 'date_seen', syncEntry.formData.date_seen);
                     appendIfDefined(formData, 'time_seen', syncEntry.formData.time_seen);
                     if (syncEntry.formData.image) {
                         appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, {type: syncEntry.formData.image.type}));
                     }
 
-                    console.log(formData)
-
-                    // TODO we have to get the permission
-                    const permission = await Notification.permission;
-                    if (permission !== 'granted') {
-                        return;
-                    }
-                    console.log("fetching create post")
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
                         body: formData,
                     }).then(() => {
                         console.log('Service Worker: Syncing new entry done');
                         deleteSyncEntryFromIDB(syncEntryDB, syncEntry.id);
-                        // self.registration.showNotification('Plantgram', {
-                        //     body: 'Entry uploaded successfully!',
-                        // });
+                        self.registration.showNotification('Plantgram', {
+                            body: 'Entry uploaded successfully!',
+                        });
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
-                        // self.registration.showNotification('Plantgram', {
-                        //     body: 'Entry upload failed! Check for network',
-                        // });
+                        self.registration.showNotification('Plantgram', {
+                            body: 'Entry upload failed, Check for network!',
+                        });
                     });
                 }
+            }).then(() => {
+                console.log('Service Worker: All pending entries uploaded');
             });
         });
     }
 });
+
+// self.addEventListener('periodicsync', event => {
+//     if (event.tag === 'upload-pending') {
+//         event.waitUntil(self.sync.register("sync-entry"));
+//     }
+// });

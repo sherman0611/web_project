@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <%- include('partials/header') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/index.css'/>
+    <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="#">
 </head>
 <body>
-    <h1><%= message %></h1>
-    <h2><%= error.status %></h2>
-    <pre><%= error.stack %></pre>
+<div class="body_container">
+    <%- include('partials/header') %>
+    <div class="main_section">
+        <p>Error accessing page.</p>
+        <a href="/">Return to Home</a>
+    </div>
+</div>
+<%- include('partials/footer.ejs')%>
+<script src="javascripts/index.js"></script>
 </body>
 </html>
+>

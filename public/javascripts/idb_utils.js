@@ -8,12 +8,10 @@ function openEntriesIDB() {
         request.onupgradeneeded = function (event) {
             const db = event.target.result;
             db.createObjectStore('entries', {keyPath: '_id'});
-            // console.log("123")
         };
         request.onsuccess = function (event) {
             const db = event.target.result;
             resolve(db);
-            // console.log("1234")
         };
     });
 }
@@ -112,14 +110,12 @@ const addEntryToSync = (syncEntryIDB, formData) => {
             console.log("Added entry to idb");
 
             const getRequest = entryStore.get(createRequest.result);
-            console.log(getRequest)
+            // console.log(getRequest)
             getRequest.addEventListener("success", () => {
-                console.log("getRequest ready")
+                // console.log("getRequest ready")
                 navigator.serviceWorker.ready.then((sw) => {
-                    console.log("in navigator.serviceWorker.ready")
+                    // console.log("in navigator.serviceWorker.ready")
                     sw.sync.register("sync-entry");
-                }).then(() => {
-                    console.log("Sync registered");
                 }).catch((err) => {
                     console.log("Sync registration failed: " + JSON.stringify(err));
                 })
@@ -155,7 +151,7 @@ const deleteEntriesFromIDB = (entryIDB) => {
     });
 };
 
-const insertEntry = (entry) => {
+const insertEntry = (entry, isPending = false) => {
     if (entry._id || entry.id) {
         let entry_id;
         if (entry.id) {
@@ -169,15 +165,23 @@ const insertEntry = (entry) => {
         entryDiv.classList.add("home", "link", "container");
 
         const anchor = document.createElement("a");
-        if (entry._id) {
-            anchor.href = "/view_plant/" + entry._id;
-        } else {
+        if (isPending) {
             anchor.href = "/view_plant/" + entry_id;
+        } else {
+            anchor.href = "/view_plant/" + entry._id;
         }
 
         const img = document.createElement("img");
         img.classList.add("plant-image");
-        img.src = entry.image ? (entry.image.includes('public') ? entry.image.replace('public','') : entry.image) : (entry.image_url || '');
+        if (entry.image_url) {
+            img.src = entry.image_url;
+        } else if (entry.image) {
+            if (isPending) {
+                img.src = URL.createObjectURL(entry.image);
+            } else {
+                img.src = entry.image.includes('public') ? entry.image.replace('public','') : entry.image;
+            }
+        }
         img.alt = entry.plant_name;
         anchor.appendChild(img);
 
@@ -185,13 +189,17 @@ const insertEntry = (entry) => {
         plantInfoDiv.classList.add("plant-info");
 
         const usernameParagraph = document.createElement("p");
-        usernameParagraph.textContent = "Plant by " + entry.username;
+        usernameParagraph.textContent = entry.plant_name + ", by " + entry.username;
 
-        const dateLocationParagraph = document.createElement("p");
-        dateLocationParagraph.textContent = entry.date ? entry.date.substring(0, 10) + ", " + entry.location : entry.location;
+        const locationParagraph = document.createElement("p");
+        locationParagraph.textContent = "Found at " + entry.location;
+
+        const dateParagraph = document.createElement("p");
+        dateParagraph.textContent = "Found on " + entry.date_seen.substring(0, 10);
 
         plantInfoDiv.appendChild(usernameParagraph);
-        plantInfoDiv.appendChild(dateLocationParagraph);
+        plantInfoDiv.appendChild(locationParagraph);
+        plantInfoDiv.appendChild(dateParagraph);
 
         anchor.appendChild(plantInfoDiv);
 

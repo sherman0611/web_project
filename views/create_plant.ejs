@@ -18,12 +18,30 @@
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div id="username-container" class="add_plant_entry_container">
                         <label for="username">Your username:</label>
-                        <input class="text_input" type="text" id="username" name="username">
-                        <button class="form-button" type="button" onclick="setUsername()">Save username</button>
+<!--                        <input class="text_input" type="text" id="username" name="username">-->
+<!--                        <button class="form-button" type="button" onclick="setUsername()">Save username</button>-->
                     </div>
+                    <br>
                     <div class="add_plant_entry_container">
                         <span class="required_text"><span class="required">*</span> Required field</span>
-                        <h3>Basic details</h3>
+                        <div>
+                            <h4>Upload image or enter image URL <span class="required">*</span></h4>
+                            <label for="image_file">Upload image file</label>
+                            <br>
+                            <input type="file" id="image_file" name="image_file" accept="image/*">
+                            <br>
+                            <label for="image_url">Enter image URL</label>
+                            <br>
+                            <input class="text-input" type="url" id="image_url" name="image_url">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="add_plant_entry_container">
+                        <p>
+                            <label for="plant_name">Plant name <span class="required">*</span> </label>
+                            <br>
+                            <input class="text-input" type="text" id="plant_name" name="plant_name" required>
+                        </p>
                         <p>
                             <label for="description">Plant description<span class="required">*</span></label>
                             <br>
@@ -45,7 +63,6 @@
                             <br>
                             <input type="time" id="time_seen" name="time_seen" required><br>
                         </p>
-
                         <p>
                             <label for="location">Location found <span class="required">*</span> </label>
                             <br>
@@ -60,40 +77,19 @@
                             <div id="display_coordinates"></div>
                         </p>
                     </div>
-
-
                     <br>
                     <div class="add_plant_entry_container">
-                        <h3>Identification</h3>
                         <p>
-                            <label for="plant_name">Plant name <span class="required">*</span> </label>
+                            <label for="plant_certainty">Identification status<span class="required">*</span></label>
                             <br>
-                            <input class="text-input" type="text" id="plant_name" name="plant_name" required>
-                        </p>
-                        <div><p>Upload image or enter image URL <span class="required">*</span></p>
-                            <label for="image_file">Upload image file</label>
-                            <br>
-                            <input type="file" id="image_file" name="image_file" accept="image/*">
-                            <br>
-                            <label for="image_url">Enter image URL</label>
-                            <br>
-                            <input class="text-input" type="url" id="image_url" name="image_url">
-                        </div>
-                        <p>
-                            <label for="plant_status">Identification status: <span class="required">*</span></label>
-                            <br>
-                            <label for="plant_status">
-                                <select id="identification_status" name="plant_status">
+                            <label for="plant_certainty_status">
+                                <select id="status" name="status">
                                     <option hidden disabled selected value> -- select an option -- </option>
                                     <option value="unknown">Unknown</option>
-                                    <option value="uncertain">In Progress</option>
+                                    <option value="in_progress">In Progress</option>
                                 </select>
                             </label>
                         </p>
-                    </div>
-                    <br>
-                    <div class="add_plant_entry_container">
-                        <h3>Plant characteristics</h3>
                         <h4>Plant size </h4>
                         <p>
                             <label for="height">Plant height(cm) <span class="required">*</span> </label>

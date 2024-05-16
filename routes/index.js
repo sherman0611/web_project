@@ -15,12 +15,27 @@ var storage = multer.diskStorage({
         cb(null, filename);
     }
 });
-
 let upload = multer({ storage: storage });
 
 /* GET index page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Home page' });
+})
+
+router.get('/create_plant', function(req, res, next) {
+    res.render('create_plant', { title: 'Create plant entry' });
+});
+
+router.get('/enter_username', function(req, res, next) {
+    res.render('enter_username', { title: 'Enter your username' });
+});
+
+router.get('/pending_posts', function(req, res, next) {
+    res.render('pending_posts', { title: 'Pending posts' });
+});
+
+router.get('/error', function(req, res, next) {
+    res.render('error', { title: 'Error' });
 });
 
 router.get('/entries', function (req, res, next) {
@@ -32,20 +47,6 @@ router.get('/entries', function (req, res, next) {
     });
 })
 
-router.get('/enter_username', function(req, res, next) {
-    res.render('enter_username', { title: 'Enter your username' });
-});
-
-router.get('/pending_posts', function(req, res, next) {
-    res.render('pending_posts', { title: 'Pending posts' });
-});
-
-/* GET create plant entry page. */
-router.get('/create_plant', function(req, res, next) {
-    res.render('create_plant', { title: 'Create plant entry' });
-});
-
-/* POST create plant entry form. */
 router.post('/create_entry', upload.single('image'), function(req, res, next) {
     let filePath = null;
     if (req.file && req.file.path) {
@@ -88,8 +89,7 @@ router.get('/view_plant/:id', function(req, res, next) {
             let plantData = JSON.parse(results[0]);
             let commentsData = JSON.parse(results[1]);
             res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
-        })
-        .catch(errors => {
+        }).catch(errors => {
             let plantData = null;
             let commentsData = null;
             if (!errors[0]) {
@@ -100,6 +100,27 @@ router.get('/view_plant/:id', function(req, res, next) {
             }
             res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
         });
+});
+
+router.get('/edit_plant/:id', function(req, res, next) {
+    const plant_id = req.params.id;
+    console.log("plant_id");
+    console.log(plant_id);
+    let plantResult = entries.getById(plant_id);
+
+    Promise.all([plantResult])
+        .then(results => {
+            let plantData = JSON.parse(results[0]);
+            console.log("plantData");
+            console.log(plantData);
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+        }).catch(errors => {
+            let plantData = null;
+            if (!errors[0]) {
+                plantData = JSON.parse(errors[0]);
+            }
+            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
+    });
 });
 
 /* POST comment form. */
@@ -198,29 +219,7 @@ function filterDataByStatus(data, status) {
     if (status === "all") {
         return data;
     }
-    return data.filter(item => item.identification_status === status);
+    return data.filter(item => item.status === status);
 }
-
-router.get('/edit_plant/:id', function(req, res, next) {
-    const plant_id = req.params.id;
-    console.log("plant_id");
-    console.log(plant_id);
-    let plantResult = entries.getById(plant_id);
-
-    Promise.all([plantResult])
-        .then(results => {
-            let plantData = JSON.parse(results[0]);
-            console.log("plantData");
-            console.log(plantData);
-            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
-        })
-        .catch(errors => {
-            let plantData = null;
-            if (!errors[0]) {
-                plantData = JSON.parse(errors[0]);
-            }
-            res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
-        });
-});
 
 module.exports = router;

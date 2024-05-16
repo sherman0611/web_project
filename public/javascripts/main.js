@@ -6,23 +6,29 @@ if (!window.indexedDB) {
 // Register service worker to control making site work offline
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', {scope: '/'})
-        .then(function (reg) {
-            console.log('Service Worker Registered!', reg);
-        })
-        .catch(function (err) {
+        .then(function () {
+            console.log('Service Worker Registered!');
+        }).catch(function (err) {
             console.log('Service Worker registration failed: ', err);
         });
-    // TODO? from the lectures
-    // if (registration.periodicSync) {
-    //     // Periodic Background Sync is supported.
-    // } else {
-    //     // Periodic Background Sync isn't supported. }
-    // });
+
+    // navigator.serviceWorker.ready.then(registration => {
+    //     if (registration.periodicSync) {
+    //         try {
+    //             registration.periodicSync.register("upload-pending", {
+    //                 minInterval: 24 * 60 * 60 * 1000,
+    //             });
+    //             console.log('Periodic Background registered');
+    //         } catch {
+    //             console.log("Periodic Sync could not be registered!");
+    //         }
+    //     } else {
+    //         console.log('Periodic Background Sync not supported');
+    //     }});
 }
 
 // Check if the browser supports the Notification API
 if ("Notification" in window) {
-    // Check if the user has granted permission to receive notifications
     if (Notification.permission === "granted") {
         // Notifications are allowed, you can proceed to create notifications
         // Or do whatever you need to do with notifications
@@ -33,12 +39,10 @@ if ("Notification" in window) {
             // If the user grants permission, you can proceed to create notifications
             if (permission === "granted") {
                 navigator.serviceWorker.ready
-                    .then(function (serviceWorkerRegistration) {
-                        serviceWorkerRegistration.showNotification("Todo App",
-                            {body: "Notifications are enabled!"})
-                            .then(r =>
-                                console.log(r)
-                            );
+                    .then(function (sw) {
+                        sw.showNotification("Todo App", {
+                            body: "Notifications are enabled!"
+                        });
                     });
             }
         });
@@ -46,16 +50,22 @@ if ("Notification" in window) {
 }
 
 if (navigator.onLine) {
+    // upload pending entries when online
+    navigator.serviceWorker.ready.then((sw) => {
+        sw.sync.register("sync-entry");
+    })
+
+    // fetch all entries from mongo and save to idb
     fetch('http://localhost:3000/entries')
         .then(function (res) {
             return res.json();
         }).then(function (newEntries) {
-        openEntriesIDB().then((db) => {
-            deleteEntriesFromIDB(db).then(() => {
-                addNewEntriesToIDB(db, newEntries).then(() => {
-                    console.log("All new entries added to IDB");
-                })
-            });
+            openEntriesIDB().then((db) => {
+                deleteEntriesFromIDB(db).then(() => {
+                    addNewEntriesToIDB(db, newEntries).then(() => {
+                        console.log("All new entries added to IDB");
+                    })
+                });
         });
     });
 }
