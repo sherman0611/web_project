@@ -142,19 +142,26 @@ router.post('/send_comment', function(req, res, next) {
  * @param res
  */
 router.get('/fetch-data', (req, res) => {
+    let { order, status, query, flowers, leaves, fruits_seeds, sun_exposure } = req.query;
+    sun_exposure = JSON.parse(sun_exposure || "[]");
+
     try {
         let result = entries.getAll();
         result.then(plant_entries => {
             let data = JSON.parse(plant_entries);
-            const { order, status, query } = req.query;
 
+            // Filter data based on the received filters
+            data = data.filter(item => {
+                return (!flowers || item.flowers.toString() === flowers) &&
+                    (!leaves || item.leaves.toString() === leaves) &&
+                    (!fruits_seeds || item.fruits_seeds.toString() === fruits_seeds) &&
+                    (sun_exposure.length === 0 || sun_exposure.includes(item.sun_exposure));
+            });
+            console.log("flowers", req.query);
             let filteredData = filterDataByStatus(data, status);
             let searchedData = searchData(filteredData, query);
             let sortedSearchedData = sortData(searchedData, order);
-
             res.json(sortedSearchedData);
-        }).catch(err => {
-            console.log('Error:', err);
         });
     } catch (err) {
         console.error('Error:', err);
@@ -166,19 +173,19 @@ function sortData(data, order) {
     return data.sort((a, b) => {
         let datetimeA, datetimeB;
         switch (order) {
-            case 'time_seen_asc':
+            case 'date_seen_asc':
                 datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
                 datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
                 return datetimeA - datetimeB;
-            case 'time_seen_desc':
+            case 'date_seen_desc':
                 datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
                 datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
                 return datetimeB - datetimeA;
-            case 'time_post_asc':
+            case 'date_post_asc':
                 datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
                 datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
                 return datetimeA - datetimeB;
-            case 'time_post_desc':
+            case 'date_post_desc':
                 datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
                 datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
                 return datetimeB - datetimeA;
