@@ -95,6 +95,12 @@
   font-size: 1.17em;
 }
 
+#abstract_dbp {
+  max-height: 300px;
+  overflow: scroll;
+  overflow-x: auto;
+}
+
 .container.two-columns .bigger-column {
   max-width: 65%;
   width: 65%;
