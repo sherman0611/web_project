@@ -20,7 +20,8 @@ window.onload = function () {
     });
 
     // DBPedia
-    if(document.getElementById("identification_status").textContent.includes("completed")){
+    if(document.getElementById("identification_status").textContent.includes("Completed")){
+        console.log("DBPedia fetching");
         fetchDBPedia();
     }
     // Ownership
@@ -85,6 +86,7 @@ async function initMap() {
 
 // Fetch DBPedia data and display if found
 function fetchDBPedia() {
+    console.log("fetching DBPedia data");
     let plant = plant_name;
     //lowercase all word
     plant = plant.toLowerCase();
