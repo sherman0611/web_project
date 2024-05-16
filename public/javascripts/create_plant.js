@@ -7,6 +7,9 @@ window.onload = function () {
     // usernameInput.value = getUsername();
     usernameDefining()
 
+    const create_button = document.getElementById("create_button")
+    create_button.addEventListener("click", submitForm)
+
     const image_file = document.getElementById('image_file')
     const image_url = document.getElementById('image_url')
     image_file.addEventListener("change", () => {
@@ -123,7 +126,7 @@ const submitForm = () => {
         return;
     }
 
-    setUsername();
+    // setUsername();
     const formData = {
         username: getValue("username"),
         plant_name: getValue("plant_name"),
@@ -168,4 +171,7 @@ const submitForm = () => {
                 body: "Entry added to pending list!"
             });
         });
+
+    goToReferrer();
+    // document.location = "/" //TODO: if we want to refer back to homepage
 }

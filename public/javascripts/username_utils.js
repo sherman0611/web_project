@@ -5,9 +5,9 @@ function setUsername(){
 
     navigator.serviceWorker.ready
         .then(function (sw) {
-            sw.showNotification('Plantgram', {
-                body: 'Username saved!',
-            });
+            // sw.showNotification('Plantgram', {
+            //     body: 'Username saved!',
+            // });
         });
 }
 
@@ -24,7 +24,6 @@ function getUsername() {
 
 // Pull the username from the localStorage or allow to create a new username
 function usernameDefining(){
-    console.log("usernameDefining")
     let html_to_insert = ""
     let username = getUsername();
     if(username === "") {

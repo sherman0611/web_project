@@ -3,7 +3,6 @@ let plant_name = null;
 let map;
 
 window.onload = function () {
-    console.log("onload")
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
 
