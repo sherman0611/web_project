@@ -172,6 +172,6 @@ const submitForm = () => {
             });
         });
 
-    goToReferrer();
+    // goToReferrer();
     // document.location = "/" //TODO: if we want to refer back to homepage
 }
