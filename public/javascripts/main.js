@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
         });
 
     navigator.serviceWorker.addEventListener("message", (event) => {
-        console.log("got the message")
+        // Redirect the page
         if (event.data && event.data.redirectTo) {
             window.location.href = event.data.redirectTo;
         }
@@ -47,9 +47,9 @@ if ("Notification" in window) {
             if (permission === "granted") {
                 navigator.serviceWorker.ready
                     .then(function (sw) {
-                        // sw.showNotification("Plantgram", {
-                        //     body: "Notifications are enabled!"
-                        // });
+                        sw.showNotification("Plantgram", {
+                            body: "Notifications are enabled!"
+                        });
                     });
             }
         });

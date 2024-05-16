@@ -104,6 +104,7 @@ self.addEventListener('sync', event => {
                     if (syncEntry.formData.image) {
                         appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, {type: syncEntry.formData.image.type}));
                     }
+                    const permission = await Notification.permission;
 
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
@@ -112,33 +113,37 @@ self.addEventListener('sync', event => {
                         console.log('Service Worker: Syncing new entry done');
                         deleteSyncEntryFromIDB(syncEntryDB, syncEntry.id);
 
-
-
+                        // From https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage
+                        // Re-written for the purpose of this project
                         self.clients.matchAll().then(clients => {
                             if (clients.length === 0) {
-                                console.log('No controlled clients found');
+                                console.log('No matched clients found');
                             } else {
-                                const client = clients[0]; // Get the first client
-                                console.log('Send msg to client');
-                                client.postMessage({ redirectTo: '/' }); // Send message
+                                const client = clients[0];
+                                // Send message: redirect
+                                client.postMessage({ redirectTo: '/' });
                             }
                         }).catch(error => {
                             console.error('Error getting clients:', error);
                         });
 
-                        // self.registration.showNotification('Plantgram', {
-                        //     body: 'Entry uploaded successfully!',
-                        // });
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Entry uploaded successfully!',
+                            });
+                        }
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
-                        // self.registration.showNotification('Plantgram', {
-                        //     body: 'Entry upload failed, Check for network!',
-                        // });
+
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Entry upload failed, check your network connection!',
+                            });
+                        }
                     });
                 }
             }).then(() => {
                 console.log('Service Worker: All pending entries uploaded');
-
             });
         });
     }

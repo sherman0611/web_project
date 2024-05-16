@@ -167,9 +167,12 @@ const submitForm = () => {
 
     navigator.serviceWorker.ready
         .then(function (sw) {
-            // sw.showNotification("Plantgram", {
-            //     body: "Entry added to pending list!"
-            // });
+            const permission = Notification.permission;
+            if (permission === 'granted') {
+                sw.showNotification("Plantgram", {
+                    body: "Entry added to pending list!"
+                });
+            }
         });
 
     // goToReferrer();

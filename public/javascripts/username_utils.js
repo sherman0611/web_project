@@ -5,9 +5,12 @@ function setUsername(){
 
     navigator.serviceWorker.ready
         .then(function (sw) {
-            // sw.showNotification('Plantgram', {
-            //     body: 'Username saved!',
-            // });
+            const permission = Notification.permission;
+            if (permission === 'granted') {
+                sw.showNotification('Plantgram', {
+                    body: 'Username saved!',
+                });
+            }
         });
 }
 
