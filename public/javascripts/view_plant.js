@@ -20,7 +20,7 @@ window.onload = function () {
     });
 
     // DBPedia
-    if(document.getElementById("identification_status").textContent.includes("Completed")){
+    if (document.getElementById("identification_status").textContent.includes("Completed")) {
         console.log("DBPedia fetching");
         fetchDBPedia();
     }
@@ -32,6 +32,19 @@ window.onload = function () {
     scrollToBottomChat();
     // Map
     initMap();
+
+    var coll = document.getElementsByClassName("collapsible");
+    for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
 }
 
 /** Check if the current user is the plant author
@@ -42,12 +55,12 @@ window.onload = function () {
  * If so, allow them to edit the plant if the identification has not yet
  * been completed.
  */
-function allowEdit(){
-    if(getUsername() === document.getElementById("plant_author").innerText){
+function allowEdit() {
+    if (getUsername() === document.getElementById("plant_author").innerText) {
         let plant_id = document.getElementById("plant_id").value;
         let identification_status = document.getElementById("identification_status").textContent;
         let html_to_insert;
-        if(identification_status.includes("Completed")){
+        if (identification_status.includes("Completed")) {
             html_to_insert = '<span class="completed-text">' +
                 '<img class="completed-icon" src="/images/completed.png" alt="Completed icon">' +
                 '<b>The identification of your plant is completed!</b></span><br>';
