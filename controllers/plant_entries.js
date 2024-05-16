@@ -24,7 +24,9 @@ exports.create = function (plantData, filePath) {
         sun_exposure: plantData.sun_exposure,
         status: plantData.status,
         date_seen: plantData.date_seen,
-        time_seen: plantData.time_seen
+        time_seen: plantData.time_seen,
+        date_post :plantData.date_post,
+        time_post : plantData.time_post
     });
 
     return entry.save().then(entry => {

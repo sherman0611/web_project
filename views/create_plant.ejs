@@ -80,13 +80,13 @@
                     <br>
                     <div class="add_plant_entry_container">
                         <p>
-                            <label for="plant_certainty">Plant unknown or uncertain?</label>
+                            <label for="plant_certainty">Identification status<span class="required">*</span></label>
                             <br>
                             <label for="plant_certainty_status">
                                 <select id="status" name="status">
-                                    <option value="">Select an option</option>
+                                    <option hidden disabled selected value> -- select an option -- </option>
                                     <option value="unknown">Unknown</option>
-                                    <option value="uncertain">Uncertain</option>
+                                    <option value="in_progress">In Progress</option>
                                 </select>
                             </label>
                         </p>
