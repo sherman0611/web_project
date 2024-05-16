@@ -4,7 +4,7 @@ const CACHE_NAME = 'Plantgram v1';
 
 // Use the install event to pre-cache all initial resources.
 self.addEventListener('install', event => {
-    console.log('Service Worker: Installing....');
+    // console.log('Service Worker: Installing....');
     event.waitUntil((async () => {
         try {
             const cache = await caches.open(CACHE_NAME);
@@ -37,7 +37,7 @@ self.addEventListener('install', event => {
                 '/stylesheets/view_plant.css',
             ]);
 
-            console.log('Service Worker: App Shell Cached');
+            // console.log('Service Worker: App Shell Cached');
         } catch {
             console.log("error occured while caching...")
         }
@@ -112,9 +112,9 @@ function appendIfDefined(formData, key, value) {
 //Sync event to sync the entries
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-entry') {
-        console.log('Service Worker: Uploading pending entries');
-        openSyncEntriesIDB().then((syncEntryDB) => {
-            getAllSyncEntries(syncEntryDB).then(async (syncEntries) => {
+        // console.log('Service Worker: Uploading pending entries');
+        openSyncIDB('sync-entries').then((syncEntryDB) => {
+            getAllSyncItems(syncEntryDB, 'sync-entries').then(async (syncEntries) => {
                 for (const syncEntry of syncEntries) {
                     const formData = new FormData();
                     appendIfDefined(formData, 'username', syncEntry.formData.username);
@@ -145,8 +145,8 @@ self.addEventListener('sync', event => {
                         method: 'POST',
                         body: formData,
                     }).then(() => {
-                        console.log('Service Worker: Syncing new entry done');
-                        deleteSyncEntryFromIDB(syncEntryDB, syncEntry.id);
+                        // console.log('Service Worker: Syncing new entry done');
+                        deleteSyncItemFromIDB(syncEntryDB, syncEntry.id, 'sync-entries');
 
                         // From https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage
                         // Re-written for the purpose of this project
@@ -179,6 +179,46 @@ self.addEventListener('sync', event => {
                 }
             }).then(() => {
                 console.log('Service Worker: All pending entries uploaded');
+            });
+        });
+    } else if (event.tag.includes('sync-comment')){
+        let plant_id = event.tag.replace('sync-comment-','');
+        let db_name = 'sync-comments-'+plant_id
+        console.log('Service Worker: Uploading pending comments');
+        openSyncIDB(db_name).then((syncCommentDB) => {
+            getAllSyncItems(syncCommentDB, db_name).then(async (syncComments) => {
+                for (const syncComment of syncComments) {
+                    const formData = new FormData();
+                    appendIfDefined(formData, 'username', syncComment.formData.username);
+                    appendIfDefined(formData, 'comment_text', syncComment.formData.comment_text);
+                    appendIfDefined(formData, 'date', new Date());
+                    const permission = await Notification.permission;
+
+                    fetch('http://localhost:3000/send_comment', {
+                        method: 'POST',
+                        body: formData,
+                    }).then(() => {
+                        uploadComments()
+                        console.log('Service Worker: Syncing new comments done');
+                        deleteSyncItemFromIDB(syncCommentDB, syncComment.id, db_name);
+
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Comments uploaded successfully!',
+                            });
+                        }
+                    }).catch((err) => {
+                        console.error('Service Worker: Syncing new comment error');
+
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Comment upload failed, check your network connection!',
+                            });
+                        }
+                    });
+                }
+            }).then(() => {
+                console.log('Service Worker: All pending comments uploaded');
             });
         });
     }

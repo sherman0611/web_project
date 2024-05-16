@@ -47,6 +47,16 @@ router.get('/entries', function (req, res, next) {
     });
 })
 
+router.get('/comments/:id', function (req, res, next) {
+    let plant_id = req.params.id;
+    comments.getAllByPlantId(plant_id).then(comments => {
+        return res.send(comments);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
+})
+
 router.post('/create_entry', upload.single('image'), function(req, res, next) {
     let filePath = null;
     if (req.file && req.file.path) {
@@ -104,15 +114,11 @@ router.get('/view_plant/:id', function(req, res, next) {
 
 router.get('/edit_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
-    console.log("plant_id");
-    console.log(plant_id);
     let plantResult = entries.getById(plant_id);
 
     Promise.all([plantResult])
         .then(results => {
             let plantData = JSON.parse(results[0]);
-            console.log("plantData");
-            console.log(plantData);
             res.render('edit_plant', { title: 'Edit plant entry', plant_id: plant_id, plant_entry: plantData });
         }).catch(errors => {
             let plantData = null;
@@ -126,6 +132,7 @@ router.get('/edit_plant/:id', function(req, res, next) {
 /* POST comment form. */
 router.post('/send_comment', function(req, res, next) {
     let commentData = req.body;
+    console.log(commentData)
     let result = comments.create(commentData);
     result.then(comment => {
         let data = JSON.parse(comment);

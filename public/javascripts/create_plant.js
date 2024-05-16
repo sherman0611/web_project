@@ -1,10 +1,7 @@
 let displayCoords = document.getElementById("display_coordinates");
 
 window.onload = function () {
-    console.log("onload")
-    // inject username to html
-    // const usernameInput = document.getElementById("username");
-    // usernameInput.value = getUsername();
+    // Let user define username (if new user) or keep on using the saved one
     usernameDefining()
 
     const create_button = document.getElementById("create_button")
@@ -16,7 +13,6 @@ window.onload = function () {
         image_url.disabled = image_file.files.length === 1;
     });
     image_url.addEventListener("input", () => {
-        console.log(image_url.value.length)
         image_file.disabled = image_url.value.length > 1;
         if(image_url.value.length > 1){
             image_file.classList.add("disabled")
@@ -100,31 +96,14 @@ function toggleColourInput() {
     }
 }
 
-function getValue(id) {
-    const element = document.getElementById(id);
-    if (element) {
-        if (element.type === "text" || element.type === "number" || element.type === "url") {
-            if (element.value.trim() !== "") {
-                return element.value;
-            }
-        } else if (element.type === "radio") {
-            const checked = document.querySelector(`input[name="${element.name}"]:checked`);
-
-            if (checked) {
-                return checked.value;
-            }
-        } else {
-            return element.value;
-        }
-    }
-}
-
 const submitForm = () => {
     //check if username exist
     if (document.getElementById("username").value === "") {
         alert("Please enter your username!");
         return;
     }
+
+    setUsername()
 
     // setUsername();
     const formData = {
@@ -161,8 +140,8 @@ const submitForm = () => {
         return;
     }
 
-    openSyncEntriesIDB().then((db) => {
-        addEntryToSync(db, formData);
+    openSyncIDB('sync-entries').then((db) => {
+        addToSync(db, formData, 'sync-entries');
     });
 
     navigator.serviceWorker.ready
