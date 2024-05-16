@@ -18,8 +18,8 @@
                 <form id="create_plant_form" action="/create_plant" method="post" enctype="multipart/form-data" >
                     <div id="username-container" class="add_plant_entry_container">
                         <label for="username">Your username:</label>
-                        <input class="text_input" type="text" id="username" name="username">
-                        <button class="form-button" type="button" onclick="setUsername()">Save username</button>
+<!--                        <input class="text_input" type="text" id="username" name="username">-->
+<!--                        <button class="form-button" type="button" onclick="setUsername()">Save username</button>-->
                     </div>
                     <br>
                     <div class="add_plant_entry_container">
@@ -147,7 +147,7 @@
                         </p>
                     </div>
                     <br>
-                    <input id="create_button" class="new_todo form-button" type="button" value="Create plant entry"/>
+                    <input id="create_button" class="new_todo form-button" type="button" value="Create plant entry" onsubmit="goToReferrer()"/>
                     <br>
                 </form>
             </div>
