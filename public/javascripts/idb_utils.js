@@ -188,7 +188,7 @@ const insertEntry = (entry, isPending = false) => {
         const plantInfoDiv = document.createElement("div");
         plantInfoDiv.classList.add("plant-info");
 
-        const usernameParagraph = document.createElement("p");
+        const usernameParagraph = document.createElement("b");
         usernameParagraph.textContent = entry.plant_name + ", by " + entry.username;
 
         const locationParagraph = document.createElement("p");
