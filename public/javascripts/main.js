@@ -12,6 +12,13 @@ if ('serviceWorker' in navigator) {
             console.log('Service Worker registration failed: ', err);
         });
 
+    navigator.serviceWorker.addEventListener("message", (event) => {
+        console.log("got the message")
+        if (event.data && event.data.redirectTo) {
+            window.location.href = event.data.redirectTo;
+        }
+    })
+
     // navigator.serviceWorker.ready.then(registration => {
     //     if (registration.periodicSync) {
     //         try {
@@ -40,9 +47,9 @@ if ("Notification" in window) {
             if (permission === "granted") {
                 navigator.serviceWorker.ready
                     .then(function (sw) {
-                        sw.showNotification("Todo App", {
-                            body: "Notifications are enabled!"
-                        });
+                        // sw.showNotification("Plantgram", {
+                        //     body: "Notifications are enabled!"
+                        // });
                     });
             }
         });
@@ -69,3 +76,9 @@ if (navigator.onLine) {
         });
     });
 }
+
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.redirectTo) {
+        window.location.href = event.data.redirectTo;
+    }
+});

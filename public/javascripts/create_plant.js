@@ -167,9 +167,9 @@ const submitForm = () => {
 
     navigator.serviceWorker.ready
         .then(function (sw) {
-            sw.showNotification("Plantgram", {
-                body: "Entry added to pending list!"
-            });
+            // sw.showNotification("Plantgram", {
+            //     body: "Entry added to pending list!"
+            // });
         });
 
     // goToReferrer();

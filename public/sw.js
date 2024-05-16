@@ -111,18 +111,34 @@ self.addEventListener('sync', event => {
                     }).then(() => {
                         console.log('Service Worker: Syncing new entry done');
                         deleteSyncEntryFromIDB(syncEntryDB, syncEntry.id);
-                        self.registration.showNotification('Plantgram', {
-                            body: 'Entry uploaded successfully!',
+
+
+
+                        self.clients.matchAll().then(clients => {
+                            if (clients.length === 0) {
+                                console.log('No controlled clients found');
+                            } else {
+                                const client = clients[0]; // Get the first client
+                                console.log('Send msg to client');
+                                client.postMessage({ redirectTo: '/' }); // Send message
+                            }
+                        }).catch(error => {
+                            console.error('Error getting clients:', error);
                         });
+
+                        // self.registration.showNotification('Plantgram', {
+                        //     body: 'Entry uploaded successfully!',
+                        // });
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
-                        self.registration.showNotification('Plantgram', {
-                            body: 'Entry upload failed, Check for network!',
-                        });
+                        // self.registration.showNotification('Plantgram', {
+                        //     body: 'Entry upload failed, Check for network!',
+                        // });
                     });
                 }
             }).then(() => {
                 console.log('Service Worker: All pending entries uploaded');
+
             });
         });
     }
