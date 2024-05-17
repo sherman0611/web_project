@@ -9,6 +9,7 @@ const submitComment = () => {
 
     setUsername();
 
+    // Get the current date
     const dateObj = new Date();
     const month   = dateObj.getUTCMonth() + 1; // months from 1-12
     const day     = dateObj.getUTCDate();
@@ -28,10 +29,12 @@ const submitComment = () => {
         return;
     }
 
+    // Add the comment to the database
     openSyncIDB('sync-comments').then((db) => {
         addToSync(db, formData, 'sync-comments');
     });
 
+    // Notify the user that the comment has been added
     navigator.serviceWorker.ready
         .then(function (sw) {
             const permission = Notification.permission;
@@ -41,6 +44,7 @@ const submitComment = () => {
                 });
             }
         }).then(function (sw) {
+            // Emit the comment to the server
             try{
                 socket.emit('comment', plant_id, formData);
             } catch(e) {
@@ -88,7 +92,7 @@ function writeNewComment(data, isPending = false) {
     if (isPending) {
         commentContainer.classList.add('pending');
     }
-    // commentContainer.classList.add('right');
+    commentContainer.classList.add('right');
 
     let usernameParagraph = document.createElement('p');
     let usernameStrong = document.createElement('strong');
@@ -138,7 +142,7 @@ function disableChat(){
     }
 }
 
-
+// Load the comments from the database
 const insertComment = (comment, isPending = false) => {
     if (comment._id || comment.id) {
         if (comment.id) {
@@ -147,5 +151,4 @@ const insertComment = (comment, isPending = false) => {
 
         writeNewComment(comment, isPending)
     }
-    // writeNewComment(comment, isPending)
 };
