@@ -165,6 +165,10 @@
   place-self: end;
   background: antiquewhite;
 }
+
+.bubble.pending {
+  background: #555555;
+}
 /* END COMMENTS SECTION */
 /* MEDIA */
 @media (max-width: 1500px){

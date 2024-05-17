@@ -42,7 +42,7 @@ window.onload = function () {
     // Ownership
     allowEdit();
     // Chat functions
-    assignCommentAuthor();
+    // assignCommentAuthor();
     disableChat();
     scrollToBottomChat();
     // Map
@@ -72,16 +72,16 @@ window.onload = function () {
         }, 100);
     });
 
-    // // display pending comments
-    // openSyncIDB('sync-comments').then((db) => {
-    //     setTimeout(() => { // Adding delay here
-    //         getAllSyncItems(db, 'sync-comments').then((items) => {
-    //             for (const item of items) {
-    //                 insertComment(item)
-    //             }
-    //         });
-    //     }, 100);
-    // });
+    // display pending comments
+    openSyncIDB('sync-comments').then((db) => {
+        setTimeout(() => { // Adding delay here
+            getAllSyncItems(db, 'sync-comments').then((items) => {
+                for (const item of items) {
+                    insertComment(item, true)
+                }
+            });
+        }, 100);
+    });
 }
 
 /** Check if the current user is the plant author

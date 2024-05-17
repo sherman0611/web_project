@@ -41,13 +41,14 @@ const submitComment = () => {
                 });
             }
         }).then(function (sw) {
-            document.getElementById("comment_text").value = "";
             try{
                 socket.emit('comment', plant_id, formData);
             } catch(e) {
                 console.log("Problems with Socket.IO: "+e)
             }
         })
+
+    document.getElementById('comment_text').value = '';
 }
 
 // As the page loads, scroll to the latest messages
@@ -78,13 +79,16 @@ function assignCommentAuthor(){
 }
 
 // Display a new comment in the comment box
-function writeNewComment(data) {
+function writeNewComment(data, isPending = false) {
     let commentsContainer = document.getElementById('comments_container');
 
     let commentContainer = document.createElement('div');
     commentContainer.classList.add('comment-container');
     commentContainer.classList.add('bubble');
-    commentContainer.classList.add('right');
+    if (isPending) {
+        commentContainer.classList.add('pending');
+    }
+    // commentContainer.classList.add('right');
 
     let usernameParagraph = document.createElement('p');
     let usernameStrong = document.createElement('strong');
@@ -96,8 +100,19 @@ function writeNewComment(data) {
 
     let dateParagraph = document.createElement('p');
     dateParagraph.style.fontSize = "0.6rem";
-    dateParagraph.textContent = 'Sent on ' + data.date.substring(0, 10);
-    // dateParagraph.textContent = 'Sent on ' + data.date;
+    if (isPending) {
+        dateParagraph.textContent = 'Sent on ' + data.date;
+    } else {
+        dateParagraph.textContent = 'Sent on ' + data.date.substring(0, 10);
+    }
+
+    if (isPending) {
+        let pendingParagraph = document.createElement('p');
+        let pendingStrong = document.createElement('strong');
+        pendingStrong.textContent = "Pending";
+        pendingParagraph.appendChild(pendingStrong);
+        commentContainer.appendChild(pendingParagraph);
+    }
 
     // Add elements of a single message
     commentContainer.appendChild(usernameParagraph);
@@ -124,14 +139,13 @@ function disableChat(){
 }
 
 
-const insertComment = (comment) => {
+const insertComment = (comment, isPending = false) => {
     if (comment._id || comment.id) {
-        let comment_id;
         if (comment.id) {
-            comment_id = comment.id;
             comment = comment.formData;
         }
 
-        writeNewComment(comment)
+        writeNewComment(comment, isPending)
     }
+    // writeNewComment(comment, isPending)
 };

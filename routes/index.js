@@ -121,8 +121,6 @@ router.get('/edit_plant/:id', function(req, res, next) {
 
 /* POST comment form. */
 router.post('/send_comment', upload.none(), function(req, res, next) {
-    // console.log(req)
-    console.log(req.body)
     let result = comments.create(req.body);
     result.then(comment => {
         let data = JSON.parse(comment);
