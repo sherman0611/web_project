@@ -88,6 +88,16 @@ function writeNewComment(data, isPending = false) {
     if (isPending) {
         commentContainer.classList.add('pending');
     }
+
+    let curUser = getUsername()
+    if(data.username === curUser ){
+        // If it is the current user whose message is being loaded,
+        // show to the right
+        commentContainer.classList.add("right")
+    } else {
+        // If it is some other user, show to the left
+        commentContainer.classList.add("left")
+    }
     // commentContainer.classList.add('right');
 
     let usernameParagraph = document.createElement('p');

@@ -44,11 +44,7 @@
 .search-and-sort .container.equal-column {
     flex-direction: column;
     margin: 0;
-    padding: 2%;
-}
-
-.search-and-sort .container:hover{
-    background: initial;
+    padding: 0 2%;
 }
 
 .two-columns.container {

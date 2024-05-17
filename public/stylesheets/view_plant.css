@@ -71,6 +71,11 @@
   min-height: 300px;
 }
 
+.plant_details.equal-column.container{
+  padding: 0%;
+  min-width: 200px;
+}
+
 .container.two-columns .chat.container {
   justify-content: space-between;
   align-items: stretch;

@@ -19,8 +19,6 @@ window.onload = function () {
     });
 
     // inject username to html
-    // const usernameInput = document.getElementById("username");
-    // usernameInput.value = getUsername();
     usernameDefining();
 
     // submit comment
@@ -42,7 +40,7 @@ window.onload = function () {
     // Ownership
     allowEdit();
     // Chat functions
-    // assignCommentAuthor();
+    assignCommentAuthor();
     disableChat();
     scrollToBottomChat();
     // Map
