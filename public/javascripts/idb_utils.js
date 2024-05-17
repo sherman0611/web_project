@@ -152,6 +152,7 @@ const deleteAllFromIDB = (entryIDB, db_name) => {
     });
 };
 
+//
 const insertEntry = (entry, isPending = false) => {
     if (entry._id || entry.id) {
         let entry_id;
