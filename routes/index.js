@@ -181,20 +181,20 @@ function sortData(data, order) {
         let datetimeA, datetimeB;
         switch (order) {
             case 'date_seen_asc':
-                datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
-                datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
+                datetimeA = new Date(`${a.date_seen.toString().split('T')[0]}T${a.time_seen}`);
+                datetimeB = new Date(`${b.date_seen.toString().split('T')[0]}T${b.time_seen}`);
                 return datetimeA - datetimeB;
             case 'date_seen_desc':
-                datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
-                datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
+                datetimeA = new Date(`${a.date_seen.toString().split('T')[0]}T${a.time_seen}`);
+                datetimeB = new Date(`${b.date_seen.toString().split('T')[0]}T${b.time_seen}`);
                 return datetimeB - datetimeA;
             case 'date_post_asc':
-                datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
-                datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
+                datetimeA = new Date(`${a.date_post.toString().split('T')[0]}T${a.time_post}`);
+                datetimeB = new Date(`${b.date_post.toString().split('T')[0]}T${b.time_post}`);
                 return datetimeA - datetimeB;
             case 'date_post_desc':
-                datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
-                datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
+                datetimeA = new Date(`${a.date_post.toString().split('T')[0]}T${a.time_post}`);
+                datetimeB = new Date(`${b.date_post.toString().split('T')[0]}T${b.time_post}`);
                 return datetimeB - datetimeA;
             default:
                 return 0; // No sorting applied

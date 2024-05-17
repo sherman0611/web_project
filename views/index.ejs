@@ -28,22 +28,25 @@
                         </select>
 
                     <div class="filter-bar">
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li>
-                                <label><input type="checkbox" name="flowers" value="true"> Flowers</label>
-                            </li>
-                            <li>
-                                <label><input type="checkbox" name="leaves" value="true"> Leaves</label>
-                            </li>
-                            <li>
-                                <label><input type="checkbox" name="fruits_seeds" value="true"> Fruits/Seeds</label>
-                            </li>
-                            <li>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div>
+                                <label><input type="checkbox" name="flowers" value="true">With Flowers</label>
+                            </div>
+                            <div>
+                                <label><input type="checkbox" name="leaves" value="true">With Leaves</label>
+                            </div>
+                            <div>
+                                <label><input type="checkbox" name="fruits_seeds" value="true">With Fruits/Seeds</label>
+                            </div>
+                            <div>
                                 <label><input type="checkbox" name="sun_exposure" value="full_sun"> Full Sun</label>
                                 <label><input type="checkbox" name="sun_exposure" value="partial_shade"> Partial Shade</label>
                                 <label><input type="checkbox" name="sun_exposure" value="full_shade"> Full Shade</label>
-                            </li>
-                        </ul>
+                            </div>
+                            <div>
+                                To view all, uncheck checkboxes and re-click the button below.
+                            </div>
+                        </div>
                         <button
                                 class="btn btn-secondary dropdown-toggle"
                                 type="button"
@@ -59,14 +62,10 @@
                     </div>
                     <label for="sort-select">Sort by:</label>
                     <select id="sort-select" onchange=sortPosts()>
-                        <option value="date_seen_asc">Date Seen Ascending</option>-->
-                        <option value="date_seen_desc">Date Seen Descending</option>-->
-                        <option value="date_post_asc">Date Post Ascending</option>-->
-                        <option value="date_post_desc">Date Post Descending</option>-->
-                        <option value="time_seen_asc">Time Seen (Newest to Oldest)</option>-->
-                        <option value="time_seen_desc">Time Seen (Oldest to Newest)</option>-->
-                        <option value="time_post_asc">Time Post (Newest to Oldest)</option>-->
-                        <option value="time_post_desc">Time Post (Oldest to Newest)</option>-->
+                        <option value="date_seen_asc">Date Seen Ascending</option>
+                        <option value="date_seen_desc">Date Seen Descending</option>
+                        <option value="date_post_asc">Date Post Ascending</option>
+                        <option value="date_post_desc">Date Post Descending</option>
                     </select>
                 </div>
 

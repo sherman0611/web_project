@@ -24,9 +24,9 @@ function sortPosts() {
     const sun_exposure = Array.from(document.querySelectorAll('input[name="sun_exposure"]:checked')).map(e => e.value);
 
     const url = new URL(`/fetch-data?order=${sortOrder}&status=${filterStatus}&query=${encodeURIComponent(searchQuery)}`, window.location.origin);
-    if (flowers) url.searchParams.append('flowers', flowers);
-    if (leaves) url.searchParams.append('leaves', leaves);
-    if (fruits_seeds) url.searchParams.append('fruits_seeds', fruits_seeds);
+    if (flowers) url.searchParams.append('flowers', flowers === "true" ? "yes" : "");
+    if (leaves) url.searchParams.append('leaves', leaves === "true" ? "yes" : "");
+    if (fruits_seeds) url.searchParams.append('fruits_seeds', fruits_seeds === "true" ? "yes" : "");
     if (sun_exposure.length > 0) url.searchParams.append('sun_exposure', JSON.stringify(sun_exposure));
 
     fetch(url)
