@@ -181,26 +181,23 @@ self.addEventListener('sync', event => {
                 console.log('Service Worker: All pending entries uploaded');
             });
         });
-    } else if (event.tag.includes('sync-comment')){
-        let plant_id = event.tag.replace('sync-comment-','');
-        let db_name = 'sync-comments-'+plant_id
-        console.log('Service Worker: Uploading pending comments');
-        openSyncIDB(db_name).then((syncCommentDB) => {
-            getAllSyncItems(syncCommentDB, db_name).then(async (syncComments) => {
+    } else if (event.tag === 'sync-comment'){
+        openSyncIDB('sync-comments').then((syncCommentDB) => {
+            getAllSyncItems(syncCommentDB, 'sync-comments').then(async (syncComments) => {
                 for (const syncComment of syncComments) {
                     const formData = new FormData();
-                    appendIfDefined(formData, 'username', syncComment.formData.username);
-                    appendIfDefined(formData, 'comment_text', syncComment.formData.comment_text);
-                    appendIfDefined(formData, 'date', new Date());
+                    formData.append('plant_id', syncComment.formData.plant_id);
+                    formData.append('username', syncComment.formData.username);
+                    formData.append('comment_text', syncComment.formData.comment_text);
+
                     const permission = await Notification.permission;
 
                     fetch('http://localhost:3000/send_comment', {
                         method: 'POST',
                         body: formData,
                     }).then(() => {
-                        uploadComments()
                         console.log('Service Worker: Syncing new comments done');
-                        deleteSyncItemFromIDB(syncCommentDB, syncComment.id, db_name);
+                        deleteSyncItemFromIDB(syncCommentDB, syncComment.id, 'sync-comments');
 
                         if (permission === 'granted') {
                             self.registration.showNotification('Plantgram', {

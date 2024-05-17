@@ -1,14 +1,13 @@
 const socket = io();
 
 // Fired on a comment being sent
-function sendComment(event) {
-    setUsername();
-    event.preventDefault();
-
-    let username = getUsername();
-    if (username==="") {
-        username = document.getElementById("username")
+const submitComment = () => {
+    if (document.getElementById("username").value === "") {
+        alert("Please enter your username!");
+        return;
     }
+
+    setUsername();
 
     const dateObj = new Date();
     const month   = dateObj.getUTCMonth() + 1; // months from 1-12
@@ -16,38 +15,39 @@ function sendComment(event) {
     const year    = dateObj.getUTCFullYear();
 
     const newDate = year + "-" + month + "-" + day;
+
     const formData = {
-        username: username,
+        plant_id: getPlantId(),
+        username: getValue("username"),
         comment_text: getValue("comment_text"),
         date: newDate
     };
 
-    openSyncIDB('sync-comments-'+plant_id).then((db) => {
-        addToSync(db, formData, 'sync-comments-'+plant_id);
+    if (!formData.comment_text) {
+        alert("Cannot send empty comment!");
+        return;
+    }
+
+    openSyncIDB('sync-comments').then((db) => {
+        addToSync(db, formData, 'sync-comments');
     });
 
     navigator.serviceWorker.ready
         .then(function (sw) {
-            console.log("New comment added to the pending list")
             const permission = Notification.permission;
             if (permission === 'granted') {
                 sw.showNotification("Plantgram", {
                     body: "Comment added to pending list!"
                 });
             }
-        });
-
-    try{
-        uploadComments()
-    } catch(e) {
-        console.log("Problem: "+e)
-    }
-
-    try{
-        socket.emit('comment', plant_id, formData);
-    } catch(e) {
-        console.log("Problems with Socket.IO: "+e)
-    }
+        }).then(function (sw) {
+            document.getElementById("comment_text").value = "";
+            try{
+                socket.emit('comment', plant_id, formData);
+            } catch(e) {
+                console.log("Problems with Socket.IO: "+e)
+            }
+        })
 }
 
 // As the page loads, scroll to the latest messages
@@ -124,7 +124,7 @@ function disableChat(){
 }
 
 
-const insertComment = (comment, isPending = false) => {
+const insertComment = (comment) => {
     if (comment._id || comment.id) {
         let comment_id;
         if (comment.id) {
@@ -135,50 +135,3 @@ const insertComment = (comment, isPending = false) => {
         writeNewComment(comment)
     }
 };
-
-function updateComments() {
-    console.log("in Update Comments")
-    openSyncIDB('sync-comments-'+plant_id).then((db) => {
-        setTimeout(() => { // Adding delay here
-            getAllSyncItems(db, 'sync-comments-'+plant_id).then((items) => {
-                for (const item of items) {
-                    insertComment(item, true);
-                }
-            });
-        }, 100);
-    });
-
-    let db_name = 'comments-'+plant_id
-
-    // fetch all entries from mongo and save to idb
-    fetch('http://localhost:3000/comments/'+plant_id)
-        .then(function (res) {
-            return res.json();
-        }).then(function (newComments) {
-        openIDB(db_name).then((db) => {
-            deleteAllFromIDB(db, db_name).then(() => {
-                addNewToIDB(db, newComments, db_name).then(() => {
-                    console.log("All new comments added to IDB");
-                })
-            });
-        });
-    });
-}
-
-function uploadComments() {
-    navigator.serviceWorker.ready.then((sw) => {
-        sw.sync.register("sync-comment-"+plant_id).then(() => {
-            updateComments();
-        });
-    })
-}
-
-
-if (navigator.onLine) {
-    let plant_id = getPlantId()
-    // upload pending comments when online
-    navigator.serviceWorker.ready.then((sw) => {
-        sw.sync.register("sync-comment-"+plant_id);
-    })
-
-}

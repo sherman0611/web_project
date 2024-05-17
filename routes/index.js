@@ -92,23 +92,13 @@ router.get('/view_plant/:id', function(req, res, next) {
     const plant_id = req.params.id;
 
     let plantResult = entries.getById(plant_id);
-    let commentsResult = comments.getAllByPlantId(plant_id);
 
-    Promise.all([plantResult, commentsResult])
+    Promise.all([plantResult])
         .then(results => {
             let plantData = JSON.parse(results[0]);
-            let commentsData = JSON.parse(results[1]);
-            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData });
         }).catch(errors => {
-            let plantData = null;
-            let commentsData = null;
-            if (!errors[0]) {
-                plantData = JSON.parse(errors[0]);
-            }
-            if (!errors[1]) {
-                commentsData = JSON.parse(errors[1]);
-            }
-            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: plantData, comments: commentsData });
+            res.render('view_plant', { title: 'View plant entry', plant_id: plant_id, plant_entry: null });
         });
 });
 
@@ -130,10 +120,10 @@ router.get('/edit_plant/:id', function(req, res, next) {
 });
 
 /* POST comment form. */
-router.post('/send_comment', function(req, res, next) {
-    let commentData = req.body;
-    console.log(commentData)
-    let result = comments.create(commentData);
+router.post('/send_comment', upload.none(), function(req, res, next) {
+    // console.log(req)
+    console.log(req.body)
+    let result = comments.create(req.body);
     result.then(comment => {
         let data = JSON.parse(comment);
         res.send(data);

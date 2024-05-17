@@ -116,21 +116,8 @@
                 </div>
                 <div class="two-columns container row-2">
                     <div class="smaller-column chat container" id="chat_interface">
-                        <% if (comments === null) { %>
-                            <p>Cannot load comments</p>
-                        <% } else { %>
-                            <div id="comments_container">
-                                <% comments.forEach(comment => { %>
-                                    <div class="comment-container bubble">
-                                        <input type="hidden" class="comment-author" name="comment-author" value="<%= comment.username %>">
-                                        <p><strong><%= comment.username %></strong></p>
-                                        <p><%= comment.comment_text %></p>
-                                        <p style="font-size: 0.7rem; color: darkslategrey">Sent on <%= comment.date.substring(0, 10) %></p>
-                                    </div>
-                                <% }); %>
-                            </div>
-                        <% } %>
-                        <form id="comment-form" onsubmit="sendComment(event)">
+                        <div id="comments_container"></div>
+                        <form id="comment-form">
                             <input type="hidden" id="plant_id" name="plant_id" value="<%= plant_entry._id %>">
                             <div id="username-container">
                                 <label for="username">Your username:</label>
@@ -139,7 +126,7 @@
                             </div>
                             <div class="send-message-box">
                                 <input type="text" id="comment_text" name="comment_text" placeholder="Enter your reply...">
-                                <button class="form-button">Send</button>
+                                <input id="create_button" class="new_todo form-button" type="button" value="Send"/>
                             </div>
                         </form>
                     </div>

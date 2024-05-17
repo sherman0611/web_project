@@ -57,20 +57,20 @@ if ("Notification" in window) {
 }
 
 if (navigator.onLine) {
-    // upload pending entries when online
+    // upload pending entries and comments when online
     navigator.serviceWorker.ready.then((sw) => {
         sw.sync.register("sync-entry");
+        sw.sync.register("sync-comment");
     })
-    let db_name = 'entries'
 
     // fetch all entries from mongo and save to idb
     fetch('http://localhost:3000/entries')
         .then(function (res) {
             return res.json();
         }).then(function (newEntries) {
-            openIDB(db_name).then((db) => {
-                deleteAllFromIDB(db, db_name).then(() => {
-                    addNewToIDB(db, newEntries, db_name).then(() => {
+            openIDB('entries').then((db) => {
+                deleteAllFromIDB(db, 'entries').then(() => {
+                    addNewToIDB(db, newEntries, 'entries').then(() => {
                         // console.log("All new entries added to IDB");
                     })
                 });

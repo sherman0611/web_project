@@ -4,6 +4,7 @@ window.onload = function () {
     // Let user define username (if new user) or keep on using the saved one
     usernameDefining()
 
+    // submit form
     const create_button = document.getElementById("create_button")
     create_button.addEventListener("click", submitForm)
 

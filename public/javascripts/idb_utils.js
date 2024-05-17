@@ -107,12 +107,16 @@ const addToSync = (syncEntryIDB, formData, db_name) => {
         const createRequest = entryStore.add({formData});
 
         createRequest.addEventListener("success", () => {
-            console.log("Added entry to IDB");
+            console.log("Added to " + db_name);
 
             const getRequest = entryStore.get(createRequest.result);
             getRequest.addEventListener("success", () => {
                 navigator.serviceWorker.ready.then((sw) => {
-                    sw.sync.register("sync-entry");
+                    if (db_name === 'sync-entries') {
+                        sw.sync.register("sync-entry");
+                    } else if (db_name === 'sync-comments') {
+                        sw.sync.register("sync-comment");
+                    }
                 }).catch((err) => {
                     console.log("Sync registration failed: " + JSON.stringify(err));
                 })

@@ -7,7 +7,7 @@ let CommentSchema  = new Schema(
         plant_id: {type: String, max: 100},
         username: {type: String, max: 100},
         comment_text: {type: String},
-        date: { type: Date, default: Date.now }
+        date: { type: Date, default: Date.now() }
     }
 );
 

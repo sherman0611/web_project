@@ -6,14 +6,29 @@ window.onload = function () {
     plant_id = document.getElementById('plant_id').value;
     plant_name = document.getElementsByTagName('h1')[0].textContent;
 
+    // fetch all comments from mongo and save to idb
+    fetch('http://localhost:3000/comments/' + plant_id)
+        .then(function (res) {
+            return res.json();
+        }).then(function (newEntries) {
+            openIDB('comments').then((db) => {
+                deleteAllFromIDB(db, 'comments').then(() => {
+                    addNewToIDB(db, newEntries, 'comments');
+                });
+        });
+    });
+
     // inject username to html
     // const usernameInput = document.getElementById("username");
     // usernameInput.value = getUsername();
     usernameDefining();
 
+    // submit comment
+    const create_button = document.getElementById("create_button")
+    create_button.addEventListener("click", submitComment)
+
     // Chat
     socket.emit('join', plant_id);
-    updateComments();
 
     // Called when a message is received
     socket.on('comment', function (room, data) {
@@ -46,15 +61,27 @@ window.onload = function () {
         });
     }
 
-    openIDB('comments-'+plant_id).then((db) => {
+    // display comments from mongo
+    openIDB('comments').then((db) => {
         setTimeout(() => { // Adding delay here
-            getAllItemsFromIDB(db, 'comments-'+plant_id).then((items) => {
+            getAllItemsFromIDB(db, 'comments').then((items) => {
                 for (const item of items) {
                     insertComment(item)
                 }
             });
         }, 100);
     });
+
+    // // display pending comments
+    // openSyncIDB('sync-comments').then((db) => {
+    //     setTimeout(() => { // Adding delay here
+    //         getAllSyncItems(db, 'sync-comments').then((items) => {
+    //             for (const item of items) {
+    //                 insertComment(item)
+    //             }
+    //         });
+    //     }, 100);
+    // });
 }
 
 /** Check if the current user is the plant author
@@ -159,6 +186,5 @@ function fetchDBPedia() {
 }
 
 function getPlantId(){
-    let loc = document.location.pathname
-    return loc.replace("/view_plant/",'')
+    return plant_id
 }
