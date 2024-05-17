@@ -139,19 +139,26 @@ router.post('/send_comment', upload.none(), function(req, res, next) {
  * @param res
  */
 router.get('/fetch-data', (req, res) => {
+    let { order, status, query, flowers, leaves, fruits_seeds, sun_exposure } = req.query;
+    sun_exposure = JSON.parse(sun_exposure || "[]");
+
     try {
         let result = entries.getAll();
         result.then(plant_entries => {
             let data = JSON.parse(plant_entries);
-            const { order, status, query } = req.query;
 
+            // Filter data based on the received filters
+            data = data.filter(item => {
+                return (!flowers || item.flowers.toString() === flowers) &&
+                    (!leaves || item.leaves.toString() === leaves) &&
+                    (!fruits_seeds || item.fruits_seeds.toString() === fruits_seeds) &&
+                    (sun_exposure.length === 0 || sun_exposure.includes(item.sun_exposure));
+            });
+            console.log("flowers", req.query);
             let filteredData = filterDataByStatus(data, status);
             let searchedData = searchData(filteredData, query);
             let sortedSearchedData = sortData(searchedData, order);
-
             res.json(sortedSearchedData);
-        }).catch(err => {
-            console.log('Error:', err);
         });
     } catch (err) {
         console.error('Error:', err);
@@ -159,32 +166,37 @@ router.get('/fetch-data', (req, res) => {
     }
 });
 
+/**
+ * Sort the homepage entries in a set order
+ * @param data to be sorted
+ * @param order for sorting
+ * @return
+ */
 function sortData(data, order) {
     return data.sort((a, b) => {
         let datetimeA, datetimeB;
         switch (order) {
-            case 'time_seen_asc':
-                datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
-                datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
+            case 'date_seen_asc': // filter date seen ascending
+                datetimeA = new Date(`${a.date_seen.toString().split('T')[0]}T${a.time_seen}`);
+                datetimeB = new Date(`${b.date_seen.toString().split('T')[0]}T${b.time_seen}`);
                 return datetimeA - datetimeB;
-            case 'time_seen_desc':
-                datetimeA = new Date(`${a.date_seen.split('T')[0]}T${a.time_seen}`);
-                datetimeB = new Date(`${b.date_seen.split('T')[0]}T${b.time_seen}`);
+            case 'date_seen_desc': // filter date seen descending
+                datetimeA = new Date(`${a.date_seen.toString().split('T')[0]}T${a.time_seen}`);
+                datetimeB = new Date(`${b.date_seen.toString().split('T')[0]}T${b.time_seen}`);
                 return datetimeB - datetimeA;
-            case 'time_post_asc':
-                datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
-                datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
+            case 'date_post_asc': // filter date posted ascending
+                datetimeA = new Date(`${a.date_post.toString().split('T')[0]}T${a.time_post}`);
+                datetimeB = new Date(`${b.date_post.toString().split('T')[0]}T${b.time_post}`);
                 return datetimeA - datetimeB;
-            case 'time_post_desc':
-                datetimeA = new Date(`${a.date_post.split('T')[0]}T${a.time_post}`);
-                datetimeB = new Date(`${b.date_post.split('T')[0]}T${b.time_post}`);
+            case 'date_post_desc': // filter date posted descending
+                datetimeA = new Date(`${a.date_post.toString().split('T')[0]}T${a.time_post}`);
+                datetimeB = new Date(`${b.date_post.toString().split('T')[0]}T${b.time_post}`);
                 return datetimeB - datetimeA;
             default:
                 return 0; // No sorting applied
         }
     });
 }
-
 
 /**
  * Search data by username, plant name, location, description, colour, and sun exposure

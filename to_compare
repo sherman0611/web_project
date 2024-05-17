@@ -1,16 +1,78 @@
-if(getUsername() === document.getElementById("plant_author").innerText){
-        let identification_status = document.getElementById("identification_status").textContent.trim();
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%= title %></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel='stylesheet' href='/stylesheets/style.css'/>
+        <link rel='stylesheet' href='/stylesheets/index.css'/>
+        <link rel="manifest" href="/manifest.json">
+        <link rel="shortcut icon" href="#">
+    </head>
+    <body>
+        <div class="body_container">
+            <%- include('partials/header') %>
+            <div class="main_section">
+                <div class="search-and-sort">
+                    <div class="search">
+                        <input id="search-input" type="text" placeholder="Search user name, description, plant name...">
+                        <button id="search-button" onclick=sortPosts()><img src="images/search_icon.png" alt="search button" /></button>
+                    </div>
+                    <div id="filter">
+                        <label for="filter-select">Filter by Identification Status:</label>
+                        <select id="filter-select" onchange=sortPosts()>
+                            <option value="all">View All</option>
+                            <option value="completed">Completed</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
 
-        let html_to_insert
-        if(identification_status.includes("Completed")){
-            html_to_insert = '<span class="completed-text">' +
-                '<b>Editing is disabled since identification is completed</b></span><br>';
-        } else {
-            html_to_insert = '<a class="form-button" href="/edit_plant/'+plant_id+'">Edit your plant entry</a>';
-        }
+                    <div class="filter-bar">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div>
+                                <label><input type="checkbox" name="flowers" value="true">With Flowers</label>
+                            </div>
+                            <div>
+                                <label><input type="checkbox" name="leaves" value="true">With Leaves</label>
+                            </div>
+                            <div>
+                                <label><input type="checkbox" name="fruits_seeds" value="true">With Fruits/Seeds</label>
+                            </div>
+                            <div>
+                                <label><input type="checkbox" name="sun_exposure" value="full_sun"> Full Sun</label>
+                                <label><input type="checkbox" name="sun_exposure" value="partial_shade"> Partial Shade</label>
+                                <label><input type="checkbox" name="sun_exposure" value="full_shade"> Full Shade</label>
+                            </div>
+                            <div>
+                                To view all, uncheck checkboxes and re-click the button below.
+                            </div>
+                        </div>
+                        <button
+                                class="btn btn-secondary dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                onclick=sortPosts()>
+                            Filter by Characteristics
+                        </button>
+                    </div>
 
-        const parentDiv = document.querySelector('.two-columns.container.row-1');
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html_to_insert;
-        parentDiv.insertBefore(tempDiv.firstChild, parentDiv.firstChild);
-    }
+
+                    </div>
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select" onchange=sortPosts()>
+                        <option value="date_seen_asc">Date Seen Ascending</option>
+                        <option value="date_seen_desc">Date Seen Descending</option>
+                        <option value="date_post_asc">Date Post Ascending</option>
+                        <option value="date_post_desc">Date Post Descending</option>
+                    </select>
+                </div>
+
+                <div class="plant-entries-container" id="plant-entries-container"></div>
+            </div>
+        </div>
+        <%- include('partials/footer.ejs')%>
+        <script src="javascripts/index.js"></script>
+    </body>
+</html>

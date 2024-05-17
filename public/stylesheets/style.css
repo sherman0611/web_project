@@ -31,6 +31,24 @@ footer {
   justify-content: space-around;
 }
 
+.container.two-columns .smaller-column {
+  max-width: 30%;
+  width:30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container.two-columns .bigger-column {
+  max-width: 65%;
+  width: 65%;
+}
+
+.container.two-columns .equal-column {
+  max-width: 50%;
+  width: 50%;
+  min-width: min-content;
+}
+
 .main_section{
   padding: 10px 20px 0 20px;
   width: 100%;
