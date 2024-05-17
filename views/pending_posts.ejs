@@ -13,29 +13,6 @@
 <div class="body_container">
     <%- include('partials/header') %>
     <div class="main_section">
-        <div class="search-and-sort">
-            <div class="search">
-                <input id="search-input" type="text" placeholder="Search plants..">
-                <button class="search_button"><img src="images/search_icon.png" alt="search button"/></button>
-            </div>
-            <div id="filter">
-                <label for="filter-select">Filter by Identification Status:</label>
-                <select id="filter-select" onchange=sortPosts()>
-                    <option value="all">View All</option>
-                    <option value="completed">Completed</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="unknown">Unknown</option>
-                </select>
-
-            </div>
-            <label for="sort-select">Sort by:</label>
-            <select id="sort-select" onchange=sortPosts()>
-                <option value="time_seen_asc">Time Seen Ascending</option>-->
-                <option value="time_seen_desc">Time Seen descending</option>-->
-                <option value="time_post_asc">Time Post Ascending</option>-->
-                <option value="time_post_desc">Time Post descending</option>-->
-            </select>
-        </div>
 
         <p>Posts created offline will be shown here. All posts will be uploaded to server when back online.</p>
 

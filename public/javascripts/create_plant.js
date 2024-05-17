@@ -141,6 +141,7 @@ const submitForm = () => {
         return;
     }
 
+    // Add entry to IndexedDB
     openSyncIDB('sync-entries').then((db) => {
         addToSync(db, formData, 'sync-entries');
     });

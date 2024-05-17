@@ -37,6 +37,7 @@ exports.create = function (plantData, filePath) {
     })
 }
 
+// Function to get all plant entries
 exports.getAll = function () {
     return plantEntryModel.find({}).then(entry => {
         return JSON.stringify(entry);
@@ -56,6 +57,7 @@ exports.getById = function (plant_id) {
     });
 };
 
+// Function to get plant entries by username
 exports.update = async (plantId, plantData) => {
     try {
         // Update only the name and identification fields

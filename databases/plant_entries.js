@@ -5,6 +5,7 @@ let connection;
 
 mongoose.Promise = global.Promise;
 
+// Connect to the plant_entries database
 mongoose.connect(mongoDB).then(result => {
     connection = result.connection;
     // console.log("MongoDB plant_entries database connection successful!");

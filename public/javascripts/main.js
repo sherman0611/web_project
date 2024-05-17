@@ -18,20 +18,6 @@ if ('serviceWorker' in navigator) {
             window.location.href = event.data.redirectTo;
         }
     })
-
-    // navigator.serviceWorker.ready.then(registration => {
-    //     if (registration.periodicSync) {
-    //         try {
-    //             registration.periodicSync.register("upload-pending", {
-    //                 minInterval: 24 * 60 * 60 * 1000,
-    //             });
-    //             console.log('Periodic Background registered');
-    //         } catch {
-    //             console.log("Periodic Sync could not be registered!");
-    //         }
-    //     } else {
-    //         console.log('Periodic Background Sync not supported');
-    //     }});
 }
 
 // Check if the browser supports the Notification API

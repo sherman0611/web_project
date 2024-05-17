@@ -152,6 +152,11 @@ const deleteAllFromIDB = (entryIDB, db_name) => {
     });
 };
 
+/**
+ * Function to insert entries in order to update the display 
+ * after searching, sorting and filtering etc.
+ * @param {Object} entry 
+ */
 const insertEntry = (entry, isPending = false) => {
     if (entry._id || entry.id) {
         let entry_id;
@@ -186,6 +191,7 @@ const insertEntry = (entry, isPending = false) => {
         img.alt = entry.plant_name;
         anchor.appendChild(img);
 
+        // Create a div for the plant info
         const plantInfoDiv = document.createElement("div");
         plantInfoDiv.classList.add("plant-info");
 
@@ -197,7 +203,8 @@ const insertEntry = (entry, isPending = false) => {
 
         const dateParagraph = document.createElement("p");
         dateParagraph.textContent = "Found on " + entry.date_seen.substring(0, 10);
-
+        
+        // Add elements to the plant info div
         plantInfoDiv.appendChild(usernameParagraph);
         plantInfoDiv.appendChild(locationParagraph);
         plantInfoDiv.appendChild(dateParagraph);
