@@ -4,7 +4,7 @@ const CACHE_NAME = 'Plantgram v1';
 
 // Use the install event to pre-cache all initial resources.
 self.addEventListener('install', event => {
-    console.log('Service Worker: Installing....');
+    // console.log('Service Worker: Installing....');
     event.waitUntil((async () => {
         try {
             const cache = await caches.open(CACHE_NAME);
@@ -37,7 +37,7 @@ self.addEventListener('install', event => {
                 '/stylesheets/view_plant.css',
             ]);
 
-            console.log('Service Worker: App Shell Cached');
+            // console.log('Service Worker: App Shell Cached');
         } catch {
             console.log("error occured while caching...")
         }
@@ -60,13 +60,46 @@ self.addEventListener('activate', event => {
     );
 })
 
-self.addEventListener('fetch', function(event) {
-    console.log('Service Worker: Fetch', event.request.url);
+// self.addEventListener('fetch', function(event) {
+//     console.log('Service Worker: Fetch', event.request.url);
+//
+//     event.respondWith(
+//         caches.match(event.request).then(function(response) {
+//             return response || fetch(event.request);
+//         })
+//     );
+// });
 
+self.addEventListener('fetch', function(event) {
     event.respondWith(
-        caches.match(event.request).then(function(response) {
-            return response || fetch(event.request);
-        })
+        caches.match(event.request)
+            .then(function(response) {
+                // Cache hit - return response
+                if (response) {
+                    return response;
+                }
+                return fetch(event.request).then(
+                    function(response) {
+                        // Check if we received a valid response
+                        if(!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+
+                        // IMPORTANT: Clone the response. A response is a stream
+                        // and because we want the browser to consume the response
+                        // as well as the cache consuming the response, we need
+                        // to clone it so we have two streams.
+                        var responseToCache = response.clone();
+
+                        caches.open(CACHE_NAME)
+                            .then(function(cache) {
+                                cache.put(event.request, responseToCache);
+                            });
+
+                        return response;
+                    }
+                );
+            })
     );
 });
 
@@ -79,9 +112,9 @@ function appendIfDefined(formData, key, value) {
 //Sync event to sync the entries
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-entry') {
-        console.log('Service Worker: Uploading pending entries');
-        openSyncEntriesIDB().then((syncEntryDB) => {
-            getAllSyncEntries(syncEntryDB).then(async (syncEntries) => {
+        // console.log('Service Worker: Uploading pending entries');
+        openSyncIDB('sync-entries').then((syncEntryDB) => {
+            getAllSyncItems(syncEntryDB, 'sync-entries').then(async (syncEntries) => {
                 for (const syncEntry of syncEntries) {
                     const formData = new FormData();
                     appendIfDefined(formData, 'username', syncEntry.formData.username);
@@ -101,28 +134,91 @@ self.addEventListener('sync', event => {
                     appendIfDefined(formData, 'status', syncEntry.formData.status);
                     appendIfDefined(formData, 'date_seen', syncEntry.formData.date_seen);
                     appendIfDefined(formData, 'time_seen', syncEntry.formData.time_seen);
+                    appendIfDefined(formData, 'date_post', new Date());
+                    appendIfDefined(formData, 'time_post', new Date().toTimeString().split(' ')[0]);
                     if (syncEntry.formData.image) {
                         appendIfDefined(formData, 'image', new File([syncEntry.formData.image], syncEntry.formData.image.name, {type: syncEntry.formData.image.type}));
                     }
+                    const permission = await Notification.permission;
 
                     fetch('http://localhost:3000/create_entry', {
                         method: 'POST',
                         body: formData,
                     }).then(() => {
-                        console.log('Service Worker: Syncing new entry done');
-                        deleteSyncEntryFromIDB(syncEntryDB, syncEntry.id);
-                        self.registration.showNotification('Plantgram', {
-                            body: 'Entry uploaded successfully!',
+                        // console.log('Service Worker: Syncing new entry done');
+                        deleteSyncItemFromIDB(syncEntryDB, syncEntry.id, 'sync-entries');
+
+                        // From https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage
+                        // Re-written for the purpose of this project
+                        self.clients.matchAll().then(clients => {
+                            if (clients.length === 0) {
+                                console.log('No matched clients found');
+                            } else {
+                                const client = clients[0];
+                                // Send message: redirect
+                                client.postMessage({ redirectTo: '/' });
+                            }
+                        }).catch(error => {
+                            console.error('Error getting clients:', error);
                         });
+
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Entry uploaded successfully!',
+                            });
+                        }
                     }).catch((err) => {
                         console.error('Service Worker: Syncing new entry failed');
-                        self.registration.showNotification('Plantgram', {
-                            body: 'Entry upload failed, Check for network!',
-                        });
+
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Entry upload failed, check your network connection!',
+                            });
+                        }
                     });
                 }
             }).then(() => {
                 console.log('Service Worker: All pending entries uploaded');
+            });
+        });
+    } else if (event.tag.includes('sync-comment')){
+        let plant_id = event.tag.replace('sync-comment-','');
+        let db_name = 'sync-comments-'+plant_id
+        console.log('Service Worker: Uploading pending comments');
+        openSyncIDB(db_name).then((syncCommentDB) => {
+            getAllSyncItems(syncCommentDB, db_name).then(async (syncComments) => {
+                for (const syncComment of syncComments) {
+                    const formData = new FormData();
+                    appendIfDefined(formData, 'username', syncComment.formData.username);
+                    appendIfDefined(formData, 'comment_text', syncComment.formData.comment_text);
+                    appendIfDefined(formData, 'date', new Date());
+                    const permission = await Notification.permission;
+
+                    fetch('http://localhost:3000/send_comment', {
+                        method: 'POST',
+                        body: formData,
+                    }).then(() => {
+                        uploadComments()
+                        console.log('Service Worker: Syncing new comments done');
+                        deleteSyncItemFromIDB(syncCommentDB, syncComment.id, db_name);
+
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Comments uploaded successfully!',
+                            });
+                        }
+                    }).catch((err) => {
+                        console.error('Service Worker: Syncing new comment error');
+
+                        if (permission === 'granted') {
+                            self.registration.showNotification('Plantgram', {
+                                body: 'Comment upload failed, check your network connection!',
+                            });
+                        }
+                    });
+                }
+            }).then(() => {
+                console.log('Service Worker: All pending comments uploaded');
             });
         });
     }

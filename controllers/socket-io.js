@@ -7,6 +7,7 @@ exports.init = function(io) {
             });
 
             socket.on('comment', function (room, data) {
+                console.log("got a message")
                 io.sockets.to(room).emit('comment', room, data);
             });
         } catch (e) {

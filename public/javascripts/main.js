@@ -7,10 +7,17 @@ if (!window.indexedDB) {
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', {scope: '/'})
         .then(function () {
-            console.log('Service Worker Registered!');
+            // console.log('Service Worker Registered!');
         }).catch(function (err) {
             console.log('Service Worker registration failed: ', err);
         });
+
+    navigator.serviceWorker.addEventListener("message", (event) => {
+        // Redirect the page
+        if (event.data && event.data.redirectTo) {
+            window.location.href = event.data.redirectTo;
+        }
+    })
 
     // navigator.serviceWorker.ready.then(registration => {
     //     if (registration.periodicSync) {
@@ -40,7 +47,7 @@ if ("Notification" in window) {
             if (permission === "granted") {
                 navigator.serviceWorker.ready
                     .then(function (sw) {
-                        sw.showNotification("Todo App", {
+                        sw.showNotification("Plantgram", {
                             body: "Notifications are enabled!"
                         });
                     });
@@ -54,18 +61,44 @@ if (navigator.onLine) {
     navigator.serviceWorker.ready.then((sw) => {
         sw.sync.register("sync-entry");
     })
+    let db_name = 'entries'
 
     // fetch all entries from mongo and save to idb
     fetch('http://localhost:3000/entries')
         .then(function (res) {
             return res.json();
         }).then(function (newEntries) {
-            openEntriesIDB().then((db) => {
-                deleteEntriesFromIDB(db).then(() => {
-                    addNewEntriesToIDB(db, newEntries).then(() => {
-                        console.log("All new entries added to IDB");
+            openIDB(db_name).then((db) => {
+                deleteAllFromIDB(db, db_name).then(() => {
+                    addNewToIDB(db, newEntries, db_name).then(() => {
+                        // console.log("All new entries added to IDB");
                     })
                 });
         });
     });
+}
+
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.redirectTo) {
+        window.location.href = event.data.redirectTo;
+    }
+});
+
+function getValue(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        if (element.type === "text" || element.type === "number" || element.type === "url") {
+            if (element.value.trim() !== "") {
+                return element.value;
+            }
+        } else if (element.type === "radio") {
+            const checked = document.querySelector(`input[name="${element.name}"]:checked`);
+
+            if (checked) {
+                return checked.value;
+            }
+        } else {
+            return element.value;
+        }
+    }
 }

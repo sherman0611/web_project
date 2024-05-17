@@ -42,9 +42,9 @@ function sortPosts() {
 }
 
 window.onload = function () {
-    openEntriesIDB().then((db) => {
+    openIDB('entries').then((db) => {
         setTimeout(() => { // Adding delay here
-            getAllEntries(db).then((entries) => {
+            getAllItemsFromIDB(db, 'entries').then((entries) => {
                 for (const entry of entries) {
                     insertEntry(entry)
                 }

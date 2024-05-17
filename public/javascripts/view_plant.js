@@ -13,6 +13,7 @@ window.onload = function () {
 
     // Chat
     socket.emit('join', plant_id);
+    updateComments();
 
     // Called when a message is received
     socket.on('comment', function (room, data) {
@@ -20,8 +21,7 @@ window.onload = function () {
     });
 
     // DBPedia
-    if (document.getElementById("status").textContent.includes("Completed")) {
-        console.log("DBPedia fetching");
+    if (document.getElementById("identification_status").textContent.includes("Completed")) {
         fetchDBPedia();
     }
     // Ownership
@@ -45,8 +45,17 @@ window.onload = function () {
             }
         });
     }
-}
 
+    openIDB('comments-'+plant_id).then((db) => {
+        setTimeout(() => { // Adding delay here
+            getAllItemsFromIDB(db, 'comments-'+plant_id).then((items) => {
+                for (const item of items) {
+                    insertComment(item)
+                }
+            });
+        }, 100);
+    });
+}
 
 /** Check if the current user is the plant author
  * If so, allow them to edit the plant if the identification has not yet
@@ -96,7 +105,6 @@ async function initMap() {
 
 // Fetch DBPedia data and display if found
 function fetchDBPedia() {
-    console.log("fetching DBPedia data");
     let plant = plant_name;
     //lowercase all word
     plant = plant.toLowerCase();
@@ -148,4 +156,9 @@ function fetchDBPedia() {
         })
         .catch(error =>
             console.error('Error:', error));
+}
+
+function getPlantId(){
+    let loc = document.location.pathname
+    return loc.replace("/view_plant/",'')
 }

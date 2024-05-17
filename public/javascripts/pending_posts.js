@@ -1,7 +1,7 @@
 function updatePosts() {
-    openSyncEntriesIDB().then((db) => {
+    openSyncIDB('sync-entries').then((db) => {
         setTimeout(() => { // Adding delay here
-            getAllSyncEntries(db).then((entries) => {
+            getAllSyncItems(db, 'sync-entries').then((entries) => {
                 for (const entry of entries) {
                     insertEntry(entry, true);
                 }

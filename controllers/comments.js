@@ -5,6 +5,7 @@ const commentModel = require('../models/comments');
 // Return: JSON object on success
 //         null on failure
 exports.create = function (commentData) {
+    console.log(commentData)
     let comment = new commentModel({
         plant_id: commentData.plant_id,
         username: commentData.username,

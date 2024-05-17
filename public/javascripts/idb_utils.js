@@ -1,13 +1,13 @@
-function openEntriesIDB() {
+function openIDB(db_name) {
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open("entries", 1);
+        const request = indexedDB.open(db_name, 1);
 
         request.onerror = function (event) {
             reject(new Error(`Database error: ${event.target}`));
         };
         request.onupgradeneeded = function (event) {
             const db = event.target.result;
-            db.createObjectStore('entries', {keyPath: '_id'});
+            db.createObjectStore(db_name, {keyPath: '_id'});
         };
         request.onsuccess = function (event) {
             const db = event.target.result;
@@ -16,16 +16,16 @@ function openEntriesIDB() {
     });
 }
 
-function openSyncEntriesIDB() {
+function openSyncIDB(db_name) {
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open("sync-entries", 1);
+        const request = indexedDB.open(db_name, 1);
 
         request.onerror = function (event) {
             reject(new Error(`Database error: ${event.target}`));
         };
         request.onupgradeneeded = function (event) {
             const db = event.target.result;
-            db.createObjectStore('sync-entries', {keyPath: 'id', autoIncrement: true});
+            db.createObjectStore(db_name, {keyPath: 'id', autoIncrement: true});
         };
         request.onsuccess = function (event) {
             const db = event.target.result;
@@ -35,10 +35,10 @@ function openSyncEntriesIDB() {
 }
 
 // Function to get the entry list from idb
-const getAllEntries = (entryIDB) => {
+const getAllItemsFromIDB = (entryIDB, db_name) => {
     return new Promise((resolve, reject) => {
-        const transaction = entryIDB.transaction(["entries"]);
-        const entryStore = transaction.objectStore("entries");
+        const transaction = entryIDB.transaction([db_name]);
+        const entryStore = transaction.objectStore(db_name);
         const req = entryStore.getAll();
 
         req.addEventListener("success", (event) => {
@@ -51,10 +51,10 @@ const getAllEntries = (entryIDB) => {
 }
 
 // Function to get the entry list from idb
-const getAllSyncEntries = (syncEntryIDB) => {
+const getAllSyncItems = (syncEntryIDB, db_name) => {
     return new Promise((resolve, reject) => {
-        const transaction = syncEntryIDB.transaction(["sync-entries"]);
-        const entryStore = transaction.objectStore("sync-entries");
+        const transaction = syncEntryIDB.transaction([db_name]);
+        const entryStore = transaction.objectStore(db_name);
         const req = entryStore.getAll();
 
         req.addEventListener("success", () => {
@@ -67,10 +67,10 @@ const getAllSyncEntries = (syncEntryIDB) => {
 }
 
 // Function to add new entries to idb and return a promise
-const addNewEntriesToIDB = (entryIDB, entries) => {
+const addNewToIDB = (entryIDB, entries, db_name) => {
     return new Promise((resolve, reject) => {
-        const transaction = entryIDB.transaction(["entries"], "readwrite");
-        const entryStore = transaction.objectStore("entries");
+        const transaction = entryIDB.transaction([db_name], "readwrite");
+        const entryStore = transaction.objectStore(db_name);
 
         const addPromises = entries.map(entry => {
             return new Promise((resolveAdd, rejectAdd) => {
@@ -100,21 +100,18 @@ const addNewEntriesToIDB = (entryIDB, entries) => {
     });
 };
 
-const addEntryToSync = (syncEntryIDB, formData) => {
+const addToSync = (syncEntryIDB, formData, db_name) => {
     if (formData) {
-        const transaction = syncEntryIDB.transaction(["sync-entries"], "readwrite");
-        const entryStore = transaction.objectStore("sync-entries");
+        const transaction = syncEntryIDB.transaction([db_name], "readwrite");
+        const entryStore = transaction.objectStore(db_name);
         const createRequest = entryStore.add({formData});
 
         createRequest.addEventListener("success", () => {
-            console.log("Added entry to idb");
+            console.log("Added entry to IDB");
 
             const getRequest = entryStore.get(createRequest.result);
-            // console.log(getRequest)
             getRequest.addEventListener("success", () => {
-                // console.log("getRequest ready")
                 navigator.serviceWorker.ready.then((sw) => {
-                    // console.log("in navigator.serviceWorker.ready")
                     sw.sync.register("sync-entry");
                 }).catch((err) => {
                     console.log("Sync registration failed: " + JSON.stringify(err));
@@ -125,9 +122,9 @@ const addEntryToSync = (syncEntryIDB, formData) => {
 }
 
 // Function to delete a sync
-const deleteSyncEntryFromIDB = (syncEntryIDB, id) => {
-    const transaction = syncEntryIDB.transaction(["sync-entries"], "readwrite");
-    const entryStore = transaction.objectStore("sync-entries");
+const deleteSyncItemFromIDB = (syncEntryIDB, id, db_name) => {
+    const transaction = syncEntryIDB.transaction([db_name], "readwrite");
+    const entryStore = transaction.objectStore(db_name);
     const req = entryStore.delete(id);
 
     req.addEventListener("success", () => {
@@ -136,9 +133,9 @@ const deleteSyncEntryFromIDB = (syncEntryIDB, id) => {
 }
 
 // Function to remove all entries from idb
-const deleteEntriesFromIDB = (entryIDB) => {
-    const transaction = entryIDB.transaction(["entries"], "readwrite");
-    const entryStore = transaction.objectStore("entries");
+const deleteAllFromIDB = (entryIDB, db_name) => {
+    const transaction = entryIDB.transaction([db_name], "readwrite");
+    const entryStore = transaction.objectStore(db_name);
     const req = entryStore.clear();
 
     return new Promise((resolve, reject) => {
