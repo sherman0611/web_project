@@ -10,75 +10,35 @@ input.addEventListener("keypress", function(event) {
 });
 
 /**
- * Fetch data from the server based on the selected sort order, filter status, and search query
+ * Fetch data from the server based on the selected sort order, filters, and search query
  * Then update the display with the fetched data
  */
 function sortPosts() {
     console.log('Fetching data...');
     const sortOrder = document.getElementById('sort-select').value;
     const filterStatus = document.getElementById('filter-select').value;
-    const searchQuery = document.getElementById('search-input').value;
+    const searchQuery = document.getElementById('search-input').value || '';
+    const flowers = document.querySelector('input[name="flowers"]:checked')?.value || '';
+    const leaves = document.querySelector('input[name="leaves"]:checked')?.value || '';
+    const fruits_seeds = document.querySelector('input[name="fruits_seeds"]:checked')?.value || '';
+    const sun_exposure = Array.from(document.querySelectorAll('input[name="sun_exposure"]:checked')).map(e => e.value);
 
-    const url = `/fetch-data?order=${sortOrder}&status=${filterStatus}` + (searchQuery ? `&query=${encodeURIComponent(searchQuery)}` : '');
+    const url = new URL(`/fetch-data?order=${sortOrder}&status=${filterStatus}&query=${encodeURIComponent(searchQuery)}`, window.location.origin);
+    if (flowers) url.searchParams.append('flowers', flowers === "true" ? "yes" : "");
+    if (leaves) url.searchParams.append('leaves', leaves === "true" ? "yes" : "");
+    if (fruits_seeds) url.searchParams.append('fruits_seeds', fruits_seeds === "true" ? "yes" : "");
+    if (sun_exposure.length > 0) url.searchParams.append('sun_exposure', JSON.stringify(sun_exposure));
+
     fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('plant-entries-container');
-            container.innerHTML = '';
-            data.forEach(item => {
-                insertEntry(item);
-            });
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-/**
- * Update the display with the fetched data
- * Display plant image, username, date, and location in a card format
- * @param data
- * @returns {void}
- */
-function updateDisplay(data) {
-    const container = document.getElementById('plant-entries-container');
-    container.innerHTML = '';
-    data.forEach(item => {
-        const plantEntryDiv = document.createElement('div');
-        plantEntryDiv.className = 'home link container';
-
-        const plantLink = document.createElement('a');
-        plantLink.href = `/view_plant/${item._id}`;
-
-        if (item.image || item.image_url) {
-            const imgSrc = item.image ? item.image.replace('public', '') : item.image_url;
-            const plantImage = document.createElement('img');
-            plantImage.className = 'plant-image';
-            plantImage.src = imgSrc;
-            plantImage.alt = item.plant_name;
-            plantLink.appendChild(plantImage);
-        }
-
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'plant-info';
-
-        const plantInfoP = document.createElement('p');
-        const plantInfoB = document.createElement('b');
-        // plantInfoP.textContent = `Plant by ${item.username || 'Anonymous'}`;
-        plantInfoB.textContent = `${item.plant_name} by ${item.username}`;
-        plantInfoP.appendChild(plantInfoB)
-        infoDiv.appendChild(plantInfoP);
-
-        if (item.date || item.location) {
-            const dateLocationP = document.createElement('p');
-            // let dateText = item.date ? new Date(item.date).toISOString().substring(0, 10) : 'Unknown Date';
-            // dateLocationP.textContent = `${dateText}, ${item.location || 'Unknown location'}`;
-            dateLocationP.textContent = `${item.location || 'Unknown location'}`;
-            infoDiv.appendChild(dateLocationP);
-        }
-
-        plantLink.appendChild(infoDiv);
-        plantEntryDiv.appendChild(plantLink);
-        container.appendChild(plantEntryDiv);
-    });
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('plant-entries-container');
+        container.innerHTML = '';
+        data.forEach(item => {
+            insertEntry(item);
+        });
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 window.onload = function () {

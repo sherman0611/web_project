@@ -19,7 +19,7 @@
 }
 
 .search {
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -41,6 +41,24 @@
     justify-content: space-between;
 }
 
+.search-and-sort .container.equal-column {
+    flex-direction: column;
+    margin: 0;
+    padding: 2%;
+}
+
+.search-and-sort .container:hover{
+    background: initial;
+}
+
+.two-columns.container {
+    flex-wrap: wrap;
+}
+
+.two-columns.container .equal-column{
+    min-width:400px;
+}
+
 /* PLANT ENTRIES */
 .plant-entries-container {
     display: flex;
@@ -58,6 +76,6 @@
     margin: 10px;
 }
 
-.container:hover{
+.home.link.container:hover{
     background-color: #AA7A54;
 }
