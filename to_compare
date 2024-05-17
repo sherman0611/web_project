@@ -1,8 +1,8 @@
 if(getUsername() === document.getElementById("plant_author").innerText){
-        let identification_status = document.getElementById("identification_status").textContent.trim();
+        let status = document.getElementById("status").textContent.trim();
 
         let html_to_insert
-        if(identification_status.includes("Completed")){
+        if(status.includes("Completed")){
             html_to_insert = '<span class="completed-text">' +
                 '<b>Editing is disabled since identification is completed</b></span><br>';
         } else {

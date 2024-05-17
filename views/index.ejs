@@ -15,8 +15,8 @@
             <div class="main_section">
                 <div class="search-and-sort">
                     <div class="search">
-                        <input id="search-input" type="text" placeholder="Search plants..">
-                        <button class="search_button"><img src="images/search_icon.png" alt="search button"/></button>
+                        <input id="search-input" type="text" placeholder="Search user name, description, plant name...">
+                        <button id="search-button" onclick=sortPosts()><img src="images/search_icon.png" alt="search button" /></button>
                     </div>
                     <div id="filter">
                         <label for="filter-select">Filter by Identification Status:</label>
@@ -27,9 +27,42 @@
                             <option value="unknown">Unknown</option>
                         </select>
 
+                    <div class="filter-bar">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <label><input type="checkbox" name="flowers" value="true"> Flowers</label>
+                            </li>
+                            <li>
+                                <label><input type="checkbox" name="leaves" value="true"> Leaves</label>
+                            </li>
+                            <li>
+                                <label><input type="checkbox" name="fruits_seeds" value="true"> Fruits/Seeds</label>
+                            </li>
+                            <li>
+                                <label><input type="checkbox" name="sun_exposure" value="full_sun"> Full Sun</label>
+                                <label><input type="checkbox" name="sun_exposure" value="partial_shade"> Partial Shade</label>
+                                <label><input type="checkbox" name="sun_exposure" value="full_shade"> Full Shade</label>
+                            </li>
+                        </ul>
+                        <button
+                                class="btn btn-secondary dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                onclick=sortPosts()>
+                            Filter by Characteristics
+                        </button>
+                    </div>
+
+
                     </div>
                     <label for="sort-select">Sort by:</label>
                     <select id="sort-select" onchange=sortPosts()>
+                        <option value="date_seen_asc">Date Seen Ascending</option>-->
+                        <option value="date_seen_desc">Date Seen Descending</option>-->
+                        <option value="date_post_asc">Date Post Ascending</option>-->
+                        <option value="date_post_desc">Date Post Descending</option>-->
                         <option value="time_seen_asc">Time Seen (Newest to Oldest)</option>-->
                         <option value="time_seen_desc">Time Seen (Oldest to Newest)</option>-->
                         <option value="time_post_asc">Time Post (Newest to Oldest)</option>-->

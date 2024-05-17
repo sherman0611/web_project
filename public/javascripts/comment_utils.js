@@ -113,8 +113,8 @@ function writeNewComment(data) {
 
 // Disable the chat function if the identification is completed
 function disableChat(){
-    let identification_status = document.getElementById("identification_status").textContent
-    if(identification_status.includes("Completed")){
+    let status = document.getElementById("status").textContent
+    if(status.includes("Completed")){
         let chatTextBox = document.getElementById("comment_text")
         chatTextBox.setAttribute("disabled", "true")
         chatTextBox.placeholder = "Chat is now disabled!"
