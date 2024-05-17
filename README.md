@@ -1,5 +1,9 @@
 # web_project
 
+## Git repository link:
+https://github.com/sherman0611/web_project
+
+## NMP installs
  1. npm install --save-dev nodemon
     After running the command, in package.json change to nodemon:
     "scripts": {
@@ -15,7 +19,6 @@ Open the project in WebStorm, go to bin/www file and click the 'Run' button.
 
 
 ## Google Maps API key
-_AIzaSyBI3suTR3SBrWpTHrdDVscQQwqhRio-ukk_ \
 to be pasted instead of 'HERE' below: \
 "https://maps.googleapis.com/maps/api/js?key=HERE&callback=initMap" \
 in plant_entry.ejs
